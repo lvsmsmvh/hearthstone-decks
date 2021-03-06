@@ -1,0 +1,10 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/bck_for_deck_holder</item>
+        <item name="colorPrimaryDark">@color/bck_for_deck_holder</item>
+        <item name="colorAccent">@color/bck_for_app</item>
+    </style>
+
+</resources>

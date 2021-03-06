@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Hearthstone Decks</string>
+    <string name="main_image">Main image</string>
+
+    //deck classes
+    <string name="demon_hunter">Demon Hunter</string>
+    <string name="druid">Druid</string>
+    <string name="priest">Priest</string>
+    <string name="warlock">Warlock</string>
+    <string name="warrior">Warrior</string>
+    <string name="rogue">Rogue</string>
+    <string name="paladin">Paladin</string>
+    <string name="shaman">Shaman</string>
+    <string name="mage">Mage</string>
+    <string name="hunter">Hunter</string>
+    <string name="dust_icon">Dust icon</string>
+    <string name="dust_needed">Dust needed: </string>
+    <string name="class_tip">Class: </string>
+    <string name="format">Format:</string>
+    <string name="created">Created:</string>
+    <string name="random_big_text">random big text random big text random big text random big text random big text random big text random big text </string>
+    <string name="no_description">No description</string>
+    <string name="no_image">Image failed to load :(</string>
+    <string name="description">Description</string>
+    <string name="next"><![CDATA[Next >]]></string>
+    <string name="previous"><![CDATA[< Previous]]></string>
+    <string name="please_wait">Please, wait...</string>
+    <string name="error_loading_data">Error loading data :(</string>
+    <string name="retry">Retry</string>
+</resources>

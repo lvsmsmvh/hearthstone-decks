@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+            <solid android:color="@color/bck_for_deck_holder"/>
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+
+</selector>
