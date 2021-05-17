@@ -36,7 +36,7 @@
                 android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
                 android:contentDescription="expand_arrow" />
         </LinearLayout>
-        <com.cyberquick.hearthstonedecks.ExpandableTextView
+        <com.cyberquick.hearthstonedecks.other.ExpandableTextView
             android:id="@+id/det_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

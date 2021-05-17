@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.transformations;
+package com.cyberquick.hearthstonedecks.other;
 
 import android.graphics.Bitmap;
 import com.squareup.picasso.Transformation;

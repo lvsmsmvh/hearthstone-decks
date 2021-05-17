@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.deck
+package com.cyberquick.hearthstonedecks.card
 
 import android.graphics.Color
 import android.view.View

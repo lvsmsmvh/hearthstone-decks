@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.deck
+package com.cyberquick.hearthstonedecks.card
 
 class Card(
     val name: String,

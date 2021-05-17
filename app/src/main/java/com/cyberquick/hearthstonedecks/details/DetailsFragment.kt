@@ -16,8 +16,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
-import com.cyberquick.hearthstonedecks.deck.Card
-import com.cyberquick.hearthstonedecks.deck.DataAdapterForCard
+import com.cyberquick.hearthstonedecks.card.Card
+import com.cyberquick.hearthstonedecks.card.DataAdapterForCard
 import com.cyberquick.hearthstonedecks.list.ViewHolder
 import kotlinx.android.synthetic.main.btn_description.*
 import kotlinx.android.synthetic.main.btn_description_failed.*

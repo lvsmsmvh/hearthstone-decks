@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks
+package com.cyberquick.hearthstonedecks.card
 
 import androidx.lifecycle.ViewModel
 

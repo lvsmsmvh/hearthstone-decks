@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks
+package com.cyberquick.hearthstonedecks.card
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.cyberquick.hearthstonedecks.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_fragment.*
 import kotlinx.coroutines.CoroutineScope

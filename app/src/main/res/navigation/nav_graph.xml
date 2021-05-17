@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/cardFragment"
-        android:name="com.cyberquick.hearthstonedecks.CardFragment"
+        android:name="com.cyberquick.hearthstonedecks.card.CardFragment"
         android:label="Card"
         tools:layout="@layout/card_fragment">
         <argument
