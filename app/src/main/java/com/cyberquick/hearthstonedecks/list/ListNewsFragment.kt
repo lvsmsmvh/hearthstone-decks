@@ -25,11 +25,9 @@ class ListNewsFragment : Fragment(), CoroutineScope {
         private var url = "https://www.hearthpwn.com/decks?filter-show-constructed-only=y&filter-deck-tag=2"
         private var currentPage : Page? = null
     }
-//    private val url = "https://www.hearthpwn.com/decks?filter-deck-tag=2&filter-show-constructed-only=y&page=2"
+
     private var listNews = mutableListOf<News>()
-    private val listOfNewsInJson = mutableListOf<String>()
     private lateinit var adapter: DataAdapter
-    private lateinit var viewModel: ListNewsViewModel
     private val domenName = "https://www.hearthpwn.com"
     private var jobLoadListFromInternet : Job = Job()
     private var jobMainUI : Job = Job()
@@ -39,13 +37,11 @@ class ListNewsFragment : Fragment(), CoroutineScope {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.i("andrey", "list news onCreateView")
         return inflater.inflate(R.layout.list_news_fragment, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("andrey", "list news onCreate")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -54,7 +50,6 @@ class ListNewsFragment : Fragment(), CoroutineScope {
             val gson = Gson()
             val jsonString = gson.toJson(listNews)
             outState.putString("list", jsonString)
-            Log.i("andrey", "save " + jsonString)
         }
     }
 
@@ -62,7 +57,6 @@ class ListNewsFragment : Fragment(), CoroutineScope {
         super.onViewStateRestored(savedInstanceState)
         if (savedInstanceState != null) {
             val json = savedInstanceState.getString("list")
-            Log.i("andrey", "restore " + json)
             if (json != null) {
                 if (json.isNotEmpty()) {
                     val gson = Gson()
@@ -84,17 +78,10 @@ class ListNewsFragment : Fragment(), CoroutineScope {
         jobLoadListFromInternet.cancel()
         jobMainUI.cancel()
         cancel()
-        Log.i("andrey", "list news onDestroy")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.i("andrey", "list news onResume")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ListNewsViewModel::class.java)
 
         adapter = DataAdapter()
         val llm = LinearLayoutManager(this.context)
@@ -131,6 +118,7 @@ class ListNewsFragment : Fragment(), CoroutineScope {
         url = domenName + currentPage?.linkOnNextPage.toString()
         getData()
     }
+
     private fun loadPreviousPage() {
         listNews.clear()
         url = domenName + currentPage?.linkOnPreviousPage.toString()
@@ -156,19 +144,13 @@ class ListNewsFragment : Fragment(), CoroutineScope {
             jobLoadListFromInternet = launch(Dispatchers.IO){
                 loadDataFromInternet()
             }
-//            GlobalScope.launch {
-//                loadDataFromInternet()
-//            }
         } else {
             initLowerButtons()
             adapter.set(listNews)
         }
     }
 
-    private fun loadDataFromInternet(){
-
-        Log.i("andrey", "loadData()")
-
+    private fun loadDataFromInternet() {
         try {
             val document = Jsoup
                 .connect(url)
@@ -178,7 +160,6 @@ class ListNewsFragment : Fragment(), CoroutineScope {
 
             initNewPageParameters(document)
 
-            Log.i("andrey", "connected")
             val element = document
                 .select("table[class=listing listing-decks b-table b-table-a]")
                 .select("tbody")
@@ -232,18 +213,12 @@ class ListNewsFragment : Fragment(), CoroutineScope {
 
                 listNews.add(News(title, deckClass, dust, timeCreated, linkDetails, formatType))
             }
-            Log.i("andrey", "finished loading " + element.size.toString() + " items")
-
             jobMainUI = launch{
                 hideProgressBar()
             }
             sendDeckToAdapter()
             initLowerButtons()
-
-//
-//
         } catch (e : Exception){
-            Log.i("andrey", "getData " + e.message.toString())
             jobMainUI = launch{
                 setFailedLoadingData()
             }
@@ -273,13 +248,9 @@ class ListNewsFragment : Fragment(), CoroutineScope {
         val prevPageLink = prevPageElement
             .select("a")
             .attr("href")
-        Log.i("andrey", "prev page url " + prevPageLink.toString())
         val nextPageLink = nextPageElement
             .select("a")
             .attr("href")
-        Log.i("andrey", "next page url " + nextPageLink.toString())
-
-
 
         val pageNumber : Int =
         if (url.contains("page=")) {

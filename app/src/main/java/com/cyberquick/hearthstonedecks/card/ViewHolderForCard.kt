@@ -31,7 +31,6 @@ class ViewHolderForCard(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .navigate(DetailsFragmentDirections
                     .actionDetailsFragmentToCardFragment(linkOnCard))
         }
-        //TODO
     }
 
     private fun setColorWithRarity(cardName: TextView, rarity: String) {

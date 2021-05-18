@@ -20,12 +20,7 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val formatType: TextView = itemView.row_tv_standard_wild
     private var link = ""
 
-
     fun bind(newsItem: News) {
-//        Picasso.with(itemView.context)
-//            .load(newsItem.linkImage)
-//            .transform(CropSquareTransformation())
-//            .into(image)
         title.text = newsItem.title
         deckClass.text = newsItem.deckClass
         setHeroIcon(image, newsItem.deckClass)
@@ -49,7 +44,6 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
     companion object {
-
         fun setDustIcon(dustIcon: ImageView?) {
             dustIcon?.setImageDrawable(ResourcesCompat.getDrawable(dustIcon.resources, R.drawable.dust, null))
         }

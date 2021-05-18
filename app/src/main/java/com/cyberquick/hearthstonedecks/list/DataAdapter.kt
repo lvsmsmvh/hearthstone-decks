@@ -8,6 +8,7 @@ import com.cyberquick.hearthstonedecks.R
 class DataAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     private val listNews = mutableListOf<News>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         return ViewHolder(view)

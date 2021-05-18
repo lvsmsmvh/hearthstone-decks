@@ -32,17 +32,12 @@ import kotlin.coroutines.CoroutineContext
 
 class DetailsFragment : Fragment(), CoroutineScope {
 
-
-    companion object {
-        var i : Int = 0
-    }
     private var jobGetDescription : Job = Job()
     private var jobGetDeck : Job = Job()
     private var jobMainUI : Job = Job()
     override val coroutineContext: CoroutineContext = Dispatchers.Main + jobGetDescription + jobGetDeck + jobMainUI
     private val listCards = mutableListOf<Card>()
     private lateinit var adapter: DataAdapterForCard
-    private lateinit var viewModel: DetailsViewModel
 
     private val copyDeckTextKey = "btn_copy_deck_text"
     private var copyDeckText: String? = null
@@ -54,7 +49,6 @@ class DetailsFragment : Fragment(), CoroutineScope {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        Log.i("andrey", "onSave bundle")
         outState.putString(copyDeckTextKey, copyDeckText)
         outState.putString(descriptionTextKey, descriptionText)
         outState.putBoolean(textWasAlreadyLoadedKey, textWasAlreadyLoaded)
@@ -62,9 +56,7 @@ class DetailsFragment : Fragment(), CoroutineScope {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        Log.i("andrey", "onRestore bundle")
         if (savedInstanceState != null) {
-            Log.i("andrey", "onRestore (bundle != null)")
             copyDeckText = savedInstanceState.getString(copyDeckTextKey)
             descriptionText = savedInstanceState.getString(descriptionTextKey)
             textWasAlreadyLoaded = savedInstanceState.getBoolean(textWasAlreadyLoadedKey)
@@ -90,7 +82,6 @@ class DetailsFragment : Fragment(), CoroutineScope {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.i("andrey", "onActivityCreated in Details")
-        viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
 
 
 //        previousInstanceOfThisFragment?.cancel()
@@ -108,7 +99,6 @@ class DetailsFragment : Fragment(), CoroutineScope {
         jobGetDescription = launch(Dispatchers.IO) {
             getDescription()
         }
-        //link.text = arguments?.getString("link")
     }
 
 
@@ -158,8 +148,6 @@ class DetailsFragment : Fragment(), CoroutineScope {
                 .maxBodySize(0)
                 .timeout(1000*20)
                 .get()
-            Log.i("andrey", "connected deck")
-
 
             val copyText = document
                 .select("button[class=copy-button button]")
@@ -274,20 +262,16 @@ class DetailsFragment : Fragment(), CoroutineScope {
         }
     }
     private fun getDescriptionFromInternet() {
-        Log.i("andrey", "getDescription try number " + i + " !")
-        i++
         try {
             val document = Jsoup
                 .connect(arguments?.getString("link"))
                 .maxBodySize(0)
                 .timeout(1000*5)
                 .get()
-            Log.i("andrey", "connected")
             val elements = document
                 .select("div[class=u-typography-format deck-description]")
                 .select("div")
                 .select("p")
-            Log.i("andrey", "loaded list")
             jobMainUI = launch {
                 readDescriptionTextFromElements(elements)
             }
@@ -295,7 +279,6 @@ class DetailsFragment : Fragment(), CoroutineScope {
             jobMainUI = launch {
                 setDescriptionNoInfo()
             }
-            Log.i("andrey", "getData (details) " + e.message.toString())
         }
     }
 
@@ -313,7 +296,8 @@ class DetailsFragment : Fragment(), CoroutineScope {
             else
                 R.drawable.ic_baseline_keyboard_arrow_down_24
 
-            det_img_arrow_up_down.setImageDrawable(ResourcesCompat.getDrawable(resources, currentArrowDirection, null))
+            det_img_arrow_up_down.setImageDrawable(
+                ResourcesCompat.getDrawable(resources, currentArrowDirection, null))
             det_description.updateStatePublic()
         }
         setDescriptionLoaded()
@@ -354,7 +338,6 @@ class DetailsFragment : Fragment(), CoroutineScope {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i("andrey", "onDestroy in Details")
         jobGetDescription.cancel()
         jobGetDeck.cancel()
         jobMainUI.cancel()
