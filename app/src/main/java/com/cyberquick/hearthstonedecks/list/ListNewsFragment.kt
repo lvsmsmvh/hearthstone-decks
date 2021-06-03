@@ -137,8 +137,6 @@ class ListNewsFragment : Fragment(), CoroutineScope {
     }
 
     private fun getData() {
-        Log.i("andrey", "getData()")
-
         if (listNews.isEmpty()) {
             makeProgressBarLoading()
             jobLoadListFromInternet = launch(Dispatchers.IO){

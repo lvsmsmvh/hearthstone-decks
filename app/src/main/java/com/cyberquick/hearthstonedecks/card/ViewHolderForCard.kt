@@ -1,5 +1,6 @@
 package com.cyberquick.hearthstonedecks.card
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
@@ -10,13 +11,13 @@ import kotlinx.android.synthetic.main.item_card.view.*
 
 class ViewHolderForCard(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
     private val cardName: TextView = itemView.tv_card_name
     private val amountOfCopies: TextView = itemView.tv_amount
     private val manaOfCard: TextView = itemView.tv_mana
     private var rarity: String = ""
     private var linkOnCard: String = ""
 
+    @SuppressLint("SetTextI18n")
     fun bind(card: Card) {
         cardName.text = card.name
         amountOfCopies.text = "x" + card.amount
