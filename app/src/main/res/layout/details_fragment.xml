@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:orientation="vertical"
-        tools:context=".details.DetailsFragment">
+        tools:context=".ui.details.DetailsFragment">
 
         <LinearLayout
             android:orientation="vertical"

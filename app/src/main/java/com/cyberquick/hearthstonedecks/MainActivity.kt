@@ -3,7 +3,10 @@ package com.cyberquick.hearthstonedecks
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.cyberquick.hearthstonedecks.other.extensions.toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,10 +14,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        NavigationUI.setupActionBarWithNavController(this,
-            Navigation.findNavController(this, R.id.nav_host_fragment))
+        setupActionBarWithNavController(findNavController(R.id.nav_host_fragment))
     }
 
-    override fun onSupportNavigateUp() = NavigationUI.navigateUp(Navigation
-            .findNavController(this, R.id.nav_host_fragment), null)
+    override fun onSupportNavigateUp(): Boolean {
+        toast("Navigate up")
+        return NavigationUI.navigateUp(
+            Navigation
+                .findNavController(this, R.id.nav_host_fragment), null
+        )
+    }
+
 }

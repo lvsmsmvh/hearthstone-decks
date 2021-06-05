@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bck_for_app"
-    tools:context=".list.ListNewsFragment">
+    tools:context=".ui.news.ListNewsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view"
+        android:id="@+id/recycle_view_news"
         android:visibility="visible"
         android:paddingBottom="70dp"
         android:layout_width="match_parent"
@@ -63,64 +63,41 @@
     <LinearLayout
         android:id="@+id/ll_nav_bottom_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:padding="10dp"
         android:layout_gravity="bottom"
         android:weightSum="2.1"
+        android:clickable="true"
+        android:focusable="true"
         android:background="@color/bck_for_deck_holder"
         android:orientation="horizontal"
         android:baselineAligned="false">
-        <FrameLayout
+
+        <Button
             android:id="@+id/btn_previous"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/bck_for_nav_bottom_buttons"
-            android:orientation="horizontal" >
-            <View
-                android:visibility="gone"
-                android:id="@+id/view_pressed_state_bg_previous"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/pressed_state_for_buttton"/>
-            <TextView
-                android:id="@+id/tv_btn_previous"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/previous"
-                android:layout_gravity="center"
-                android:textColor="#664444"
-                android:textSize="16sp"/>
+            android:text="@string/previous"
+            android:layout_gravity="center"
+            android:textColor="#664444"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
 
-        </FrameLayout>
-        <LinearLayout
+        <View
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.1"/>
-        <FrameLayout
+
+        <Button
             android:id="@+id/btn_next"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/bck_for_nav_bottom_buttons"
-            android:orientation="horizontal" >
-            <View
-                android:visibility="gone"
-                android:id="@+id/view_pressed_state_bg_next"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/pressed_state_for_buttton"/>
-
-            <TextView
-                android:id="@+id/tv_btn_next"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/next"
-                android:textColor="#330000"
-                android:textSize="16sp"/>
-        </FrameLayout>
+            android:text="@string/next"
+            android:layout_gravity="center"
+            android:textColor="#664444"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 </FrameLayout>

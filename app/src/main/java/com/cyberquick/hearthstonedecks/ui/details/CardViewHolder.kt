@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.card
+package com.cyberquick.hearthstonedecks.ui.details
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -6,10 +6,10 @@ import android.view.View
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.cyberquick.hearthstonedecks.details.DetailsFragmentDirections
+import com.cyberquick.hearthstonedecks.model.Card
 import kotlinx.android.synthetic.main.item_card.view.*
 
-class ViewHolderForCard(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val cardName: TextView = itemView.tv_card_name
     private val amountOfCopies: TextView = itemView.tv_amount

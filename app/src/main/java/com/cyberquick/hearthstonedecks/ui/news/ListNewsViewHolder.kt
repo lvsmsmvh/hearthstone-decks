@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.list
+package com.cyberquick.hearthstonedecks.ui.news
 
 import android.graphics.Color
 import android.view.View
@@ -8,9 +8,11 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
+import com.cyberquick.hearthstonedecks.model.News
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.item.view.*
 
-class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ListNewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val title: TextView = itemView.row_tv_title
     private val deckClass: TextView = itemView.row_tv_class
@@ -37,8 +39,11 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         itemView.setOnClickListener {
             itemView.findNavController()
-                .navigate(ListNewsFragmentDirections
-                    .actionListNewsFragmentToDetailsFragment(link, newsItem.title, newsItem.deckClass, newsItem.dust, newsItem.timeCreated, newsItem.formatType))
+                .navigate(
+                    ListNewsFragmentDirections.actionListNewsFragmentToDetailsFragment(
+                        Gson().toJson(newsItem)
+                    )
+                )
         }
     }
 

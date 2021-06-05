@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listNewsFragment"
-        android:name="com.cyberquick.hearthstonedecks.list.ListNewsFragment"
+        android:name="com.cyberquick.hearthstonedecks.ui.news.ListNewsFragment"
         android:label="List"
         tools:layout="@layout/list_news_fragment">
         <action
@@ -16,35 +16,22 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.cyberquick.hearthstonedecks.details.DetailsFragment"
+        android:name="com.cyberquick.hearthstonedecks.ui.details.DetailsFragment"
         android:label="Deck"
         tools:layout="@layout/details_fragment">
-        <argument
-            android:name="link"
-            app:argType="string" />
-        <argument
-            android:name="title"
-            app:argType="string" />
-        <argument
-            android:name="deckClass"
-            app:argType="string" />
-        <argument
-            android:name="dust"
-            app:argType="string" />
-        <argument
-            android:name="timeCreated"
-            app:argType="string" />
-        <argument
-            android:name="formatType"
-            app:argType="string" />
         <action
             android:id="@+id/action_detailsFragment_to_cardFragment"
             app:destination="@id/cardFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/nav_default_pop_enter_anim" />
+        <argument
+            android:name="newsJson"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/cardFragment"
-        android:name="com.cyberquick.hearthstonedecks.card.CardFragment"
+        android:name="com.cyberquick.hearthstonedecks.ui.card.CardFragment"
         android:label="Card"
         tools:layout="@layout/card_fragment">
         <argument

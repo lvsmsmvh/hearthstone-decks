@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.list
+package com.cyberquick.hearthstonedecks.model
 
 class News(
     val title: String,

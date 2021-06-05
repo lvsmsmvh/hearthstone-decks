@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.other;
+package com.cyberquick.hearthstonedecks.other.utils;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.text.Editable;
