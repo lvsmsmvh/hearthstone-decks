@@ -12,8 +12,7 @@ import kotlinx.android.synthetic.main.list_news_fragment.*
 
 class NewsFragment : Fragment(R.layout.list_news_fragment) {
 
-    private val defaultPageNumber = 1
-    private var currentPage: Page? = null
+    private var currentPage = Page(1, emptyList())
     private lateinit var newsAdapter: NewsAdapter
 
     private var _loadingDataState = LoadingDataState.LOADING
@@ -54,7 +53,7 @@ class NewsFragment : Fragment(R.layout.list_news_fragment) {
 
     private fun initControl() {
         btn_reload_data.setOnClickListener {
-            loadPageFromInternet(currentPage?.pageNumber!!)
+            loadPageFromInternet(currentPage.pageNumber)
         }
     }
 
@@ -65,12 +64,12 @@ class NewsFragment : Fragment(R.layout.list_news_fragment) {
     }
 
     private fun restoreData() {
-        currentPage?.let {
-            showPage(it)
+        if (currentPage.listOfNews.isNotEmpty()) {
+            showPage(currentPage)
             return
         }
 
-        loadPageFromInternet(defaultPageNumber)
+        loadPageFromInternet(currentPage.pageNumber)
     }
 
     private fun showPage(page: Page) {
