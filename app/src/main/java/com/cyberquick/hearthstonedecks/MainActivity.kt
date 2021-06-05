@@ -1,12 +1,11 @@
 package com.cyberquick.hearthstonedecks
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.cyberquick.hearthstonedecks.other.extensions.toast
+import androidx.appcompat.app.AppCompatActivity
+import com.cyberquick.hearthstonedecks.other.extensions.simpleNavigate
+import com.cyberquick.hearthstonedecks.ui.news.NewsFragment
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,15 +13,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupActionBarWithNavController(findNavController(R.id.nav_host_fragment))
+        simpleNavigate(NewsFragment())
+
+        setSupportActionBar(toolbarCustom)
+        toolbarTextView.text = getString(R.string.app_name)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        toast("Navigate up")
-        return NavigationUI.navigateUp(
-            Navigation
-                .findNavController(this, R.id.nav_host_fragment), null
-        )
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 1)
+            supportFragmentManager.popBackStack()
+        else
+            finish()
     }
-
 }

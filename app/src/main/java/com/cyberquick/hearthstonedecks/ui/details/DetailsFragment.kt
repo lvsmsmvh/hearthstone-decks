@@ -11,13 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.other.api.HearthstoneApi
-import com.cyberquick.hearthstonedecks.ui.news.ListNewsViewHolder
+import com.cyberquick.hearthstonedecks.ui.news.NewsViewHolder
 import com.cyberquick.hearthstonedecks.model.News
 import com.cyberquick.hearthstonedecks.model.Deck
 import com.cyberquick.hearthstonedecks.model.api.LoadingDataState
 import com.cyberquick.hearthstonedecks.other.extensions.hide
 import com.cyberquick.hearthstonedecks.other.extensions.show
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.btn_description.*
 import kotlinx.android.synthetic.main.btn_description_failed.*
 import kotlinx.android.synthetic.main.btn_description_progress_bar.*
@@ -26,10 +25,9 @@ import kotlinx.android.synthetic.main.list_news_fragment.*
 import kotlinx.coroutines.*
 
 
-class DetailsFragment : Fragment(R.layout.details_fragment) {
+class DetailsFragment(private val newsItem: News) : Fragment(R.layout.details_fragment) {
 
     private lateinit var cardAdapter: CardAdapter
-    private lateinit var newsItem: News
     private lateinit var deck: Deck
 
     private var _loadingDataState = LoadingDataState.LOADING
@@ -79,8 +77,6 @@ class DetailsFragment : Fragment(R.layout.details_fragment) {
     }
 
     private fun restoreDataFromArguments() {
-        newsItem = Gson().fromJson(requireArguments().getString("newsJson"), News::class.java)
-
         det_tv_title.text = newsItem.title
 
         det_tv_deck_class.text = newsItem.deckClass
@@ -94,9 +90,9 @@ class DetailsFragment : Fragment(R.layout.details_fragment) {
             if (newsItem.formatType == "Standard") "#cc00ff" else "#0033cc"
         ))
 
-        ListNewsViewHolder.setHeroIcon(det_img, newsItem.deckClass)
+        NewsViewHolder.setHeroIcon(det_img, newsItem.deckClass)
 
-        ListNewsViewHolder.setDustIcon(det_dust_icon)
+        NewsViewHolder.setDustIcon(det_dust_icon)
     }
 
     private fun initControl() {

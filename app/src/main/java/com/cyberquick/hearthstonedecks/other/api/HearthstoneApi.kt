@@ -3,19 +3,20 @@ package com.cyberquick.hearthstonedecks.other.api
 import android.app.Activity
 import com.cyberquick.hearthstonedecks.other.api.loaders.DeckLoader
 import com.cyberquick.hearthstonedecks.other.api.loaders.LinkOnCardImageLoader
-import com.cyberquick.hearthstonedecks.other.api.loaders.NewsLoader
+import com.cyberquick.hearthstonedecks.other.api.loaders.PageLoader
 import com.cyberquick.hearthstonedecks.model.News
 import com.cyberquick.hearthstonedecks.model.Deck
+import com.cyberquick.hearthstonedecks.model.Page
 
 object HearthstoneApi {
 
-    fun loadListOfNews(
+    fun loadPage(
         activity: Activity,
         pageNumber: Int,
-        callback: (List<News>) -> Unit
+        callback: (Page) -> Unit
     ) {
         Thread {
-            val result = NewsLoader.load(pageNumber = pageNumber)
+            val result = PageLoader.load(pageNumber = pageNumber)
             activity.runOnUiThread {
                 callback(result)
             }

@@ -2,10 +2,11 @@ package com.cyberquick.hearthstonedecks.other.api.loaders
 
 import com.cyberquick.hearthstonedecks.other.api.JsoupFeatures
 import com.cyberquick.hearthstonedecks.model.News
+import com.cyberquick.hearthstonedecks.model.Page
 import com.cyberquick.hearthstonedecks.other.Constants
 
-object NewsLoader {
-    fun load(pageNumber: Int): List<News> {
+object PageLoader {
+    fun load(pageNumber: Int): Page {
         val listNews = mutableListOf<News>()
 
         val link = Constants.API_URL_PAGE + "&page=" + pageNumber
@@ -13,7 +14,7 @@ object NewsLoader {
         val document = try {
             JsoupFeatures.getDocument(link)
         } catch (e: Exception) {
-            return emptyList()
+            return Page(pageNumber, emptyList())
         }
 
         val element = document
@@ -65,6 +66,6 @@ object NewsLoader {
             listNews.add(News(title, deckClass, dust, timeCreated, linkDetails, formatType))
         }
 
-        return listNews
+        return Page(pageNumber, listNews)
     }
 }

@@ -6,21 +6,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.model.News
 
-class ListNewsAdapter : RecyclerView.Adapter<ListNewsViewHolder>() {
+class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
 
     private val listNews = mutableListOf<News>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListNewsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
-        return ListNewsViewHolder(view)
+        return NewsViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return listNews.size
     }
 
-    override fun onBindViewHolder(holderListNews: ListNewsViewHolder, position: Int) {
-        holderListNews.bind(listNews[position])
+    override fun onBindViewHolder(holderNews: NewsViewHolder, position: Int) {
+        holderNews.bind(listNews[position])
     }
 
     fun set(list: List<News>) {

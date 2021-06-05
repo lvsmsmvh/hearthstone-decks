@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.model.Card
+import com.cyberquick.hearthstonedecks.other.extensions.getActivity
+import com.cyberquick.hearthstonedecks.other.extensions.simpleNavigate
+import com.cyberquick.hearthstonedecks.ui.card.CardFragment
 import kotlinx.android.synthetic.main.item_card.view.*
 
 class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,9 +30,7 @@ class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         linkOnCard = card.linkOnCard
         itemView.setOnClickListener {
-            itemView.findNavController()
-                .navigate(DetailsFragmentDirections
-                    .actionDetailsFragmentToCardFragment(linkOnCard))
+            itemView.context.getActivity()!!.simpleNavigate(CardFragment(linkOnCard))
         }
     }
 

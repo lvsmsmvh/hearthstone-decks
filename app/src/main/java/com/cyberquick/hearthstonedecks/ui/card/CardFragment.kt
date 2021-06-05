@@ -8,12 +8,11 @@ import com.cyberquick.hearthstonedecks.other.api.HearthstoneApi
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_fragment.*
 
-class CardFragment : Fragment(R.layout.card_fragment) {
+class CardFragment(private val linkOnCardPage: String) : Fragment(R.layout.card_fragment) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val linkOnCardPage = arguments?.getString("linkOnCard").toString()
         loadCardPageFromInternet(linkOnCardPage)
     }
 
