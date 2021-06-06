@@ -1,6 +1,7 @@
 package com.cyberquick.hearthstonedecks.ui.news
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
@@ -8,9 +9,9 @@ import com.cyberquick.hearthstonedecks.other.api.HearthstoneApi
 import com.cyberquick.hearthstonedecks.model.Page
 import com.cyberquick.hearthstonedecks.model.api.LoadingDataState
 import com.cyberquick.hearthstonedecks.other.extensions.*
-import kotlinx.android.synthetic.main.list_news_fragment.*
+import kotlinx.android.synthetic.main.fragment_news.*
 
-class NewsFragment : Fragment(R.layout.list_news_fragment) {
+class NewsFragment : Fragment(R.layout.fragment_news) {
 
     private var currentPage = Page(1, emptyList())
     private lateinit var newsAdapter: NewsAdapter
@@ -43,8 +44,8 @@ class NewsFragment : Fragment(R.layout.list_news_fragment) {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         initControl()
         configureRecycler()

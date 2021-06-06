@@ -17,13 +17,12 @@ import com.cyberquick.hearthstonedecks.other.extensions.*
 import kotlinx.android.synthetic.main.btn_description.*
 import kotlinx.android.synthetic.main.btn_description_failed.*
 import kotlinx.android.synthetic.main.btn_description_progress_bar.*
-import kotlinx.android.synthetic.main.details_fragment.*
+import kotlinx.android.synthetic.main.fragment_deck.*
 import kotlinx.android.synthetic.main.item.view.*
-import kotlinx.android.synthetic.main.list_news_fragment.*
 import kotlinx.coroutines.*
 
 
-class DeckFragment(private val newsItem: News) : Fragment(R.layout.details_fragment) {
+class DeckFragment(private val newsItem: News) : Fragment(R.layout.fragment_deck) {
 
     private lateinit var cardAdapter: CardAdapter
     private var deck: Deck? = null
@@ -55,8 +54,8 @@ class DeckFragment(private val newsItem: News) : Fragment(R.layout.details_fragm
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         requireActivity().showTitle(newsItem.title)
 

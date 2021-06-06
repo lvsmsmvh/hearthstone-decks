@@ -1,6 +1,7 @@
 package com.cyberquick.hearthstonedecks.ui.card
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.model.Card
@@ -11,12 +12,12 @@ import com.cyberquick.hearthstonedecks.other.extensions.show
 import com.cyberquick.hearthstonedecks.other.extensions.showTitle
 import com.cyberquick.hearthstonedecks.other.extensions.viewDestroyed
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.card_fragment.*
+import kotlinx.android.synthetic.main.fragment_card.*
 
-class CardFragment(private val card: Card) : Fragment(R.layout.card_fragment) {
+class CardFragment(private val card: Card) : Fragment(R.layout.fragment_card) {
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         requireActivity().showTitle(card.name)
 
