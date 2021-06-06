@@ -12,7 +12,14 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.cyberquick.hearthstonedecks.MainActivity">
+        <activity android:name="com.cyberquick.hearthstonedecks.ui.MainActivity"
+            android:screenOrientation="fullSensor"
+            android:launchMode="singleTask"/>
+
+        <activity android:name=".ui.SplashActivity"
+            android:screenOrientation="fullSensor"
+            android:launchMode="singleTask"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
