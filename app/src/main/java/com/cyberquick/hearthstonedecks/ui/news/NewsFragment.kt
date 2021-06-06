@@ -49,7 +49,6 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         super.onViewCreated(view, savedInstanceState)
 
         initControl()
-        initNavigationDrawer()
         configureRecycler()
         restoreData()
     }
@@ -57,34 +56,6 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     private fun initControl() {
         btn_reload_data.setOnClickListener {
             loadPageFromInternet(currentPage.pageNumber)
-        }
-    }
-
-
-    private fun initNavigationDrawer() {
-        topAppBar.navigationIcon = requireContext().drawable(R.drawable.ic_baseline_menu_24)
-
-        topAppBar.setNavigationOnClickListener {
-            drawerLayout.openDrawer(fragment_news_navigation_drawer)
-        }
-
-        fragment_news_navigation_drawer.setNavigationItemSelectedListener { menuItem ->
-            drawerLayout.closeDrawer(fragment_news_navigation_drawer)
-            requireActivity().toast("Clicked on item " + menuItem.title)
-            when (menuItem.itemId) {
-                R.id.drawer_menu_item_my_decks -> {
-
-                }
-
-                R.id.drawer_menu_item_about -> {
-
-                }
-
-                R.id.drawer_menu_item_logout -> {
-
-                }
-            }
-            return@setNavigationItemSelectedListener true
         }
     }
 
@@ -106,7 +77,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     private fun showPage(page: Page) {
         setLoadingDataState(state = LoadingDataState.LOADED)
 
-        topAppBar.title = "Page: ${page.pageNumber}/100"
+        setTitle("Page: ${page.pageNumber}/100")
 
         newsAdapter.set(page.listOfNews)
 

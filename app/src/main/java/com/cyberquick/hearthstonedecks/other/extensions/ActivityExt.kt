@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.cyberquick.hearthstonedecks.R
 import com.google.android.material.appbar.MaterialToolbar
+import kotlinx.android.synthetic.main.toolbar.*
 
 fun FragmentActivity.simpleNavigate(fragment: Fragment) =
     supportFragmentManager.beginTransaction()
@@ -17,3 +18,7 @@ fun FragmentActivity.showTitle(message: String) {
 }
 
 fun Fragment.viewDestroyed() = view == null
+
+fun Fragment.setTitle(title: String) {
+    requireActivity().topAppBar.title = title
+}

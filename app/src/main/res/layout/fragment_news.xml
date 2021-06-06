@@ -1,134 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout"
-    android:layout_width="match_parent"
+<FrameLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bck_for_app"
+    tools:context=".ui.news.NewsFragment"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view_news"
+        android:visibility="visible"
+        android:paddingBottom="70dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <include
+        android:id="@+id/progress_bar_in_main"
+        android:layout_gravity="center"
+        android:visibility="gone"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <include layout="@layout/toolbar"/>
-
-        <RelativeLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/bck_for_app"
-                tools:context=".ui.news.NewsFragment">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycle_view_news"
-                    android:visibility="visible"
-                    android:paddingBottom="70dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <include
-                    android:id="@+id/progress_bar_in_main"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    layout="@layout/btn_description_progress_bar"/>
-                <LinearLayout
-                    android:id="@+id/ll_error_loading_data"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center">
-                    <TextView
-                        android:id="@+id/tv_error_loading_data"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:textColor="#ffffff"
-                        android:text="@string/error_loading_data"/>
-                    <LinearLayout
-                        android:id="@+id/btn_reload_data"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bck_for_nav_bottom_buttons"
-                        android:padding="10dp"
-                        android:clickable="true"
-                        android:layout_marginTop="30dp"
-                        android:orientation="horizontal"
-                        android:focusable="true">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/bck_for_deck_holder"
-                            android:textSize="22sp"
-                            android:layout_marginRight="5dp"
-                            android:text="@string/retry"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_replay_24"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_nav_bottom_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:padding="10dp"
-                    android:layout_gravity="bottom"
-                    android:weightSum="2.1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="@color/bck_for_deck_holder"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
-
-                    <Button
-                        android:id="@+id/btn_previous"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/previous"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bck_for_description_button"
-                        android:textColor="#664444"
-                        android:textSize="14sp"
-                        android:textStyle="bold"/>
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.1"/>
-
-                    <Button
-                        android:id="@+id/btn_next"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/next"
-                        android:background="@drawable/bck_for_description_button"
-                        android:layout_gravity="center"
-                        android:textColor="#664444"
-                        android:textSize="14sp"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-            </FrameLayout>
-        </RelativeLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/fragment_news_navigation_drawer"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        layout="@layout/btn_description_progress_bar"/>
+    <LinearLayout
+        android:id="@+id/ll_error_loading_data"
+        android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/header_navigation_drawer"
-        app:menu="@menu/menu_navigation" />
-</androidx.drawerlayout.widget.DrawerLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/tv_error_loading_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="#ffffff"
+            android:text="@string/error_loading_data"/>
+        <LinearLayout
+            android:id="@+id/btn_reload_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bck_for_nav_bottom_buttons"
+            android:padding="10dp"
+            android:clickable="true"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:focusable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bck_for_deck_holder"
+                android:textSize="22sp"
+                android:layout_marginRight="5dp"
+                android:text="@string/retry"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_replay_24"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_nav_bottom_btn"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:padding="10dp"
+        android:layout_gravity="bottom"
+        android:weightSum="2.1"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/bck_for_deck_holder"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <Button
+            android:id="@+id/btn_previous"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/previous"
+            android:layout_gravity="center"
+            android:background="@drawable/bck_for_description_button"
+            android:textColor="#664444"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"/>
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/next"
+            android:background="@drawable/bck_for_description_button"
+            android:layout_gravity="center"
+            android:textColor="#664444"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</FrameLayout>

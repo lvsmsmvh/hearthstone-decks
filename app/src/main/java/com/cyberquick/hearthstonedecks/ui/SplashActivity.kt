@@ -16,8 +16,6 @@ class SplashActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        signOut()
-
 //        FirebaseAuth.getInstance().currentUser?.delete()
 //            ?.addOnCompleteListener {
 //            toast("deleted user successfully")
@@ -43,14 +41,6 @@ class SplashActivity: AppCompatActivity() {
                 .setAvailableProviders(providers)
                 .build(),
             RC_SIGN_IN)
-    }
-
-    private fun signOut() {
-        AuthUI.getInstance()
-            .signOut(this)
-            .addOnCompleteListener {
-                toast("Signed out successfully!")
-            }
     }
 
     private fun goToMainActivity() {

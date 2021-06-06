@@ -4,7 +4,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.view.View
+import android.view.*
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,11 +55,18 @@ class DeckFragment(private val newsItem: News) : Fragment(R.layout.fragment_deck
             }
         }
     }
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         topAppBar.title = newsItem.title
+        topAppBar.menu
 
         showNewsItem()
         configureRecycler()
@@ -144,5 +152,22 @@ class DeckFragment(private val newsItem: News) : Fragment(R.layout.fragment_deck
                 .setPrimaryClip(ClipData.newPlainText("note_copy", deckCode))
             requireContext().toast("Copied to clipboard!")
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        requireContext().toast("on create options menu")
+
+
+        val item = menu.add(Menu.NONE, 1, Menu.NONE, "Add to favorites").apply {
+            setIcon(R.drawable.ic_star)
+            setOnMenuItemClickListener {
+                requireContext().toast("OnClicked item " + it.title)
+                return@setOnMenuItemClickListener true
+            }
+        }
+        inflater.inflate(R.menu.menu_with_star, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }
