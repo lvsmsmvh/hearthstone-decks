@@ -4,6 +4,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.cyberquick.hearthstonedecks.R
+import com.google.android.material.appbar.MaterialToolbar
 
 fun FragmentActivity.simpleNavigate(fragment: Fragment) =
     supportFragmentManager.beginTransaction()
@@ -12,7 +13,7 @@ fun FragmentActivity.simpleNavigate(fragment: Fragment) =
         .commit()
 
 fun FragmentActivity.showTitle(message: String) {
-    findViewById<TextView>(R.id.toolbarTextView).text = message
+    findViewById<MaterialToolbar>(R.id.topAppBar).title = message
 }
 
 fun Fragment.viewDestroyed() = view == null

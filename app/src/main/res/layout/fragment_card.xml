@@ -6,6 +6,8 @@
     android:background="@color/bck_for_app"
     tools:context=".ui.card.CardFragment">
 
+    <include layout="@layout/toolbar"/>
+
     <LinearLayout
         android:id="@+id/layout_card_loading"
         android:layout_gravity="center"

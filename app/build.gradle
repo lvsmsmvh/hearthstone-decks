@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
@@ -21,6 +23,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
@@ -42,6 +53,9 @@ dependencies {
     // gson
 //    implementation 'com.google.code.gson:gson:2.8.6'
 
+    // material
+    implementation 'com.google.android.material:material:1.4.0-beta01'
+
     // jsoup
     implementation 'org.jsoup:jsoup:1.11.3'
 
@@ -52,8 +66,13 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
 
     // picasso
-    implementation "com.squareup.picasso:picasso:2.3.2"
+    implementation "com.squareup.picasso:picasso:2.3.2" // don't update - it differs a lot
 
-    // auth
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:28.1.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 }

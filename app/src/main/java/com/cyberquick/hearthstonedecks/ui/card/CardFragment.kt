@@ -13,11 +13,14 @@ import com.cyberquick.hearthstonedecks.other.extensions.showTitle
 import com.cyberquick.hearthstonedecks.other.extensions.viewDestroyed
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_card.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class CardFragment(private val card: Card) : Fragment(R.layout.fragment_card) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        topAppBar.title = card.name
 
         requireActivity().showTitle(card.name)
 

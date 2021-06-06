@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.other.extensions.simpleNavigate
 import com.cyberquick.hearthstonedecks.ui.news.NewsFragment
-import kotlinx.android.synthetic.main.activity_main.*
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,9 +14,9 @@ class MainActivity : AppCompatActivity() {
 
         simpleNavigate(NewsFragment())
 
-        setSupportActionBar(toolbarCustom)
-        toolbarTextView.text = getString(R.string.app_name)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
+//        setSupportActionBar(toolbarCustom)
+//        toolbarTextView.text = getString(R.string.app_name)
+//        supportActionBar!!.setDisplayShowTitleEnabled(false)
     }
 
     override fun onBackPressed() {

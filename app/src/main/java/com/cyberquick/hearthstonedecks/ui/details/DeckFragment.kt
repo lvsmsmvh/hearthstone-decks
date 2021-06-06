@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.btn_description_failed.*
 import kotlinx.android.synthetic.main.btn_description_progress_bar.*
 import kotlinx.android.synthetic.main.fragment_deck.*
 import kotlinx.android.synthetic.main.item.view.*
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.*
 
 
@@ -57,7 +58,7 @@ class DeckFragment(private val newsItem: News) : Fragment(R.layout.fragment_deck
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().showTitle(newsItem.title)
+        topAppBar.title = newsItem.title
 
         showNewsItem()
         configureRecycler()
