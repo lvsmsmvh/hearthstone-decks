@@ -12,5 +12,5 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:textColor="#ffffff"
-        android:text="@string/no_description"/>
+        android:text="@string/error_loading_data"/>
 </LinearLayout>

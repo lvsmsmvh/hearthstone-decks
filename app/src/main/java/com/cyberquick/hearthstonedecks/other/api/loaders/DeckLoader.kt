@@ -4,6 +4,7 @@ import com.cyberquick.hearthstonedecks.other.api.JsoupFeatures
 import com.cyberquick.hearthstonedecks.model.Card
 import com.cyberquick.hearthstonedecks.model.News
 import com.cyberquick.hearthstonedecks.model.Deck
+import com.cyberquick.hearthstonedecks.model.enums.CardRarity
 import com.cyberquick.hearthstonedecks.other.Constants
 
 object DeckLoader {
@@ -57,12 +58,13 @@ object DeckLoader {
                 .select("td.col-cost")
                 .text()
 
-            val rarity = cardElements
+            val rarityStr = cardElements
                 .eq(i)
                 .select("td.col-name")
                 .select("b")
                 .select("a")
                 .attr("data-rarity")
+            val rarity = CardRarity.values().first { it.name == rarityStr }
 
             val link = Constants.API_URL_ROOT + cardElements
                 .eq(i)

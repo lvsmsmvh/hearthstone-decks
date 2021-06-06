@@ -1,6 +1,7 @@
 package com.cyberquick.hearthstonedecks.other.api
 
 import android.app.Activity
+import com.cyberquick.hearthstonedecks.model.CardDetails
 import com.cyberquick.hearthstonedecks.other.api.loaders.DeckLoader
 import com.cyberquick.hearthstonedecks.other.api.loaders.LinkOnCardImageLoader
 import com.cyberquick.hearthstonedecks.other.api.loaders.PageLoader
@@ -36,10 +37,10 @@ object HearthstoneApi {
         }.start()
     }
 
-    fun loadLinkOnCardImage(
+    fun loadCardDetails(
         activity: Activity,
         linkOnCard: String,
-        callback: (String?) -> Unit
+        callback: (CardDetails?) -> Unit
     ) {
         Thread {
             val result = LinkOnCardImageLoader.load(linkOnCard = linkOnCard)

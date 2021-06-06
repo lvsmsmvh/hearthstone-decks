@@ -3,6 +3,8 @@ package com.cyberquick.hearthstonedecks.other.api.loaders
 import com.cyberquick.hearthstonedecks.other.api.JsoupFeatures
 import com.cyberquick.hearthstonedecks.model.News
 import com.cyberquick.hearthstonedecks.model.Page
+import com.cyberquick.hearthstonedecks.model.enums.GameClasses
+import com.cyberquick.hearthstonedecks.model.enums.GameFormat
 import com.cyberquick.hearthstonedecks.other.Constants
 
 object PageLoader {
@@ -31,10 +33,11 @@ object PageLoader {
                 .select("a")
                 .text()
 
-            val deckClass = element
+            val deckClassStr = element
                 .eq(i)
                 .select("td.col-class")
                 .text()
+            val deckClass = GameClasses.values().first { it.titleInEnglish == deckClassStr }
 
             val dust = element
                 .eq(i)
@@ -47,7 +50,7 @@ object PageLoader {
                 .select("abbr")
                 .text()
 
-            val linkDetails = Constants.API_URL_PAGE + element
+            val linkDetails = Constants.API_URL_ROOT + element
                 .eq(i)
                 .select("td.col-name")
                 .select("div")
@@ -61,7 +64,7 @@ object PageLoader {
                     .select("td.col-deck-type")
                     .select("span")
                     .attr("class"
-                    ) == "is-std") "Standard" else "Wild"
+                    ) == "is-std") GameFormat.Standard else GameFormat.Wild
 
             listNews.add(News(title, deckClass, dust, timeCreated, linkDetails, formatType))
         }

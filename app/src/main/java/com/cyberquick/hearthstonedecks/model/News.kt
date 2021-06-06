@@ -1,10 +1,13 @@
 package com.cyberquick.hearthstonedecks.model
 
+import com.cyberquick.hearthstonedecks.model.enums.GameClasses
+import com.cyberquick.hearthstonedecks.model.enums.GameFormat
+
 class News(
     val title: String,
-    val deckClass: String,
+    val gameClass: GameClasses,
     val dust: String,
     val timeCreated: String,
     val linkDetails: String,
-    val formatType: String
+    val gameFormat: GameFormat
 )

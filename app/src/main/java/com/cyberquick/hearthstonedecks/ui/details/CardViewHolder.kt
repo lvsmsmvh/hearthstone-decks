@@ -1,48 +1,31 @@
 package com.cyberquick.hearthstonedecks.ui.details
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.View
-import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.model.Card
+import com.cyberquick.hearthstonedecks.other.extensions.color
 import com.cyberquick.hearthstonedecks.other.extensions.getActivity
 import com.cyberquick.hearthstonedecks.other.extensions.simpleNavigate
 import com.cyberquick.hearthstonedecks.ui.card.CardFragment
 import kotlinx.android.synthetic.main.item_card.view.*
 
-class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    private val cardName: TextView = itemView.tv_card_name
-    private val amountOfCopies: TextView = itemView.tv_amount
-    private val manaOfCard: TextView = itemView.tv_mana
-    private var rarity: String = ""
-    private var linkOnCard: String = ""
+class CardViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     @SuppressLint("SetTextI18n")
     fun bind(card: Card) {
-        cardName.text = card.name
-        amountOfCopies.text = "x" + card.amount
-        manaOfCard.text = card.cost
+        view.tv_card_name.apply {
+            text = card.name
+            setTextColor(color(card.rarity.colorRes))
+        }
 
-        rarity = card.rarity
-        setColorWithRarity(cardName, rarity)
+        view.tv_amount.text = "x" + card.amount
 
-        linkOnCard = card.linkOnCard
+        view.tv_mana.text = card.cost
+
         itemView.setOnClickListener {
-            itemView.context.getActivity()!!.simpleNavigate(CardFragment(linkOnCard))
+            itemView.context.getActivity()!!.simpleNavigate(CardFragment(card))
         }
-    }
-
-    private fun setColorWithRarity(cardName: TextView, rarity: String) {
-        val colorForSetting = when (rarity) {
-            "FREE" -> "#000000"
-            "EPIC" -> "#BB00BB"
-            "RARE" -> "#0000FF"
-            "COMMON" -> "#00BB00"
-            "LEGENDARY" -> "#FF9900"
-            else -> "#000000"
-        }
-        cardName.setTextColor(Color.parseColor(colorForSetting))
     }
 }

@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="13dp">
+    android:layout_height="26dp"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginVertical="1dp"
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                     android:textSize="10sp"
                     android:layout_marginLeft="1dp"
                     android:textColor="@color/light_font"
-                    android:shadowColor="@color/text_shadow"
+                    android:shadowColor="@color/black"
                     android:shadowDx="2"
                     android:shadowDy="2"
                     android:shadowRadius="1" />
@@ -54,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Card name"
+                android:textStyle="bold"
                 android:ellipsize="end"
                 android:textSize="12sp"
                 android:maxLines="1"

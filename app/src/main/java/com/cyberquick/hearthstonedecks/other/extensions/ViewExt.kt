@@ -9,3 +9,5 @@ fun View.show() {
 fun View.hide() {
     visibility = View.GONE
 }
+
+fun View.color(color: Int) = context.color(color)

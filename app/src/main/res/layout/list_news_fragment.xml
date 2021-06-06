@@ -80,6 +80,7 @@
             android:layout_weight="1"
             android:text="@string/previous"
             android:layout_gravity="center"
+            android:background="@drawable/bck_for_description_button"
             android:textColor="#664444"
             android:textSize="14sp"
             android:textStyle="bold"/>
@@ -95,6 +96,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/next"
+            android:background="@drawable/bck_for_description_button"
             android:layout_gravity="center"
             android:textColor="#664444"
             android:textSize="14sp"

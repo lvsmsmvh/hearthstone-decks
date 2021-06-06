@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hearthstone Decks</string>
+    <string name="app_name">Decks for Hearthstone</string>
     <string name="main_image">Main image</string>
 
     //deck classes
@@ -27,4 +27,5 @@
     <string name="please_wait">Please, wait...</string>
     <string name="error_loading_data">Error loading data :(</string>
     <string name="retry">Retry</string>
+    <string name="error">Error :(</string>
 </resources>

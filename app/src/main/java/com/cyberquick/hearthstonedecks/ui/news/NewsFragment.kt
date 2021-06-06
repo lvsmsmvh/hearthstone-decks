@@ -86,6 +86,8 @@ class NewsFragment : Fragment(R.layout.list_news_fragment) {
         setLoadingDataState(state = LoadingDataState.LOADING)
 
         HearthstoneApi.loadPage(requireActivity(), pageNumber) { page ->
+            if (viewDestroyed()) return@loadPage
+
             if (page.listOfNews.isEmpty()) {   // error occurred
                 setLoadingDataState(state = LoadingDataState.FAILED)
             } else {    // all good

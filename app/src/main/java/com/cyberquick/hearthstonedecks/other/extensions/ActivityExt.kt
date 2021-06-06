@@ -14,3 +14,5 @@ fun FragmentActivity.simpleNavigate(fragment: Fragment) =
 fun FragmentActivity.showTitle(message: String) {
     findViewById<TextView>(R.id.toolbarTextView).text = message
 }
+
+fun Fragment.viewDestroyed() = view == null
