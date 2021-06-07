@@ -23,11 +23,11 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/fragment_news_navigation_drawer"
+        android:id="@+id/navigation_drawer"
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:layout_gravity="start"
-        android:background="@color/bck_for_app"
+        android:background="@color/background_yellow"
         app:headerLayout="@layout/header_navigation_drawer"
         app:menu="@menu/menu_navigation" />
 </androidx.drawerlayout.widget.DrawerLayout>

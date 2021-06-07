@@ -13,6 +13,6 @@
         android:layout_height="?attr/actionBarSize"
         app:title="@string/app_name"
         style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
-        android:background="@android:color/transparent"
+        android:background="@color/colorPrimaryDark"
         android:elevation="0dp" />
 </com.google.android.material.appbar.AppBarLayout>

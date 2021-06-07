@@ -2,12 +2,12 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/background_yellow</item>
 
         <!-- Primary brand color. -->
         <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSurface">@color/white</item>
+        <item name="colorSurface">@color/background_yellow</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimary</item>
@@ -20,6 +20,17 @@
         <item name="android:windowFullscreen">false</item>
         <item name="android:adjustViewBounds">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:statusBarColor">@color/bck_for_deck_holder</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="MyAlertDialogTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/black</item>
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSurface">@color/background_yellow</item>
     </style>
 </resources>

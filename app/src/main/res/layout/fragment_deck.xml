@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bck_for_app">
+    android:background="@color/colorPrimary">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -176,7 +176,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:textSize="12sp"
-                        android:textColor="@color/smooth_yellow"
+                        android:textColor="@color/background_yellow"
                         android:text="Copy:"/>
                     <ImageView
                         android:id="@+id/btn_copy_deck"
@@ -184,7 +184,7 @@
                         android:layout_height="20dp"
                         android:layout_marginHorizontal="10dp"
                         android:src="@drawable/ic_baseline_content_copy_24"
-                        app:tint="@color/smooth_yellow"/>
+                        app:tint="@color/background_yellow"/>
                 </LinearLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"

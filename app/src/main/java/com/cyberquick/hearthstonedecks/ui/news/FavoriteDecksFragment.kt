@@ -70,7 +70,7 @@ class FavoriteDecksFragment : Fragment(R.layout.fragment_fav_decks) {
             return
         }
 
-        loadDecksFromFirebase()
+//        loadDecksFromFirebase()
     }
 
     private fun loadDecksFromFirebase() {
@@ -85,9 +85,11 @@ class FavoriteDecksFragment : Fragment(R.layout.fragment_fav_decks) {
                 }
                 list.isEmpty() -> {   // error occurred
                     setLoadingDataState(state = LoadingDataState.LOADED)
+                    showListOfDecks(emptyList())
                     requireContext().toast("This list is empty.")
                 }
                 else -> {    // all good
+                    logNav("List of favorite decks loaded, size = " + list.size)
                     currentListOfDeck = list
                     showListOfDecks(list)
                 }
@@ -105,5 +107,10 @@ class FavoriteDecksFragment : Fragment(R.layout.fragment_fav_decks) {
                 DeckDetailsFragment(deckClicked, isInFavoriteList = true)
             )
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadDecksFromFirebase()
     }
 }

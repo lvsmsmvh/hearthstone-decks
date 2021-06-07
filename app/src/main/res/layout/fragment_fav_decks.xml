@@ -2,7 +2,7 @@
 <FrameLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/bck_for_app"
+    android:background="@color/colorPrimary"
     tools:context=".ui.news.AllDecksFragment"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/bck_for_deck_holder"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="22sp"
                 android:layout_marginRight="5dp"
                 android:text="@string/retry"/>

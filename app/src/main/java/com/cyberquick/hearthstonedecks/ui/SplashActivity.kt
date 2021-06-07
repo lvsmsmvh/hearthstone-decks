@@ -3,8 +3,6 @@ package com.cyberquick.hearthstonedecks.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.cyberquick.hearthstonedecks.other.extensions.toast
 import com.firebase.ui.auth.AuthUI
@@ -16,19 +14,10 @@ class SplashActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        FirebaseAuth.getInstance().currentUser?.delete()
-//            ?.addOnCompleteListener {
-//            toast("deleted user successfully")
-//        }
-
-        Handler(Looper.getMainLooper()).postDelayed( {
-            if (!isFinishing) {
-                if (FirebaseAuth.getInstance().currentUser == null)
-                    goToSignInActivity()
-                else
-                    goToMainActivity()
-            }
-        }, 2000)
+        if (FirebaseAuth.getInstance().currentUser == null)
+            goToSignInActivity()
+        else
+            goToMainActivity()
     }
 
     private fun goToSignInActivity() {

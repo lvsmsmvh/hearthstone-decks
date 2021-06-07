@@ -3,7 +3,7 @@
 
     <item>
         <shape>
-            <solid android:color="@color/bck_for_deck_holder"/>
+            <solid android:color="@color/colorPrimaryDark"/>
             <corners android:radius="30dp"/>
         </shape>
     </item>

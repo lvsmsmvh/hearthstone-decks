@@ -3,16 +3,13 @@
     // default
     <color name="colorPrimary">#592921</color>
     <color name="colorPrimaryDark">#451911</color>
-    <color name="colorAccent">#EEEEDD</color>
+    <color name="colorAccent">#592921</color>
 
     // ui
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="bck_for_deck_holder">#451911</color>
-    <color name="bck_for_app">#592921</color>
-    <color name="smooth_yellow">#EEEEDD</color>
     <color name="smooth_yellow_pressed">#CCCCBB</color>
-
+    <color name="background_yellow">#EEEEDD</color>
 
     // other
     <color name="purple">#a656c4</color>
