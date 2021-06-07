@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
-import com.cyberquick.hearthstonedecks.model.News
+import com.cyberquick.hearthstonedecks.model.DeckPreview
 
 class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
 
-    private val listNews = mutableListOf<News>()
+    private val listNews = mutableListOf<DeckPreview>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
@@ -23,7 +23,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
         holderNews.bind(listNews[position])
     }
 
-    fun set(list: List<News>) {
+    fun set(list: List<DeckPreview>) {
         this.listNews.clear()
         this.listNews.addAll(list)
         notifyDataSetChanged()

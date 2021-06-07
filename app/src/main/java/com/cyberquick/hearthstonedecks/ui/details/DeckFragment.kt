@@ -5,16 +5,16 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.other.api.HearthstoneApi
-import com.cyberquick.hearthstonedecks.model.News
+import com.cyberquick.hearthstonedecks.model.DeckPreview
 import com.cyberquick.hearthstonedecks.model.Deck
 import com.cyberquick.hearthstonedecks.model.api.LoadingDataState
 import com.cyberquick.hearthstonedecks.other.extensions.*
+import com.cyberquick.hearthstonedecks.other.firebase.FirebaseHelper
 import kotlinx.android.synthetic.main.btn_description.*
 import kotlinx.android.synthetic.main.btn_description_failed.*
 import kotlinx.android.synthetic.main.btn_description_progress_bar.*
@@ -23,8 +23,10 @@ import kotlinx.android.synthetic.main.item.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.*
 
-
-class DeckFragment(private val newsItem: News) : Fragment(R.layout.fragment_deck) {
+class DeckFragment(
+    private val deckPreviewItem: DeckPreview,
+    private val isInFavoriteList: Boolean = false
+) : Fragment(R.layout.fragment_deck) {
 
     private lateinit var cardAdapter: CardAdapter
     private var deck: Deck? = null
@@ -65,7 +67,7 @@ class DeckFragment(private val newsItem: News) : Fragment(R.layout.fragment_deck
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        topAppBar.title = newsItem.title
+        topAppBar.title = deckPreviewItem.title
         topAppBar.menu
 
         showNewsItem()
@@ -85,7 +87,7 @@ class DeckFragment(private val newsItem: News) : Fragment(R.layout.fragment_deck
     }
 
     private fun showNewsItem() {
-        newsItem.bindToView(
+        deckPreviewItem.bindToView(
             tv_title = det_tv_title,
             tv_gameClassText = det_tv_deck_class,
             img_gameClassIcon = det_img,
@@ -103,7 +105,7 @@ class DeckFragment(private val newsItem: News) : Fragment(R.layout.fragment_deck
 
         setLoadingDataState(state = LoadingDataState.LOADING)
 
-        HearthstoneApi.loadDeck(requireActivity(), newsItem) { deck ->
+        HearthstoneApi.loadDeck(requireActivity(), deckPreviewItem) { deck ->
             this.deck = deck
 
             if (viewDestroyed()) return@loadDeck
@@ -155,19 +157,39 @@ class DeckFragment(private val newsItem: News) : Fragment(R.layout.fragment_deck
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-
-        requireContext().toast("on create options menu")
-
-
-        val item = menu.add(Menu.NONE, 1, Menu.NONE, "Add to favorites").apply {
-            setIcon(R.drawable.ic_star)
-            setOnMenuItemClickListener {
-                requireContext().toast("OnClicked item " + it.title)
-                return@setOnMenuItemClickListener true
-            }
-        }
         inflater.inflate(R.menu.menu_with_star, menu)
 
+        if (!isInFavoriteList) {
+            menu.findItem(R.id.btn_favorite).setIcon(R.drawable.ic_star)
+        }
+
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (deck == null) {
+            requireContext().toast("Deck is still loading")
+            return false
+        }
+
+        // so only once can click on menu item
+        item.setOnMenuItemClickListener {
+            return@setOnMenuItemClickListener false
+        }
+
+        if (isInFavoriteList) {
+            item.setIcon(R.drawable.ic_star)
+            // remove from firebase
+        } else {
+            item.setIcon(R.drawable.ic_star_filled)
+            FirebaseHelper.saveDeckToFavorite(deck!!) { successful ->
+                if (successful) {
+                    requireContext().toast("Added to favorite")
+                } else {
+                    requireContext().toast("Failed")
+                }
+            }
+        }
+        return true
     }
 }

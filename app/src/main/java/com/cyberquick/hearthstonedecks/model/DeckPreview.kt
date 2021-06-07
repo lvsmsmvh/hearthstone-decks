@@ -3,7 +3,7 @@ package com.cyberquick.hearthstonedecks.model
 import com.cyberquick.hearthstonedecks.model.enums.GameClasses
 import com.cyberquick.hearthstonedecks.model.enums.GameFormat
 
-class News(
+class DeckPreview(
     val title: String,
     val gameClass: GameClasses,
     val dust: String,

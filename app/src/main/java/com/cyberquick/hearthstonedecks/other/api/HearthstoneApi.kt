@@ -5,7 +5,7 @@ import com.cyberquick.hearthstonedecks.model.CardDetails
 import com.cyberquick.hearthstonedecks.other.api.loaders.DeckLoader
 import com.cyberquick.hearthstonedecks.other.api.loaders.LinkOnCardImageLoader
 import com.cyberquick.hearthstonedecks.other.api.loaders.PageLoader
-import com.cyberquick.hearthstonedecks.model.News
+import com.cyberquick.hearthstonedecks.model.DeckPreview
 import com.cyberquick.hearthstonedecks.model.Deck
 import com.cyberquick.hearthstonedecks.model.Page
 
@@ -26,11 +26,11 @@ object HearthstoneApi {
 
     fun loadDeck(
         activity: Activity,
-        news: News,
+        deckPreview: DeckPreview,
         callback: (Deck?) -> Unit
     ) {
         Thread {
-            val result = DeckLoader.load(news = news)
+            val result = DeckLoader.load(deckPreview = deckPreview)
             activity.runOnUiThread {
                 callback(result)
             }

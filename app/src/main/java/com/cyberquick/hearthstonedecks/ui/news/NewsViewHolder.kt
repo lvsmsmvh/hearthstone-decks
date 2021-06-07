@@ -2,7 +2,7 @@ package com.cyberquick.hearthstonedecks.ui.news
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.cyberquick.hearthstonedecks.model.News
+import com.cyberquick.hearthstonedecks.model.DeckPreview
 import com.cyberquick.hearthstonedecks.other.extensions.bindToView
 import com.cyberquick.hearthstonedecks.other.extensions.getActivity
 import com.cyberquick.hearthstonedecks.other.extensions.simpleNavigate
@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.item.view.*
 
 class NewsViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(newsItem: News) {
-        newsItem.bindToView(
+    fun bind(deckPreviewItem: DeckPreview) {
+        deckPreviewItem.bindToView(
             tv_title = view.row_tv_title,
             tv_gameClassText = view.row_tv_class,
             img_gameClassIcon = view.row_img_game_class,
@@ -22,7 +22,7 @@ class NewsViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         )
 
         view.setOnClickListener {
-            view.context.getActivity()!!.simpleNavigate(DeckFragment(newsItem))
+            view.context.getActivity()!!.simpleNavigate(DeckFragment(deckPreviewItem))
         }
     }
 }

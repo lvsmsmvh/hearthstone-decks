@@ -1,7 +1,7 @@
 package com.cyberquick.hearthstonedecks.other.api.loaders
 
 import com.cyberquick.hearthstonedecks.other.api.JsoupFeatures
-import com.cyberquick.hearthstonedecks.model.News
+import com.cyberquick.hearthstonedecks.model.DeckPreview
 import com.cyberquick.hearthstonedecks.model.Page
 import com.cyberquick.hearthstonedecks.model.enums.GameClasses
 import com.cyberquick.hearthstonedecks.model.enums.GameFormat
@@ -9,7 +9,7 @@ import com.cyberquick.hearthstonedecks.other.Constants
 
 object PageLoader {
     fun load(pageNumber: Int): Page {
-        val listNews = mutableListOf<News>()
+        val listNews = mutableListOf<DeckPreview>()
 
         val link = Constants.API_URL_PAGE + "&page=" + pageNumber
 
@@ -66,7 +66,7 @@ object PageLoader {
                     .attr("class"
                     ) == "is-std") GameFormat.Standard else GameFormat.Wild
 
-            listNews.add(News(title, deckClass, dust, timeCreated, linkDetails, formatType))
+            listNews.add(DeckPreview(title, deckClass, dust, timeCreated, linkDetails, formatType))
         }
 
         return Page(pageNumber, listNews)

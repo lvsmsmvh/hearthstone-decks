@@ -2,15 +2,15 @@ package com.cyberquick.hearthstonedecks.other.api.loaders
 
 import com.cyberquick.hearthstonedecks.other.api.JsoupFeatures
 import com.cyberquick.hearthstonedecks.model.Card
-import com.cyberquick.hearthstonedecks.model.News
+import com.cyberquick.hearthstonedecks.model.DeckPreview
 import com.cyberquick.hearthstonedecks.model.Deck
 import com.cyberquick.hearthstonedecks.model.enums.CardRarity
 import com.cyberquick.hearthstonedecks.other.Constants
 
 object DeckLoader {
-    fun load(news: News): Deck? {
+    fun load(deckPreview: DeckPreview): Deck? {
         val document = try {
-            JsoupFeatures.getDocument(url = news.linkDetails)
+            JsoupFeatures.getDocument(url = deckPreview.linkDetails)
         } catch (e: Exception) {
             return null
         }
@@ -30,6 +30,7 @@ object DeckLoader {
         for (i in 0 until descriptionElements.size) {
             description += descriptionElements.eq(i).text() + "\n\n"
         }
+        description = description.trim()
 
         // card
         val listOfCards = mutableListOf<Card>()
@@ -75,6 +76,6 @@ object DeckLoader {
 
             listOfCards.add(element = Card(name, amountOfCopies, rarity, manaCost, link))
         }
-        return Deck(description, deckCode, listOfCards)
+        return Deck(deckPreview, description, deckCode, listOfCards)
     }
 }

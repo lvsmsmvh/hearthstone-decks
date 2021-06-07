@@ -2,9 +2,9 @@ package com.cyberquick.hearthstonedecks.other.extensions
 
 import android.widget.ImageView
 import android.widget.TextView
-import com.cyberquick.hearthstonedecks.model.News
+import com.cyberquick.hearthstonedecks.model.DeckPreview
 
-fun News.bindToView(
+fun DeckPreview.bindToView(
     tv_title: TextView,
     tv_gameClassText: TextView,
     img_gameClassIcon: ImageView,

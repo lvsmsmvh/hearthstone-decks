@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "834075967917",
+    "firebase_url": "https://decks-for-hearthstone-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "decks-for-hearthstone",
     "storage_bucket": "decks-for-hearthstone.appspot.com"
   },
