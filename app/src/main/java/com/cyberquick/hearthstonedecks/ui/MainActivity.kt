@@ -8,8 +8,10 @@ import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.other.extensions.drawable
 import com.cyberquick.hearthstonedecks.other.extensions.simpleNavigate
 import com.cyberquick.hearthstonedecks.other.extensions.toast
-import com.cyberquick.hearthstonedecks.ui.news.NewsFragment
+import com.cyberquick.hearthstonedecks.ui.news.AllDecksFragment
+import com.cyberquick.hearthstonedecks.ui.news.FavoriteDecksFragment
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -19,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        simpleNavigate(NewsFragment())
+        simpleNavigate(AllDecksFragment())
 
         setSupportActionBar(topAppBar)
         initNavigationDrawer()
@@ -29,7 +31,16 @@ class MainActivity : AppCompatActivity() {
         if (supportFragmentManager.backStackEntryCount > 1)
             supportFragmentManager.popBackStack()
         else
-            finish()
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Quit app?")
+                .setPositiveButton("Quit") { dialog, _ ->
+                    dialog.dismiss()
+                    finish()
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
     }
 
     private fun initNavigationDrawer() {
@@ -41,16 +52,16 @@ class MainActivity : AppCompatActivity() {
 
         fragment_news_navigation_drawer.setNavigationItemSelectedListener { menuItem ->
             drawerLayout.closeDrawer(fragment_news_navigation_drawer)
-            toast("Clicked on item " + menuItem.title)
             when (menuItem.itemId) {
-                R.id.drawer_menu_item_my_decks -> {
-
+                R.id.drawer_menu_item_all_decks -> {
+                    simpleNavigate(AllDecksFragment())
                 }
-
+                R.id.drawer_menu_item_my_decks -> {
+                    simpleNavigate(FavoriteDecksFragment())
+                }
                 R.id.drawer_menu_item_about -> {
 
                 }
-
                 R.id.drawer_menu_item_logout -> {
                     AuthUI.getInstance()
                         .signOut(this)

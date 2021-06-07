@@ -1,8 +1,7 @@
-package com.cyberquick.hearthstonedecks.ui.details
+package com.cyberquick.hearthstonedecks.ui.deck
 
 import android.annotation.SuppressLint
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.model.Card
 import com.cyberquick.hearthstonedecks.other.extensions.color

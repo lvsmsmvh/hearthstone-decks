@@ -9,13 +9,15 @@ import com.cyberquick.hearthstonedecks.other.api.HearthstoneApi
 import com.cyberquick.hearthstonedecks.model.Page
 import com.cyberquick.hearthstonedecks.model.api.LoadingDataState
 import com.cyberquick.hearthstonedecks.other.extensions.*
+import com.cyberquick.hearthstonedecks.ui.deck.DeckDetailsFragment
 import kotlinx.android.synthetic.main.fragment_news.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class NewsFragment : Fragment(R.layout.fragment_news) {
+class AllDecksFragment : Fragment(R.layout.fragment_news) {
 
     private var currentPage = Page(1, emptyList())
-    private lateinit var newsAdapter: NewsAdapter
+    private val totalPages = 100
+    private lateinit var deckAdapter: DeckAdapter
 
     private var _loadingDataState = LoadingDataState.LOADING
     private fun setLoadingDataState(state: LoadingDataState) {
@@ -60,28 +62,18 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     }
 
     private fun configureRecycler() {
-        newsAdapter = NewsAdapter()
+        deckAdapter = DeckAdapter()
         recycle_view_news.layoutManager = LinearLayoutManager(context)
-        recycle_view_news.adapter = newsAdapter
+        recycle_view_news.adapter = deckAdapter
     }
 
     private fun restoreData() {
-        if (currentPage.listOfNews.isNotEmpty()) {
+        if (currentPage.listOfDecks.isNotEmpty()) {
             showPage(currentPage)
             return
         }
 
         loadPageFromInternet(currentPage.pageNumber)
-    }
-
-    private fun showPage(page: Page) {
-        setLoadingDataState(state = LoadingDataState.LOADED)
-
-        setTitle("Page: ${page.pageNumber}/100")
-
-        newsAdapter.set(page.listOfNews)
-
-        initLowerButtons(page)
     }
 
     private fun loadPageFromInternet(pageNumber: Int) {
@@ -90,13 +82,27 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         HearthstoneApi.loadPage(requireActivity(), pageNumber) { page ->
             if (viewDestroyed()) return@loadPage
 
-            if (page.listOfNews.isEmpty()) {   // error occurred
+            if (page.listOfDecks.isEmpty()) {   // error occurred
                 setLoadingDataState(state = LoadingDataState.FAILED)
             } else {    // all good
                 currentPage = page
                 showPage(page)
             }
         }
+    }
+
+    private fun showPage(page: Page) {
+        setLoadingDataState(state = LoadingDataState.LOADED)
+
+        setTitle("Page: ${page.pageNumber}/${totalPages}")
+
+        deckAdapter.set(page.listOfDecks) { deckClicked ->
+            requireActivity().simpleNavigate(
+                DeckDetailsFragment(deckClicked, isInFavoriteList = false)
+            )
+        }
+
+        initLowerButtons(page)
     }
 
     private fun initLowerButtons(page: Page) {

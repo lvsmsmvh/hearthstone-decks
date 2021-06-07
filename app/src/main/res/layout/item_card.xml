@@ -39,7 +39,7 @@
                     android:gravity="center"
                     android:textSize="10sp"
                     android:layout_marginLeft="1dp"
-                    android:textColor="@color/light_font"
+                    android:textColor="@color/white"
                     android:shadowColor="@color/black"
                     android:shadowDx="2"
                     android:shadowDy="2"

@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.ui.details
+package com.cyberquick.hearthstonedecks.ui.deck
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.other.api.HearthstoneApi
-import com.cyberquick.hearthstonedecks.model.DeckPreview
 import com.cyberquick.hearthstonedecks.model.Deck
+import com.cyberquick.hearthstonedecks.model.DeckDetails
 import com.cyberquick.hearthstonedecks.model.api.LoadingDataState
 import com.cyberquick.hearthstonedecks.other.extensions.*
 import com.cyberquick.hearthstonedecks.other.firebase.FirebaseHelper
@@ -19,17 +19,15 @@ import kotlinx.android.synthetic.main.btn_description.*
 import kotlinx.android.synthetic.main.btn_description_failed.*
 import kotlinx.android.synthetic.main.btn_description_progress_bar.*
 import kotlinx.android.synthetic.main.fragment_deck.*
-import kotlinx.android.synthetic.main.item.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.*
 
-class DeckFragment(
-    private val deckPreviewItem: DeckPreview,
+class DeckDetailsFragment(
+    private val deck: Deck,
     private val isInFavoriteList: Boolean = false
 ) : Fragment(R.layout.fragment_deck) {
 
     private lateinit var cardAdapter: CardAdapter
-    private var deck: Deck? = null
 
     private var _loadingDataState = LoadingDataState.LOADING
     private fun setLoadingDataState(state: LoadingDataState) {
@@ -45,7 +43,7 @@ class DeckFragment(
             // loaded
             LoadingDataState.LOADED -> {
                 progress_bar_layout.hide()
-                if (!deck?.description.isNullOrBlank()) card_view_btn_description.show()
+                if (!deck.deckDetails?.description.isNullOrBlank()) card_view_btn_description.show()
                 det_description_failed_layout.hide()
                 ll_deck_holder.show()
             }
@@ -67,13 +65,13 @@ class DeckFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        topAppBar.title = deckPreviewItem.title
-        topAppBar.menu
+        setTitle(deck.title)
+//        topAppBar.title = deck.title
 
         showNewsItem()
         configureRecycler()
 
-        loadDeckFromInternet()
+        restoreDeck()
     }
 
     private fun configureRecycler() {
@@ -87,7 +85,7 @@ class DeckFragment(
     }
 
     private fun showNewsItem() {
-        deckPreviewItem.bindToView(
+        deck.bindToView(
             tv_title = det_tv_title,
             tv_gameClassText = det_tv_deck_class,
             img_gameClassIcon = det_img,
@@ -97,35 +95,36 @@ class DeckFragment(
         )
     }
 
-    private fun loadDeckFromInternet() {
-        deck?.let {
-            showDeck(it)
+    private fun restoreDeck() {
+        deck.deckDetails?.let {
+            showDetails(it)
             return
         }
 
         setLoadingDataState(state = LoadingDataState.LOADING)
 
-        HearthstoneApi.loadDeck(requireActivity(), deckPreviewItem) { deck ->
-            this.deck = deck
+        HearthstoneApi.loadDeckDetails(requireActivity(), deck) { deckDetails ->
+            deck.deckDetails = deckDetails
 
-            if (viewDestroyed()) return@loadDeck
+            if (viewDestroyed()) return@loadDeckDetails
 
-            if (deck == null) {
+            if (deckDetails == null) {
                 setLoadingDataState(state = LoadingDataState.FAILED)
-                return@loadDeck
+                return@loadDeckDetails
             }
-            showDeck(deck)
+
+            showDetails(deckDetails)
         }
     }
 
-    private fun showDeck(deck: Deck) {
+    private fun showDetails(deckDetails: DeckDetails) {
         setLoadingDataState(state = LoadingDataState.LOADED)
         // description
-        setDescriptionText(deck.description)
+        setDescriptionText(deckDetails.description)
         // cards
-        cardAdapter.set(deck.listOfCards)
+        cardAdapter.set(deckDetails.listOfCards)
         // copy button
-        initCopyButton(deck.code)
+        initCopyButton(deckDetails.code)
     }
 
     private fun setDescriptionText(text: String) {
@@ -166,27 +165,43 @@ class DeckFragment(
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    private var hasCompletedRequestToFirebase = false
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (deck == null) {
+        if (deck.deckDetails == null) {
             requireContext().toast("Deck is still loading")
             return false
         }
 
         // so only once can click on menu item
-        item.setOnMenuItemClickListener {
-            return@setOnMenuItemClickListener false
-        }
+
+        if (hasCompletedRequestToFirebase) return false
+        hasCompletedRequestToFirebase = true
 
         if (isInFavoriteList) {
             item.setIcon(R.drawable.ic_star)
-            // remove from firebase
-        } else {
-            item.setIcon(R.drawable.ic_star_filled)
-            FirebaseHelper.saveDeckToFavorite(deck!!) { successful ->
+            FirebaseHelper.removeFromFavorite(deck) { successful ->
+                if (viewDestroyed()) return@removeFromFavorite
+
                 if (successful) {
-                    requireContext().toast("Added to favorite")
+                    requireContext().toast("Removed from favorite")
+                    item.isVisible = false
                 } else {
                     requireContext().toast("Failed")
+                    hasCompletedRequestToFirebase = false
+                }
+            }
+        } else {
+            item.setIcon(R.drawable.ic_star_filled)
+            FirebaseHelper.saveDeckToFavorite(deck) { successful ->
+                if (viewDestroyed()) return@saveDeckToFavorite
+
+                if (successful) {
+                    requireContext().toast("Added to favorite")
+                    item.isVisible = false
+                } else {
+                    requireContext().toast("Failed")
+                    hasCompletedRequestToFirebase = false
                 }
             }
         }

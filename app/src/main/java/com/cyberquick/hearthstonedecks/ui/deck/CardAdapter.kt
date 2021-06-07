@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.ui.details
+package com.cyberquick.hearthstonedecks.ui.deck
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

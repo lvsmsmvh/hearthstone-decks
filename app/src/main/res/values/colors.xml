@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     // default
-    <color name="colorPrimary">#451911</color>
+    <color name="colorPrimary">#592921</color>
     <color name="colorPrimaryDark">#451911</color>
-    <color name="colorAccent">#946656</color>
+    <color name="colorAccent">#EEEEDD</color>
 
     // ui
-    <color name="light_font">#FBFBFB</color>
-    <color name="grey_font">#ff9e9e9e</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="bck_for_deck_holder">#451911</color>
-    <color name="bck_for_app">#946656</color>
-    <color name="bck_for_card_in_list">#EEEEBB</color>
+    <color name="bck_for_app">#592921</color>
     <color name="smooth_yellow">#EEEEDD</color>
     <color name="smooth_yellow_pressed">#CCCCBB</color>
 

@@ -1,8 +1,14 @@
 package com.cyberquick.hearthstonedecks.model
 
+import com.cyberquick.hearthstonedecks.model.enums.GameClasses
+import com.cyberquick.hearthstonedecks.model.enums.GameFormat
+
 data class Deck(
-    val deckPreview: DeckPreview,
-    val description: String,
-    val code: String,
-    val listOfCards: List<Card>
+    val title: String = "",
+    val gameClass: GameClasses = GameClasses.DemonHunter,
+    val dust: String = "",
+    val timeCreated: String = "",
+    val linkDetails: String = "",
+    val gameFormat: GameFormat = GameFormat.Standard,
+    var deckDetails: DeckDetails? = null
 )

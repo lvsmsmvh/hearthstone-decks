@@ -1,10 +1,8 @@
 package com.cyberquick.hearthstonedecks.other.firebase
 
 import com.cyberquick.hearthstonedecks.model.Deck
-import com.cyberquick.hearthstonedecks.model.DeckNullable
 import com.cyberquick.hearthstonedecks.other.extensions.id
 import com.cyberquick.hearthstonedecks.other.extensions.logNav
-import com.cyberquick.hearthstonedecks.other.extensions.toDeckNullable
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -26,7 +24,7 @@ class FirebaseHelper {
 
             decksStorage(user.uid)
                 .child(deck.id())
-                .setValue(deck.toDeckNullable())
+                .setValue(deck)
                 .addOnFailureListener {
                     logNav("firebase error " + it.message)
                 }
@@ -68,11 +66,11 @@ class FirebaseHelper {
                 }
         }
 
-        fun getFavoriteDecks(callback: (list: List<DeckNullable>) -> Unit) {
+        fun getFavoriteDecks(callback: (list: List<Deck>?) -> Unit) {
             val user = FirebaseAuth.getInstance().currentUser
 
             if (user == null) {
-                callback(emptyList())
+                callback(null)
                 return
             }
 
@@ -80,12 +78,12 @@ class FirebaseHelper {
                 .get()
                 .addOnSuccessListener {
                     val list = it.children.map { dataSnapshot ->
-                        dataSnapshot.getValue(DeckNullable::class.java)!!
+                        dataSnapshot.getValue(Deck::class.java)
                     }
-                    callback(list)
+                    callback(list.filterNotNull())
                 }
                 .addOnFailureListener {
-                    callback(emptyList())
+                    callback(null)
                 }
         }
     }

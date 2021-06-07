@@ -8,6 +8,10 @@
             android:title="Decks">
             <menu>
                 <item
+                    android:id="@+id/drawer_menu_item_all_decks"
+                    android:icon="@drawable/ic_baseline_view_list_24"
+                    android:title="All decks"/>
+                <item
                     android:id="@+id/drawer_menu_item_my_decks"
                     android:icon="@drawable/ic_star_filled"
                     android:title="Favorite decks"/>

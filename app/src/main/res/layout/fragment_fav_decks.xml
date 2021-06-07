@@ -59,47 +59,4 @@
                 android:src="@drawable/ic_baseline_replay_24"/>
         </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_nav_bottom_btn"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:padding="10dp"
-        android:layout_gravity="bottom"
-        android:weightSum="2.1"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="@color/bck_for_deck_holder"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
-
-        <Button
-            android:id="@+id/btn_previous"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/previous"
-            android:layout_gravity="center"
-            android:background="@drawable/bck_for_description_button"
-            android:textColor="#664444"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"/>
-
-        <Button
-            android:id="@+id/btn_next"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/next"
-            android:background="@drawable/bck_for_description_button"
-            android:layout_gravity="center"
-            android:textColor="#664444"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
 </FrameLayout>
