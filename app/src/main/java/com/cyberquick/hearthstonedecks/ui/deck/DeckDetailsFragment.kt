@@ -1,7 +1,6 @@
 package com.cyberquick.hearthstonedecks.ui.deck
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment

@@ -2,7 +2,6 @@ package com.cyberquick.hearthstonedecks.other.firebase
 
 import com.cyberquick.hearthstonedecks.model.Deck
 import com.cyberquick.hearthstonedecks.other.extensions.id
-import com.cyberquick.hearthstonedecks.other.extensions.logNav
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
