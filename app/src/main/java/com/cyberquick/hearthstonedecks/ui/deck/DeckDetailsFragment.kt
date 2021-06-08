@@ -116,19 +116,10 @@ class DeckDetailsFragment(
     override fun setFavoriteIconClickable(clickable: Boolean) {
         if (viewDestroyed()) return
 
-        logNav("set fav icon clickable = " + clickable)
-
         menuStarItem?.apply {
-            logNav("set fav alpha")
             isEnabled = clickable
-            icon.alpha = if (clickable) 253 else 127
+            icon.alpha = if (clickable) 255 else 127
         }
-
-        logNav("fav icon alpha = " + menuStarItem?.icon?.alpha)
-
-        Handler().postDelayed({
-            logNav("fav icon alpha after 1 ms = " + menuStarItem?.icon?.alpha)
-        }, 1)
     }
 
     override fun outputMessage(message: String) {
