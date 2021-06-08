@@ -6,7 +6,6 @@ import android.content.Context
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.model.Deck
 import com.cyberquick.hearthstonedecks.other.api.HearthstoneApi
-import com.cyberquick.hearthstonedecks.other.extensions.logNav
 import com.cyberquick.hearthstonedecks.other.firebase.FirebaseHelper
 
 class DeckDetailsPresenter(val view: DeckDetailsContract.View)
@@ -57,7 +56,6 @@ class DeckDetailsPresenter(val view: DeckDetailsContract.View)
         view.setFavoriteIconClickable(false)
 
         FirebaseHelper.isInFavoriteList(currentDeck) { exists ->
-            logNav("fav icon existing state loaded, exists = " + exists)
             isDeckInFavorite = exists
             view.setFavoriteIconClickable(true)
         }

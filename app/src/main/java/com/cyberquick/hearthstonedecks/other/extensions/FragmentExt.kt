@@ -27,13 +27,6 @@ fun FragmentActivity.simpleNavigate(fragment: Fragment) {
     }
 }
 
-//fun FragmentActivity.simpleNavigateAndDestroyAfter(fragment: Fragment) {
-//    supportFragmentManager.beginTransaction()
-//        .replace(R.id.fragment_container, fragment)
-//        .addToBackStack(fragment.id.toString())
-//        .commit()
-//}
-
 fun FragmentActivity.showTitle(message: String) {
     findViewById<MaterialToolbar>(R.id.topAppBar).title = message
 }

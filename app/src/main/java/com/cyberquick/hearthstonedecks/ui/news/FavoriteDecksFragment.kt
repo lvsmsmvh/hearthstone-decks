@@ -89,7 +89,6 @@ class FavoriteDecksFragment : Fragment(R.layout.fragment_fav_decks) {
                     requireContext().toast("This list is empty.")
                 }
                 else -> {    // all good
-                    logNav("List of favorite decks loaded, size = " + list.size)
                     currentListOfDeck = list
                     showListOfDecks(list)
                 }
