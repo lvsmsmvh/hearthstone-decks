@@ -104,7 +104,7 @@ class FavoriteDecksFragment : Fragment(R.layout.fragment_fav_decks) {
 
         deckAdapter.set(list) { deckClicked ->
             requireActivity().simpleNavigate(
-                DeckDetailsFragment(deckClicked, isInFavoriteList = true)
+                DeckDetailsFragment(deckClicked)
             )
         }
     }

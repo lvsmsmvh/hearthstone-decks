@@ -23,7 +23,7 @@
         <include
             android:layout_gravity="center|bottom"
             android:id="@+id/progress_bar_in_card"
-            layout="@layout/btn_description_progress_bar"
+            layout="@layout/layout_progress_bar"
             android:layout_height="match_parent"
             android:layout_width="wrap_content" />
     </LinearLayout>

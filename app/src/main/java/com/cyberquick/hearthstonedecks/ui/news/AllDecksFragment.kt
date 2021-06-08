@@ -98,7 +98,7 @@ class AllDecksFragment : Fragment(R.layout.fragment_news) {
 
         deckAdapter.set(page.listOfDecks) { deckClicked ->
             requireActivity().simpleNavigate(
-                DeckDetailsFragment(deckClicked, isInFavoriteList = false)
+                DeckDetailsFragment(deckClicked)
             )
         }
 
