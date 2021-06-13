@@ -58,7 +58,8 @@ class DeckDetailsFragment(
             img_gameClassIcon = det_img,
             tv_dustText = det_tv_dust,
             tv_timeCreated = det_tv_time,
-            tv_gameFormat = det_tv_format
+            tv_gameFormat = det_tv_format,
+            img_gameFormatIcon = det_tv_format_icon
         )
     }
 

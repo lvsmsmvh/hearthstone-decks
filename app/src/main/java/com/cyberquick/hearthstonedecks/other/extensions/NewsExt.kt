@@ -2,6 +2,7 @@ package com.cyberquick.hearthstonedecks.other.extensions
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.cyberquick.hearthstonedecks.model.Deck
 
 fun Deck.bindToView(
@@ -10,7 +11,8 @@ fun Deck.bindToView(
     img_gameClassIcon: ImageView,
     tv_dustText: TextView,
     tv_timeCreated: TextView,
-    tv_gameFormat: TextView
+    tv_gameFormat: TextView,
+    img_gameFormatIcon: ImageView
 ) {
     val context = tv_title.context
 
@@ -27,5 +29,10 @@ fun Deck.bindToView(
     tv_gameFormat.apply {
         text = gameFormat.name
         setTextColor(context.color(gameFormat.colorRes))
+    }
+
+    img_gameFormatIcon.apply {
+        setImageDrawable(ContextCompat.getDrawable(context, gameFormat.iconRes))
+        setColorFilter(context.color(gameFormat.colorRes))
     }
 }

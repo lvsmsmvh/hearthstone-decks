@@ -1,7 +1,6 @@
 package com.cyberquick.hearthstonedecks.ui.news
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
@@ -13,7 +12,7 @@ class DeckAdapter : RecyclerView.Adapter<DeckViewHolder>() {
     private lateinit var onClickListener: (Deck) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeckViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.deck_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_deck_preview, parent, false)
         return DeckViewHolder(view)
     }
 

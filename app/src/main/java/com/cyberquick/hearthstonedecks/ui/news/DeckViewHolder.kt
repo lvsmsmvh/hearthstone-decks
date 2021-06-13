@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.model.Deck
 import com.cyberquick.hearthstonedecks.other.extensions.bindToView
-import kotlinx.android.synthetic.main.deck_item.view.*
+import kotlinx.android.synthetic.main.item_deck_preview.view.*
 
 class DeckViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -15,14 +15,11 @@ class DeckViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             img_gameClassIcon = view.row_img_game_class,
             tv_dustText = view.row_tv_dust,
             tv_timeCreated = view.row_tv_time,
-            tv_gameFormat = view.row_tv_standard_wild
+            tv_gameFormat = view.row_tv_standard_wild,
+            img_gameFormatIcon = view.row_tv_standard_wild_icon
         )
         view.setOnClickListener {
             onClickListener(deckItem)
         }
-
-//        view.setOnClickListener {
-//            view.context.getActivity()!!.simpleNavigate(DeckDetailsFragment(deckItem))
-//        }
     }
 }

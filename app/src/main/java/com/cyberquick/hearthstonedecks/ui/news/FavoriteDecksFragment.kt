@@ -69,8 +69,6 @@ class FavoriteDecksFragment : Fragment(R.layout.fragment_fav_decks) {
             showListOfDecks(it)
             return
         }
-
-//        loadDecksFromFirebase()
     }
 
     private fun loadDecksFromFirebase() {

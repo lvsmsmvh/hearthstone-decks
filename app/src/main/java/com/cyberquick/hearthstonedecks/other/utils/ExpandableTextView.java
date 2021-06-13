@@ -4,18 +4,16 @@ import android.graphics.Canvas;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import androidx.appcompat.widget.AppCompatTextView;
 
-public class ExpandableTextView extends androidx.appcompat.widget.AppCompatTextView {
+public class ExpandableTextView extends AppCompatTextView {
 
-    private int collapsedLines;
-    private int expandedLines;
     private int collapsedHeight;
     private int expandedHeight;
     private boolean collapsed = true;
     private int speed = 100;
-    private boolean inited = false;
+    private boolean initialized = false;
 
-    private Canvas textCanvas;
 
     public ExpandableTextView(Context context) {
         super(context);
@@ -23,18 +21,18 @@ public class ExpandableTextView extends androidx.appcompat.widget.AppCompatTextV
 
     public ExpandableTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        inited = false;
+        initialized = false;
     }
 
     public ExpandableTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        inited = false;
+        initialized = false;
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (!inited) {
+        if (!initialized) {
             setCollapsedLines(1);
             setMeasuredDimension(widthMeasureSpec, collapsedHeight);
         }
@@ -53,14 +51,8 @@ public class ExpandableTextView extends androidx.appcompat.widget.AppCompatTextV
     }
 
     public void init(){
-        if (!inited) {
-            inited = true;
-//            this.setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    //updateState();
-//                }
-//            });
+        if (!initialized) {
+            initialized = true;
 
             this.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -81,7 +73,7 @@ public class ExpandableTextView extends androidx.appcompat.widget.AppCompatTextV
         }
     }
     private void updateState(){
-        if (collapsed){
+        if (collapsed) {
             expand();
         } else {
             collapse();
@@ -120,7 +112,6 @@ public class ExpandableTextView extends androidx.appcompat.widget.AppCompatTextV
     }
 
     public void setCollapsedLines(int collapsedLines) {
-        this.collapsedLines = collapsedLines;
         if (collapsedLines == 0)
             collapsedHeight = 0;
         else
@@ -128,7 +119,6 @@ public class ExpandableTextView extends androidx.appcompat.widget.AppCompatTextV
     }
 
     private void setExpandedLines(int expandedLines) {
-        this.expandedLines = expandedLines;
         expandedHeight = (int) Math.ceil(expandedLines * (getLineHeight() + getLineSpacingExtra()) + getPaddingBottom()  + getPaddingTop() + getLastBaselineToBottomHeight());
     }
 
