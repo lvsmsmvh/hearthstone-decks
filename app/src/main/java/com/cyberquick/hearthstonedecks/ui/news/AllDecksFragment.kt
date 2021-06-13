@@ -10,7 +10,7 @@ import com.cyberquick.hearthstonedecks.model.Page
 import com.cyberquick.hearthstonedecks.model.api.LoadingDataState
 import com.cyberquick.hearthstonedecks.other.extensions.*
 import com.cyberquick.hearthstonedecks.ui.deck.DeckDetailsFragment
-import kotlinx.android.synthetic.main.fragment_news.*
+import kotlinx.android.synthetic.main.fragment_all_decks.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class AllDecksFragment : Fragment(R.layout.fragment_all_decks) {

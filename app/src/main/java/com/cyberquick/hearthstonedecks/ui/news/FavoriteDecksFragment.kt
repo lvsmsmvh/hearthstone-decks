@@ -6,12 +6,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.model.Deck
-import com.cyberquick.hearthstonedecks.model.DeckDetails
 import com.cyberquick.hearthstonedecks.model.api.LoadingDataState
 import com.cyberquick.hearthstonedecks.other.extensions.*
 import com.cyberquick.hearthstonedecks.other.firebase.FirebaseHelper
 import com.cyberquick.hearthstonedecks.ui.deck.DeckDetailsFragment
-import kotlinx.android.synthetic.main.fragment_news.*
+import kotlinx.android.synthetic.main.fragment_fav_decks.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class FavoriteDecksFragment : Fragment(R.layout.fragment_fav_decks) {

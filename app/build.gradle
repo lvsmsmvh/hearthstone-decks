@@ -52,13 +52,13 @@ dependencies {
 //    implementation 'com.google.code.gson:gson:2.8.6'
 
     // material
-    implementation 'com.google.android.material:material:1.4.0-beta01'
+    implementation 'com.google.android.material:material:1.4.0-rc01'
 
     // jsoup
     implementation 'org.jsoup:jsoup:1.11.3'
 
     // recycler
-    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 
     // card view
     implementation "androidx.cardview:cardview:1.0.0"
@@ -67,10 +67,9 @@ dependencies {
     implementation "com.squareup.picasso:picasso:2.3.2" // don't update - it differs a lot
 
     // firebase
-    implementation platform('com.google.firebase:firebase-bom:28.1.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:19.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.0.1'
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.0'
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.firebaseui:firebase-ui-auth:7.1.0'
 }

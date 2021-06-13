@@ -1,6 +1,5 @@
 package com.cyberquick.hearthstonedecks.ui.deck
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import com.cyberquick.hearthstonedecks.model.Deck
 import com.cyberquick.hearthstonedecks.model.DeckDetails
