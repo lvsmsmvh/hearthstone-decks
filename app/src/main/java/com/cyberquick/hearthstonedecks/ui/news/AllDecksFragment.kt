@@ -13,7 +13,7 @@ import com.cyberquick.hearthstonedecks.ui.deck.DeckDetailsFragment
 import kotlinx.android.synthetic.main.fragment_news.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class AllDecksFragment : Fragment(R.layout.fragment_news) {
+class AllDecksFragment : Fragment(R.layout.fragment_all_decks) {
 
     private var currentPage = Page(1, emptyList())
     private val totalPages = 100
@@ -114,19 +114,7 @@ class AllDecksFragment : Fragment(R.layout.fragment_news) {
             loadPageFromInternet(page.pageNumber + 1)
         }
 
-        when {
-            page.pageNumber <= 1 -> {
-                btn_previous.setActive(false)
-                btn_next.setActive(true)
-            }
-            page.pageNumber >= 100 -> {
-                btn_previous.setActive(true)
-                btn_next.setActive(false)
-            }
-            else -> {
-                btn_previous.setActive(true)
-                btn_next.setActive(true)
-            }
-        }
+        btn_previous.setActive(active = page.pageNumber > 1)
+        btn_previous.setActive(active = page.pageNumber < 100)
     }
 }

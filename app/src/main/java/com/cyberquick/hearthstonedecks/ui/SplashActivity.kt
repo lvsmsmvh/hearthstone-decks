@@ -20,11 +20,9 @@ class SplashActivity: AppCompatActivity() {
     }
 
     private fun goToSignInActivity() {
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build())
+        val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build())
 
-        startActivityForResult(
-            AuthUI.getInstance()
+        startActivityForResult(AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
                 .build(),
@@ -32,8 +30,7 @@ class SplashActivity: AppCompatActivity() {
     }
 
     private fun goToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 
