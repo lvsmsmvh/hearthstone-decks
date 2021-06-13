@@ -115,6 +115,6 @@ class AllDecksFragment : Fragment(R.layout.fragment_all_decks) {
         }
 
         btn_previous.setActive(active = page.pageNumber > 1)
-        btn_previous.setActive(active = page.pageNumber < 100)
+        btn_next.setActive(active = page.pageNumber < 100)
     }
 }

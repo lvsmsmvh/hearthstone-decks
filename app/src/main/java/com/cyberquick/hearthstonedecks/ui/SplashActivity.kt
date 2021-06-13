@@ -19,8 +19,6 @@ class SplashActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        logAuth("onCreateSplash")
-
         if (proceedEmailLink(intent)) return
 
         if (FirebaseAuth.getInstance().currentUser == null)
@@ -31,7 +29,6 @@ class SplashActivity: AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        logAuth("onNewIntent")
         cancelFinishingActivity()
         proceedEmailLink(intent)
     }
@@ -40,18 +37,13 @@ class SplashActivity: AppCompatActivity() {
         intent ?: return false
 
         val link = intent.data?.toString()
-
-        logAuth("got link: " + link)
-
         if (link != null && AuthUI.canHandleIntent(intent)) {
-            logAuth("proceed emil link start")
             startActivityForResult(
                 AuthUI.getInstance()
                     .createSignInIntentBuilder()
                     .setEmailLink(link)
                     .setAvailableProviders(getAvailableProviders())
                     .build(), RC_SIGN_IN)
-            logAuth("proceed emil link finish")
             return true
         }
 
@@ -59,7 +51,6 @@ class SplashActivity: AppCompatActivity() {
     }
 
     private fun goToSignInActivity() {
-        logAuth("go to sign in activity")
         startActivityForResult(AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(getAvailableProviders())
@@ -98,8 +89,6 @@ class SplashActivity: AppCompatActivity() {
     }
 
     private fun finishWithDelayOneSecond() {
-        logAuth("finish activity in 1 s")
-
         if (handlerFinishingActivity == null)
             handlerFinishingActivity = Handler(Looper.getMainLooper())
 
@@ -107,7 +96,6 @@ class SplashActivity: AppCompatActivity() {
     }
 
     private fun cancelFinishingActivity() {
-        logAuth("cancel finishing activity")
         handlerFinishingActivity?.removeCallbacksAndMessages(null)
     }
 
