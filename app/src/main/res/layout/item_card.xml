@@ -1,91 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="26dp"
-    android:layout_marginHorizontal="5dp"
-    android:layout_marginVertical="1dp"
-    app:cardCornerRadius="5dp">
+    android:layout_height="wrap_content"
+    android:backgroundTint="@android:color/transparent">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        android:background="@drawable/bck_for_list_of_cards"
-        android:baselineAligned="false">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/mana_icon"/>
-                <TextView
-                    android:id="@+id/tv_mana"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textSize="10sp"
-                    android:layout_marginLeft="1dp"
-                    android:textColor="@color/white"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="1" />
-            </FrameLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="7">
-            <TextView
-                android:id="@+id/tv_card_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Card name"
-                android:textStyle="bold"
-                android:ellipsize="end"
-                android:textSize="12sp"
-                android:maxLines="1"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-            <TextView
-                android:id="@+id/tv_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:text="x2"/>
-        </LinearLayout>
+        android:contentDescription="@null"
+        android:adjustViewBounds="true"
+        android:src="@drawable/card_placeholder" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_baseline_keyboard_arrow_right_24"/>
-        </LinearLayout>
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/img_card_small"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null" />
 
-</androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:background="@color/colorPrimary_transparent"
+        android:paddingHorizontal="3dp"
+        android:paddingVertical="1dp"
+        android:text="x1"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+</FrameLayout>

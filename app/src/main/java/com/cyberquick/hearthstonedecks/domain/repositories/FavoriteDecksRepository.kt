@@ -1,0 +1,3 @@
+package com.cyberquick.hearthstonedecks.domain.repositories
+
+interface FavoriteDecksRepository: DecksRepository, Savable

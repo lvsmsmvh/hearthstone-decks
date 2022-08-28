@@ -1,18 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
-    android:fitsSystemWindows="true">
+    android:layout_height="50dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingHorizontal="10dp"
+    android:background="@color/colorPrimaryDark">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:title="@string/app_name"
-        style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
-        android:background="@color/colorPrimaryDark"
-        android:elevation="0dp" />
-</com.google.android.material.appbar.AppBarLayout>
+    <ImageView
+        android:id="@+id/icon_menu"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_baseline_menu_24"
+        android:contentDescription="@null" />
+
+    <ImageView
+        android:id="@+id/icon_back"
+        android:layout_width="25dp"
+        android:visibility="gone"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/toolbar_text"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:maxLines="2"
+        android:textColor="@color/white"
+        android:text="@string/app_name"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="40dp" />
+
+    <ImageView
+        android:id="@+id/icon_additional"
+        android:layout_width="25dp"
+        android:visibility="gone"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_star_not_filled"
+        android:contentDescription="@null" />
+</LinearLayout>

@@ -24,7 +24,7 @@
     <string name="description">Description</string>
     <string name="next"><![CDATA[Next >]]></string>
     <string name="previous"><![CDATA[< Previous]]></string>
-    <string name="please_wait">Please, wait...</string>
+    <string name="please_wait">Please, wait…</string>
     <string name="error_loading_data">Error loading data :(</string>
     <string name="retry">Retry</string>
     <string name="error">Error :(</string>
@@ -50,4 +50,25 @@
         \n\n
         If you have any questions or comments, feel free to email me at iamajavagod@gmail.com.
     </string>
+
+<!--    CardFragment-->
+    <string name="id">Id:</string>
+    <string name="collectible">Collectible:</string>
+    <string name="slug">Slug:</string>
+    <string name="class_id">Class id:</string>
+    <string name="multiclass_ids">Multiclass ids:</string>
+    <string name="card_type_id">Card type id:</string>
+    <string name="card_set_id">Card set id:</string>
+    <string name="rarity_id">Rarity id:</string>
+    <string name="artist_name">Artist name:</string>
+    <string name="health">Health:</string>
+    <string name="attack">Attack:</string>
+    <string name="mana_cost">Mana cost:</string>
+    <string name="name">Name:</string>
+    <string name="text">Text:</string>
+    <string name="flavor_text">Flavor text:</string>
+
+    <string name="artist_name_ph"><b>Artist:</b> %s</string>
+    <string name="quote_ph">%s</string>
+
 </resources>

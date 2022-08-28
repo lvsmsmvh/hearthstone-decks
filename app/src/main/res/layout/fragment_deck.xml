@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/deck_preview"
+        layout="@layout/item_deck_preview" />
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:paddingBottom="5dp"
             android:orientation="vertical">
 
-            <include layout="@layout/item_deck_preview_in_deck_details_layout"/>
+            <include
+                android:id="@+id/btn_description"
+                layout="@layout/btn_description"
+                android:visibility="gone" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <include layout="@layout/btn_description" />
-                    <include layout="@layout/item_deck_holder"/>
-                </LinearLayout>
-                <include layout="@layout/layout_progress_bar" />
-                <include layout="@layout/layout_error_loading_data"/>
-            </FrameLayout>
+            <include
+                android:id="@+id/deck_holder"
+                layout="@layout/item_deck_holder"
+                android:visibility="gone" />
 
+            <include
+                android:id="@+id/layout_progress_bar"
+                layout="@layout/layout_progress_bar"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/layout_failed"
+                layout="@layout/layout_failed"
+                android:visibility="gone" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

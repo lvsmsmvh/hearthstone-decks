@@ -1,17 +1,16 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: "androidx.navigation.safeargs"
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
 android {
-    compileSdkVersion 30
-    buildToolsVersion "29.0.3"
+    compileSdk 32
 
     defaultConfig {
         applicationId "com.cyberquick.hearthstonedecks"
-        minSdkVersion 23
-        targetSdkVersion 30
+        minSdkVersion 26
+        targetSdk 32
         versionCode 2
         versionName "1.02"
 
@@ -33,14 +32,21 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding true
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.5.10"
-    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.0"
+    implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
@@ -48,28 +54,35 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    // gson
-//    implementation 'com.google.code.gson:gson:2.8.6'
-
-    // material
-    implementation 'com.google.android.material:material:1.4.0-rc01'
-
-    // jsoup
-    implementation 'org.jsoup:jsoup:1.11.3'
-
-    // recycler
-    implementation "androidx.recyclerview:recyclerview:1.2.1"
-
-    // card view
+    // UI
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.material:material:1.7.0-beta01'
     implementation "androidx.cardview:cardview:1.0.0"
-
-    // picasso
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "com.squareup.picasso:picasso:2.3.2" // don't update - it differs a lot
 
-    // firebase
-    implementation 'com.google.firebase:firebase-analytics-ktx:19.0.0'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.0.1'
-    implementation 'com.google.firebase:firebase-database-ktx:20.0.0'
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
-    implementation 'com.firebaseui:firebase-ui-auth:7.1.0'
+    // Jsoup
+    implementation 'org.jsoup:jsoup:1.11.3'
+
+    // Room
+    implementation "androidx.room:room-ktx:2.4.3"
+    implementation 'androidx.room:room-common:2.4.3'
+    kapt "androidx.room:room-compiler:2.4.3"
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    // Dagger - Hilt
+    implementation "com.google.dagger:hilt-android:2.41"
+    kapt "com.google.dagger:hilt-android-compiler:2.41"
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
+
+    // Retrofit 2
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // Kotlin ext
+    implementation 'androidx.fragment:fragment-ktx:1.5.2'
+
+    // Blur
+    implementation 'jp.wasabeef:blurry:4.0.1'
 }

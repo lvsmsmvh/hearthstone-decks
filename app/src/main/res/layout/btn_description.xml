@@ -4,7 +4,8 @@
     android:id="@+id/card_view_btn_description"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginHorizontal="7dp"
     app:cardCornerRadius="5dp">
     <LinearLayout
         android:id="@+id/det_description_layout"
@@ -36,7 +37,7 @@
                 android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
                 android:contentDescription="expand_arrow" />
         </LinearLayout>
-        <com.cyberquick.hearthstonedecks.other.utils.ExpandableTextView
+        <com.cyberquick.hearthstonedecks.utils.ExpandableTextView
             android:id="@+id/det_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

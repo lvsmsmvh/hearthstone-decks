@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     // default
-    <color name="colorPrimary">#592921</color>
-    <color name="colorPrimaryDark">#451911</color>
-    <color name="colorAccent">#592921</color>
+    <color name="colorPrimary">#392921</color>
+    <color name="colorPrimaryDark">#251911</color>
+    <color name="colorAccent">#392921</color>
+
+    <color name="colorPrimary_transparent">#CC392921</color>
 
     // ui
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="smooth_yellow_pressed">#CCCCBB</color>
     <color name="background_yellow">#EEEEDD</color>
+    <color name="blue_cool">#050A33</color>
+    <color name="text_shadow">#7F000000</color>
+    <color name="text_shadow_2">#CF000000</color>
 
     // other
     <color name="purple">#a656c4</color>
