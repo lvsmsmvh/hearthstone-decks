@@ -1,3 +1,3 @@
 package com.cyberquick.hearthstonedecks.domain.repositories
 
-interface OnlineDecksRepository: DecksRepository
+interface OnlineDecksRepository: BaseDecksRepository

@@ -23,11 +23,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:background="@color/colorPrimary_transparent"
+        android:background="@drawable/bg_card_amount"
         android:paddingHorizontal="3dp"
-        android:paddingVertical="1dp"
         android:text="x1"
-        android:textColor="@color/white"
-        android:textSize="11sp"
-        android:textStyle="bold" />
+        android:textColor="@color/palette_text_1"
+        android:textSize="11sp" />
 </FrameLayout>

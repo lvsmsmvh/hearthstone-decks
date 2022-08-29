@@ -1,28 +1,19 @@
 package com.cyberquick.hearthstonedecks.presentation.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.SharedElementCallback
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.TransitionInflater
-import androidx.transition.TransitionSet
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
 import com.cyberquick.hearthstonedecks.presentation.common.Toolbar
-import com.cyberquick.hearthstonedecks.presentation.viewmodels.FavoritePagesViewModel
-import com.cyberquick.hearthstonedecks.presentation.viewmodels.LoadingState
-import com.cyberquick.hearthstonedecks.presentation.viewmodels.OnlinePagesViewModel
-import com.cyberquick.hearthstonedecks.presentation.viewmodels.PagesViewModel
+import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.setActive
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
@@ -30,12 +21,12 @@ import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class OnlinePageFragment : PageFragment() {
-    override val viewModel: OnlinePagesViewModel by viewModels()
+    override val viewModel: OnlinePageViewModel by viewModels()
 }
 
 @AndroidEntryPoint
 class FavoritePageFragment : PageFragment() {
-    override val viewModel: FavoritePagesViewModel by viewModels()
+    override val viewModel: FavoritePageViewModel by viewModels()
 }
 
 abstract class PageFragment : BaseFragment() {
@@ -46,7 +37,7 @@ abstract class PageFragment : BaseFragment() {
     private var currentPageNumber = 1
     private var deckPreviewIdClicked: Int? = null
 
-    abstract val viewModel: PagesViewModel
+    abstract val viewModel: PageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,8 +45,6 @@ abstract class PageFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPageBinding.inflate(layoutInflater)
-//        exitTransition = TransitionInflater.from(requireContext())
-//            .inflateTransition(R.transition.items_exit_transition)
         postponeEnterTransition()
         return binding.root
     }
@@ -72,9 +61,8 @@ abstract class PageFragment : BaseFragment() {
         toolbar.updateRightButtonState(Toolbar.RightButtonState.None)
 
         deckAdapter = DeckAdapter()
-        binding.recycleViewNews.layoutManager = LinearLayoutManager(context)
-        binding.recycleViewNews.adapter = deckAdapter
-
+        binding.recycleViewDecks.layoutManager = LinearLayoutManager(context)
+        binding.recycleViewDecks.adapter = deckAdapter
         binding.layoutFailed.btnReloadData.setOnClickListener {
             loadPage(currentPageNumber)
         }
@@ -167,20 +155,15 @@ abstract class PageFragment : BaseFragment() {
     }
 
     private fun updateLayout(loadingState: LoadingState<Any>) {
-        binding.layoutLoading.layoutProgressBar.isVisible = loadingState is LoadingState.Loading
-        binding.layoutLoaded.isVisible = loadingState is LoadingState.Loaded
-        binding.layoutFailed.layoutFailed.isVisible = loadingState is LoadingState.Failed
+        binding.layoutLoading.layoutProgressBar.isVisible = loadingState.isLoading()
+        binding.layoutFailed.layoutFailed.isVisible = loadingState.isFailed()
+        binding.layoutLoaded.isVisible = loadingState.isLoaded()
 
-        binding.btnPrevious.setActive(loadingState is LoadingState.Loaded)
-        binding.btnNext.setActive(loadingState is LoadingState.Loaded)
+        binding.btnPrevious.setActive(loadingState.isLoaded() && currentPageNumber > 1)
+        binding.btnNext.setActive(loadingState.isLoaded() && currentPageNumber < totalPages)
 
         if (loadingState is LoadingState.Failed) {
             binding.layoutFailed.tvErrorLoadingDataSmall.text = loadingState.message
-        }
-
-        if (loadingState is LoadingState.Loaded) {
-            binding.btnPrevious.setActive(currentPageNumber > 1)
-            binding.btnNext.setActive(currentPageNumber < totalPages)
         }
     }
 }

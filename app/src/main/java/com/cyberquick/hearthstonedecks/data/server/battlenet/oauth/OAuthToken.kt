@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.data.server.blizzard.oauth
+package com.cyberquick.hearthstonedecks.data.server.battlenet.oauth
 
 class OAuthToken(
     private val oAuthResponse: OAuthResponse,

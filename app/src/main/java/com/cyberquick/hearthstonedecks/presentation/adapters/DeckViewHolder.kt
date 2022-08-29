@@ -62,7 +62,7 @@ class DeckViewHolder(
 
         content.deckFormat.apply {
             text = gameFormatEnum.name
-            setTextColor(context.color(gameFormatEnum.colorRes))
+//            setTextColor(context.color(gameFormatEnum.colorRes))
         }
 
         content.root.setOnClickListener {

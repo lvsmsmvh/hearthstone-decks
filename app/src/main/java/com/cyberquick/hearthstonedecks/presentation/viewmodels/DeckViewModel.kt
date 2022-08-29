@@ -1,6 +1,5 @@
 package com.cyberquick.hearthstonedecks.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -8,7 +7,6 @@ import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.Card
 import com.cyberquick.hearthstonedecks.domain.entities.Deck
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
-import com.cyberquick.hearthstonedecks.domain.usecases.cached.CacheDeckUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.common.GetCardsUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.common.GetDeckUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.AddDeckToFavoriteUseCase
@@ -22,62 +20,52 @@ import javax.inject.Inject
 @HiltViewModel
 class DeckViewModel @Inject constructor(
     private val getDeckUseCase: GetDeckUseCase,
+    private val getCardsUseCase: GetCardsUseCase,
     private val isDeckFavoriteUseCase: IsDeckInFavoriteUseCase,
     private val addDeckToFavoriteUseCase: AddDeckToFavoriteUseCase,
     private val removeDeckFromFavoriteUseCase: RemoveDeckFromFavoriteUseCase,
-    private val cacheDeckUseCase: CacheDeckUseCase,
-    private val getCardsUseCase: GetCardsUseCase,
 ) : BaseViewModel() {
 
     init {
-        Log.i("tag_retrofit", "DeckViewModel init()")
         val sampleDeckCode = "AAECAaIHBKOgBNi2BOnQBL7wBA316APg8QPRoAT9rAS" +
                 "EsgS3swTVtgTjuQSJ0gTj0wT03QSs7QTL7QQA"
     }
 
-    val stateCardsLoading: LiveData<LoadingState<List<Card>>> = MutableLiveData(LoadingState.Idle)
-    val stateDeckLoading: LiveData<LoadingState<Deck>> = MutableLiveData(LoadingState.Idle)
-    val stateDeckSaving: LiveData<SavedState> = MutableLiveData()
+    val stateCards: LiveData<LoadingState<List<Card>>> = MutableLiveData(LoadingState.Idle)
+    val stateDeck: LiveData<LoadingState<Deck>> = MutableLiveData(LoadingState.Idle)
+    val stateDeckSaved: LiveData<SavedState> = MutableLiveData()
+    val error: LiveData<String?> = MutableLiveData()
 
     fun loadDeck(deckPreview: DeckPreview) = viewModelScope.launch(Dispatchers.IO) {
-        if (stateDeckLoading.value?.canBeLoaded() == false) return@launch
-        stateDeckLoading.postValue(LoadingState.Loading)
-        val result = getDeckUseCase(deckPreview)
-        if (result is Result.Success) {
-            cacheDeckUseCase(result.data)
+        if (stateDeck.value.isLoading()) return@launch
+        stateDeck.postValue(LoadingState.Loading)
+        stateDeck.postValue(LoadingState.fromResult(getDeckUseCase(deckPreview)))
+    }
+
+    fun loadCards(deck: Deck) = viewModelScope.launch(Dispatchers.IO) {
+        if (stateCards.value.isLoading()) return@launch
+        stateCards.postValue(LoadingState.Loading)
+        stateCards.postValue(LoadingState.fromResult(getCardsUseCase.invoke(deck)))
+    }
+
+    fun clickedOnSaveButton(deck: Deck, cards: List<Card>) = viewModelScope.launch(Dispatchers.IO) {
+        val oldSavedState = stateDeckSaved.value ?: SavedState.NotSaved
+
+        val newSavingState = when (oldSavedState) {
+            SavedState.Saved -> removeDeckFromFavoriteUseCase(deck.deckPreview)
+            SavedState.NotSaved -> addDeckToFavoriteUseCase(deck, cards)
         }
 
-        stateDeckLoading.postValue(LoadingState.fromResult(result))
-    }
-
-    fun loadCards(deck: Deck) = viewModelScope.launch {
-        if (stateCardsLoading.value?.canBeLoaded() == false) return@launch
-        stateCardsLoading.postValue(LoadingState.Loading)
-        stateCardsLoading.postValue(LoadingState.fromResult(getCardsUseCase.invoke(deck)))
-    }
-
-    fun clickedOnSaveButton(deck: Deck) = viewModelScope.launch(Dispatchers.IO) {
-        when (stateDeckSaving.value) {
-            SavedState.NotSaved -> {
-                val saveDeckResult = when (val result = addDeckToFavoriteUseCase(deck)) {
-                    is Result.Success -> SavedState.Saved
-                    is Result.Error -> SavedState.Failed(result.exception.message.toString())
-                }
-                stateDeckSaving.postValue(saveDeckResult)
+        when (newSavingState) {
+            is Result.Success -> stateDeckSaved.postValue(SavedState.opposite(oldSavedState))
+            is Result.Error -> {
+                error.postValue(newSavingState.exception.message.toString())
+                error.postValue(null)
             }
-            SavedState.Saved -> {
-                val removeDeckResult = when (val result = removeDeckFromFavoriteUseCase(deck)) {
-                    is Result.Success -> SavedState.NotSaved
-                    is Result.Error -> SavedState.Failed(result.exception.message.toString())
-                }
-                stateDeckSaving.postValue(removeDeckResult)
-            }
-            is SavedState.Failed -> updateIsDeckSaved(deck.deckPreview)
-            null -> {}
         }
     }
 
     fun updateIsDeckSaved(deckPreview: DeckPreview) = viewModelScope.launch(Dispatchers.IO) {
-        stateDeckSaving.postValue(SavedState.fromResult(isDeckFavoriteUseCase(deckPreview)))
+        stateDeckSaved.postValue(SavedState.fromResult(isDeckFavoriteUseCase(deckPreview)))
     }
 }

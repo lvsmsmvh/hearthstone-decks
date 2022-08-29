@@ -7,7 +7,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blue_cool">
+        android:background="@color/palette_bg">
 
         <ImageView
             android:id="@+id/blurred_background"
@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_margin="40dp"
             android:contentDescription="@null"
-            android:src="@drawable/img_placeholder" />
+            android:src="@drawable/card_placeholder" />
 
         <ImageView
             android:id="@+id/previewer_image"

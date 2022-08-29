@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Decks for Hearthstone</string>
+    <string name="app_name_new_line">Decks for\nHearthstone</string>
     <string name="main_image">Main image</string>
 
     //deck classes
@@ -22,17 +23,14 @@
     <string name="no_description">No description</string>
     <string name="no_image">Image failed to load :(</string>
     <string name="description">Description</string>
-    <string name="next"><![CDATA[Next >]]></string>
-    <string name="previous"><![CDATA[< Previous]]></string>
+    <string name="next"><![CDATA[Next]]></string>
+    <string name="previous"><![CDATA[Previous]]></string>
     <string name="please_wait">Please, wait…</string>
     <string name="error_loading_data">Error loading data :(</string>
     <string name="retry">Retry</string>
     <string name="error">Error :(</string>
 
-    <string name="app_description">
-        In this app you can find good community decks and save them into your account.
-        \nMore information you\'ll find in FAQ.
-    </string>
+    <string name="app_description">In this app you can find good community decks and save them into your account.\nMore information you shall find in FAQ.</string>
 
     <string name="app_description_detailed">
         In this app you can find good community decks and save them into your account.
@@ -70,5 +68,6 @@
 
     <string name="artist_name_ph"><b>Artist:</b> %s</string>
     <string name="quote_ph">%s</string>
+    <string name="copy">Copy</string>
 
 </resources>

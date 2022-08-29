@@ -1,9 +1,9 @@
 package com.cyberquick.hearthstonedecks.data.db
 
-import com.cyberquick.hearthstonedecks.data.db.dao.CardPreviewDao
 import com.cyberquick.hearthstonedecks.data.db.dao.DeckDao
-import com.cyberquick.hearthstonedecks.data.db.entities.FavoriteDecksEntity
+import com.cyberquick.hearthstonedecks.data.db.entities.DeckToCardEntity
 import com.cyberquick.hearthstonedecks.data.db.mappers.DBMapper
+import com.cyberquick.hearthstonedecks.domain.entities.Card
 import com.cyberquick.hearthstonedecks.domain.entities.Deck
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.domain.entities.Page
@@ -12,7 +12,6 @@ import kotlin.math.ceil
 
 class RoomDBApi @Inject constructor(
     private val deckDao: DeckDao,
-    private val cardPreviewDao: CardPreviewDao,
     private val dbMapper: DBMapper,
 ) {
 
@@ -20,57 +19,36 @@ class RoomDBApi @Inject constructor(
         private const val ITEMS_ON_A_PAGE = 10
     }
 
-    /**
-     * Returns ID
-     */
-    fun insert(deck: Deck) {
+    fun insert(deck: Deck, cards: List<Card>) {
         deckDao.insert(dbMapper.toDeckEntity(deck))
-    }
-
-    fun remove(deck: Deck) {
-        deckDao.delete(deckDao.getDeckEntity(deck.deckPreview.id))
-    }
-
-    fun markFavorite(deck: Deck, favorite: Boolean) {
-        val deckFavoriteEntity = deckDao.getFavoriteEntity(deck.deckPreview.id)
-
-        if (favorite && deckFavoriteEntity == null) {
-            deckDao.insert(FavoriteDecksEntity(deck.deckPreview.id))
-        }
-
-        if (!favorite && deckFavoriteEntity != null) {
-            deckDao.delete(deckFavoriteEntity)
+        cards.forEach { card ->
+            deckDao.insert(dbMapper.toCardEntity(card))
+            deckDao.insert(DeckToCardEntity(
+                deckId = deck.deckPreview.id, cardId = card.id
+            ))
         }
     }
 
-    fun getPagesQuantity(onlyFavorites: Boolean): Int {
-        val total = when (onlyFavorites) {
-            true -> deckDao.amountFavorites()
-            false -> deckDao.amountAll()
-        }
-        return ceil(total / ITEMS_ON_A_PAGE.toFloat()).toInt()
+    fun remove(deckPreview: DeckPreview) {
+        deckDao.delete(deckDao.getDeckEntity(deckPreview.id))
+        deckDao.deleteCardsThatDoesNotHaveDeck()
+    }
+
+    fun getPagesQuantity(): Int {
+        var pages = ceil(deckDao.amountDecks() / ITEMS_ON_A_PAGE.toFloat()).toInt()
+        if (pages == 0) pages++
+        return pages
     }
 
     fun isSaved(deckPreview: DeckPreview): Boolean {
         return deckDao.getDeckEntity(deckPreview.id) != null
     }
 
-    fun isFavorite(deckPreview: DeckPreview): Boolean {
-        deckDao.getDeckEntity(deckPreview.id)?.let {
-            return deckDao.getFavoriteEntity(deckPreview.id) != null
-        }
-        return false
-    }
-
-    fun getPage(pageNumber: Int, onlyFavorites: Boolean): Page {
-        val lastIndex = pageNumber * ITEMS_ON_A_PAGE
+    fun getPage(pageNumber: Int): Page {
+        val lastIndex = pageNumber * ITEMS_ON_A_PAGE - 1
         val firstIndex = lastIndex - ITEMS_ON_A_PAGE + 1
 
-        val entities = when (onlyFavorites) {
-            true -> deckDao.getFavorites(firstIndex, lastIndex)
-            false -> deckDao.getAll(firstIndex, lastIndex)
-        }
-
+        val entities = deckDao.getDeckEntities(firstIndex, lastIndex)
         val deckPreviews = entities.map { dbMapper.toDeck(it).deckPreview }
         return Page(pageNumber, deckPreviews)
     }
@@ -79,9 +57,7 @@ class RoomDBApi @Inject constructor(
         return deckDao.getDeckEntity(deckPreview.id)?.let { dbMapper.toDeck(it) }
     }
 
-
-    fun clearCache() {
-        deckDao.deleteNotFavorites()
-//        cardPreviewDao.deleteAllThatDoesNotRelateToDecks()
+    fun getCards(deckPreview: DeckPreview): List<Card> {
+        return deckDao.getCardsForDeckId(deckPreview.id).map { dbMapper.toCard(it) }
     }
 }

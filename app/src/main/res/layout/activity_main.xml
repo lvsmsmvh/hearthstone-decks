@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
+    android:background="@color/palette_bg"
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
@@ -34,7 +35,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/background_yellow"
+        android:theme="@style/NavDrawer"
         app:headerLayout="@layout/header_navigation_drawer"
+        app:itemRippleColor="?android:attr/colorControlNormal"
+        app:itemTextColor="@color/palette_text_1"
+        app:itemIconTint="@color/palette_text_1"
+        app:itemTextAppearance="@style/TextAppearance.AppCompat.Body1"
         app:menu="@menu/menu_navigation" />
 </androidx.drawerlayout.widget.DrawerLayout>

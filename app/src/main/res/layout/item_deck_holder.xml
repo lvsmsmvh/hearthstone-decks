@@ -12,31 +12,36 @@
     android:visibility="visible">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/btn_copy_deck"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
         android:orientation="horizontal"
-        android:paddingBottom="10dp">
+        android:layout_gravity="end"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="10dp"
+        android:background="@drawable/button">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="end|center_vertical"
-            android:text="COPY"
-            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/copy"
+            android:textAllCaps="true"
+            android:textColor="@color/palette_text_on_button"
             android:textSize="14sp" />
 
         <ImageView
-            android:id="@+id/btn_copy_deck"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:src="@drawable/ic_baseline_content_copy_24"
-            app:tint="@color/black" />
+            android:layout_marginStart="5dp"
+            app:tint="@color/palette_text_on_button"
+            android:contentDescription="@null" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view_deck"
+        android:id="@+id/recycle_view_cards"
+        android:theme="@style/RecyclerViewTheme"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

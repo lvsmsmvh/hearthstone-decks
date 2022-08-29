@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.data.server.blizzard.oauth
+package com.cyberquick.hearthstonedecks.data.server.battlenet.oauth
 
 import android.util.Base64
 import retrofit2.http.*

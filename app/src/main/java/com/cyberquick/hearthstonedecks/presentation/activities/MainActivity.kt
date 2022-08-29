@@ -4,7 +4,11 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
+import android.widget.AbsListView
+import android.widget.EdgeEffect
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.core.view.isVisible
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.ActivityMainBinding
@@ -15,6 +19,8 @@ import com.cyberquick.hearthstonedecks.utils.drawable
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.reflect.Field
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), Toolbar {
@@ -32,13 +38,20 @@ class MainActivity : AppCompatActivity(), Toolbar {
 
         initNavigationDrawer()
         simpleNavigate(OnlinePageFragment())
+
+        setEdgeEffectColors()
+    }
+
+    @SuppressLint("SoonBlockedPrivateApi")
+    private fun setEdgeEffectColors() {
+
     }
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 1)
             supportFragmentManager.popBackStack()
         else
-            showExitWindow()
+            finish()
     }
 
     @SuppressLint("SetTextI18n")
@@ -59,8 +72,8 @@ class MainActivity : AppCompatActivity(), Toolbar {
                 R.id.drawer_menu_item_about -> {
                     simpleNavigate(AboutAppFragment())
                 }
-                R.id.drawer_menu_item_logout -> {
-                    showLogoutWindow()
+                R.id.drawer_menu_item_exit -> {
+                    finish()
                 }
             }
             return@setNavigationItemSelectedListener true

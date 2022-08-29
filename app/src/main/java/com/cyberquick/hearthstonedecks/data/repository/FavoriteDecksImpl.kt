@@ -11,33 +11,41 @@ class FavoriteDecksImpl @Inject constructor(
     private val roomDBApi: RoomDBApi,
 ) : FavoriteDecksRepository {
 
-    override suspend fun save(deck: Deck): Result<Unit> {
-        roomDBApi.markFavorite(deck, favorite = true)
+    override suspend fun save(deck: Deck, cards: List<Card>): Result<Unit> {
+        roomDBApi.insert(deck, cards)
         return Result.Success(Unit)
     }
 
-    override suspend fun remove(deck: Deck): Result<Unit> {
-        roomDBApi.markFavorite(deck, favorite = false)
+    override suspend fun remove(deckPreview: DeckPreview): Result<Unit> {
+        roomDBApi.remove(deckPreview)
         return Result.Success(Unit)
     }
 
     override suspend fun getPagesQuantity(): Result<Int> {
-        val pages = roomDBApi.getPagesQuantity(onlyFavorites = true)
+        val pages = roomDBApi.getPagesQuantity()
         return Result.Success(pages)
     }
 
     override suspend fun getPage(pageNumber: Int): Result<Page> {
-        val page = roomDBApi.getPage(pageNumber, onlyFavorites = true)
+        val page = roomDBApi.getPage(pageNumber)
         return Result.Success(page)
     }
 
     override suspend fun getDeck(deckPreview: DeckPreview): Result<Deck> {
-        return roomDBApi.getDeck(deckPreview)?.let { Result.Success(it) }
-            ?: Result.Error(NullPointerException())
+        val deck = roomDBApi.getDeck(deckPreview)
+        return deck?.let { Result.Success(it) } ?: Result.Error(NullPointerException())
+    }
+
+    override suspend fun getCards(deck: Deck): Result<List<Card>> {
+        val cards = roomDBApi.getCards(deck.deckPreview)
+        return when (cards.isNotEmpty()) {
+            true -> Result.Success(cards)
+            false -> Result.Error(Exception("Empty card list from database."))
+        }
     }
 
     override suspend fun isSaved(deckPreview: DeckPreview): Result<Boolean> {
-        val isFavorite = roomDBApi.isFavorite(deckPreview)
+        val isFavorite = roomDBApi.isSaved(deckPreview)
         return Result.Success(isFavorite)
     }
 }

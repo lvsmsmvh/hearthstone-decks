@@ -1,22 +1,29 @@
 package com.cyberquick.hearthstonedecks.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.ContextWrapper
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
+import java.lang.reflect.Field
 
-fun Context.toast(message: String) {
+fun Context.toast(message: String?) {
+    if (message == null) return
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
+
+fun Fragment.toast(message: String?) {
+    requireContext().toast(message)
 }
 
 tailrec fun Context.getActivity(): AppCompatActivity? = this as? AppCompatActivity
@@ -48,8 +55,8 @@ fun FragmentActivity.simpleNavigate(fragment: Fragment) {
 
 fun View.color(color: Int) = context.color(color)
 
-fun View.setActive(active: Boolean) {
-    alpha = if (active) 1f else 0.5f
+fun AppCompatButton.setActive(active: Boolean) {
+    alpha = if (active) 1f else 0.1f
     isEnabled = active
 }
 

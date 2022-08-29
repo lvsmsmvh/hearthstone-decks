@@ -40,9 +40,9 @@
             android:title="Other">
             <menu>
                 <item
-                    android:id="@+id/drawer_menu_item_logout"
+                    android:id="@+id/drawer_menu_item_exit"
                     android:icon="@drawable/ic_baseline_exit_to_app_24"
-                    android:title="Logout"/>
+                    android:title="Exit"/>
             </menu>
         </item>
     </group>

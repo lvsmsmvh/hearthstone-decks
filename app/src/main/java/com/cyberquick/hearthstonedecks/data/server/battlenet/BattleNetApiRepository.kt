@@ -1,15 +1,15 @@
-package com.cyberquick.hearthstonedecks.data.server.blizzard
+package com.cyberquick.hearthstonedecks.data.server.battlenet
 
-import com.cyberquick.hearthstonedecks.data.server.blizzard.hearthstone.HearthstoneApi
-import com.cyberquick.hearthstonedecks.data.server.blizzard.oauth.OAuthApi
-import com.cyberquick.hearthstonedecks.data.server.blizzard.oauth.OAuthToken
+import com.cyberquick.hearthstonedecks.data.server.battlenet.hearthstone.DeckApi
+import com.cyberquick.hearthstonedecks.data.server.battlenet.oauth.OAuthApi
+import com.cyberquick.hearthstonedecks.data.server.battlenet.oauth.OAuthToken
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.Card
 import java.lang.Exception
 import javax.inject.Inject
 
-class HearthstoneApiRepository @Inject constructor(
-    private val hearthstoneApi: HearthstoneApi,
+class BattleNetApiRepository @Inject constructor(
+    private val deckApi: DeckApi,
     private val oAuthApi: OAuthApi,
 ) {
 
@@ -39,7 +39,7 @@ class HearthstoneApiRepository @Inject constructor(
         }
 
         return try {
-            val deckResponse = hearthstoneApi.getDeck(
+            val deckResponse = deckApi.getDeck(
                 token = "Bearer $token",
                 code = code
             )

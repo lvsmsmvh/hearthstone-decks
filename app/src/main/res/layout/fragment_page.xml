@@ -1,85 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.fragments.PageFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    tools:context=".presentation.fragments.PageFragment">
 
     <LinearLayout
         android:id="@+id/layout_loaded"
-        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="center"
         android:layout_weight="1"
-        android:background="@color/colorPrimary"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        android:visibility="visible">
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycle_view_news"
-            android:visibility="visible"
+            android:id="@+id/recycle_view_decks"
+            android:theme="@style/RecyclerViewTheme"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <include
         android:id="@+id/layout_loading"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        layout="@layout/layout_progress_bar"
         android:layout_width="match_parent"
-        layout="@layout/layout_progress_bar"/>
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:visibility="gone" />
 
     <include
         android:id="@+id/layout_failed"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        layout="@layout/layout_failed"
         android:layout_width="match_parent"
-        layout="@layout/layout_failed"/>
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/layout_nav_buttons"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:padding="10dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:baselineAligned="false"
         android:clickable="true"
         android:focusable="true"
-        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:padding="10dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_previous"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/previous"
+            android:layout_height="35dp"
             android:layout_gravity="center"
-            android:background="@drawable/bck_for_description_button"
-            android:textColor="#664444"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:text="@string/previous"
+            android:textColor="@color/palette_text_on_button"
+            android:textSize="14sp" />
 
         <View
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"/>
+            android:layout_height="0dp"
+            android:layout_weight="0.1" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_next"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/next"
-            android:background="@drawable/bck_for_description_button"
+            android:layout_height="35dp"
             android:layout_gravity="center"
-            android:textColor="#664444"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:text="@string/next"
+            android:textColor="@color/palette_text_on_button"
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

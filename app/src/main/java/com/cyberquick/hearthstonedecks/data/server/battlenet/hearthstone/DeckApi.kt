@@ -1,8 +1,8 @@
-package com.cyberquick.hearthstonedecks.data.server.blizzard.hearthstone
+package com.cyberquick.hearthstonedecks.data.server.battlenet.hearthstone
 
 import retrofit2.http.*
 
-interface HearthstoneApi {
+interface DeckApi {
     @GET("hearthstone/deck")
 //    @Headers("Authorization: Bearer US43vH18oM5AucyuaaqR9LdsnGEa8H4EOP")
     suspend fun getDeck(

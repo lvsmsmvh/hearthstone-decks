@@ -16,18 +16,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OnlinePagesViewModel @Inject constructor(
+class OnlinePageViewModel @Inject constructor(
     getOnlinePagesQuantityUseCase: GetOnlinePagesQuantityUseCase,
     getOnlinePageUseCase: GetOnlinePageUseCase,
-) : PagesViewModel(getOnlinePagesQuantityUseCase, getOnlinePageUseCase)
+) : PageViewModel(getOnlinePagesQuantityUseCase, getOnlinePageUseCase)
 
 @HiltViewModel
-class FavoritePagesViewModel @Inject constructor(
+class FavoritePageViewModel @Inject constructor(
     getFavoritePagesQuantityUseCase: GetFavoritePagesQuantityUseCase,
     getFavoritePageUseCase: GetFavoritePageUseCase,
-) : PagesViewModel(getFavoritePagesQuantityUseCase, getFavoritePageUseCase)
+) : PageViewModel(getFavoritePagesQuantityUseCase, getFavoritePageUseCase)
 
-open class PagesViewModel(
+open class PageViewModel(
     private val getOnlinePagesQuantityUseCase: GetPagesQuantityUseCase,
     private val getOnlinePageUseCase: GetPageUseCase,
 ) : BaseViewModel() {
@@ -36,13 +36,14 @@ open class PagesViewModel(
     val page: LiveData<LoadingState<Page>> = MutableLiveData()
 
     fun loadAmountOfPages() = viewModelScope.launch(Dispatchers.IO) {
-        if (amountOfPages.value?.canBeLoaded() == false) return@launch
+        if (amountOfPages.value.isLoadingOrLoaded()) return@launch
         amountOfPages.postValue(LoadingState.Loading)
         amountOfPages.postValue(LoadingState.fromResult(getOnlinePagesQuantityUseCase()))
     }
 
     fun loadPage(pageNumber: Int) = viewModelScope.launch(Dispatchers.IO) {
-        if (page.value?.canBeLoaded() == false) return@launch
+        if (page.value.asLoaded()?.result?.number == pageNumber) return@launch
+        if (page.value.isLoading()) return@launch
         page.postValue(LoadingState.Loading)
         page.postValue(LoadingState.fromResult(getOnlinePageUseCase(pageNumber)))
     }
