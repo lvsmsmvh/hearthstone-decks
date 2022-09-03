@@ -1,10 +1,15 @@
 package com.cyberquick.hearthstonedecks.presentation.fragments
 
+import android.animation.LayoutTransition
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.app.ShareCompat
 import androidx.core.app.SharedElementCallback
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
@@ -12,17 +17,17 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
+import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentDeckBinding
-import com.cyberquick.hearthstonedecks.domain.entities.Deck
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
-import com.cyberquick.hearthstonedecks.presentation.adapters.CardAdapter
+import com.cyberquick.hearthstonedecks.presentation.adapters.CardSmallAdapter
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckViewHolder
-import com.cyberquick.hearthstonedecks.presentation.common.Toolbar
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.DeckViewModel
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.LoadingState
-import com.cyberquick.hearthstonedecks.presentation.viewmodels.SavedState.*
+import com.cyberquick.hearthstonedecks.presentation.viewmodels.SavedState.Saved
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.asLoaded
-import com.cyberquick.hearthstonedecks.utils.configureByDefault
+import com.cyberquick.hearthstonedecks.utils.drawable
+import com.cyberquick.hearthstonedecks.utils.expand
 import com.cyberquick.hearthstonedecks.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,8 +62,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
     }
 
     private fun initView() {
-        toolbar.setText(deckPreview.title)
-        toolbar.updateLeftButtonState(Toolbar.LeftButtonState.BackButton)
+        toolbarTitleChanger.setText(deckPreview.title)
 
         val content = DeckViewHolder.Content(
             root = binding.deckPreview.root,
@@ -79,76 +83,109 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
                         override fun onMapSharedElements(
                             names: List<String?>, sharedElements: MutableMap<String?, View?>
                         ) {
-                            sharedElements[names[0]] = binding.deckPreview.root
+                            val target = binding.deckPreview.root
+                            sharedElements[names[0]] = target
                         }
                     })
             },
         )
 
-        requireView().doOnPreDraw { startPostponedEnterTransition() }
-
-        toolbar.setRightButtonListener {
-            viewModel.stateDeck.value.asLoaded()?.result?.let { deck ->
-                viewModel.stateCards.value.asLoaded()?.result?.let { cards ->
-                    viewModel.clickedOnSaveButton(deck, cards)
-                    return@setRightButtonListener
-                }
-            }
-
-            toast("A deck is not loaded yet.")
+        binding.deckPreview.cardView.setOnClickListener {
+            requireActivity().onBackPressed()
         }
+
+        requireView().doOnPreDraw { startPostponedEnterTransition() }
     }
 
     private fun initData() {
-        viewModel.stateDeckSaved.observe(viewLifecycleOwner) { state ->
-            toolbar.updateRightButtonState(Toolbar.RightButtonState.SaveButton(state is Saved))
-        }
+        binding.layoutProgressBar.layoutProgressBar.isVisible = true
 
         viewModel.stateDeck.observe(viewLifecycleOwner) { state ->
-            binding.layoutProgressBar.layoutProgressBar.isVisible = state is LoadingState.Loading
-            binding.layoutFailed.layoutFailed.isVisible = state is LoadingState.Failed
-            binding.btnDescription.cardViewBtnDescription.isVisible = state is LoadingState.Loaded
+            Log.i("tag_state", "Observe DECK  : ${state.javaClass.simpleName}")
+            if (state is LoadingState.Loading) {
+                binding.layoutProgressBar.layoutProgressBar.isVisible = true
+            }
 
             if (state is LoadingState.Failed) {
-                binding.layoutFailed.tvErrorLoadingDataSmall.text = state.message
+                binding.layoutProgressBar.layoutProgressBar.isVisible = false
+                binding.layoutFailed.layoutFailed.isVisible = true
+                binding.layoutFailed.tvErrorLoadingDataSmall.text = state.exception.message.toString()
+                binding.layoutFailed.btnReloadData.setOnClickListener {
+                    binding.layoutFailed.layoutFailed.isVisible = false
+                    viewModel.loadDeck(deckPreview)
+                }
             }
 
             if (state is LoadingState.Loaded) {
                 val deck = state.result
                 viewModel.loadCards(deck)
-                binding.btnDescription.root.isVisible = deck.description.isNotBlank()
-                binding.btnDescription.detDescription.configureByDefault(
-                    text = deck.description,
-                    layoutContainer = binding.btnDescription.detDescriptionLayout,
-                    arrow = binding.btnDescription.detImgArrowUpDown,
-                )
-                binding.deckHolder.btnCopyDeck.setOnClickListener {
-                    copyToClipboard(deck)
+
+                binding.btnCopyDeck.setOnClickListener {
+                    copyToClipboard(deck.code)
+                }
+                binding.btnShare.setOnClickListener {
+                    shareLink(deck.deckPreview.deckUrl)
                 }
             }
         }
 
         viewModel.stateCards.observe(viewLifecycleOwner) { state ->
-            binding.layoutProgressBar.layoutProgressBar.isVisible = state is LoadingState.Loading
-            binding.layoutFailed.layoutFailed.isVisible = state is LoadingState.Failed
-            binding.deckHolder.llDeckHolder.isVisible = state is LoadingState.Loaded
+            Log.i("tag_state", "Observe CARDS  : ${state.javaClass.simpleName}")
+            if (state is LoadingState.Loading) {
+                binding.layoutProgressBar.layoutProgressBar.isVisible = true
+            }
 
             if (state is LoadingState.Failed) {
-                binding.layoutFailed.tvErrorLoadingDataSmall.text = state.message
+                binding.layoutProgressBar.layoutProgressBar.isVisible = false
+                binding.layoutFailed.layoutFailed.isVisible = true
+                binding.layoutFailed.tvErrorLoadingDataSmall.text = state.exception.message.toString()
+                binding.layoutFailed.btnReloadData.setOnClickListener {
+                    binding.layoutFailed.layoutFailed.isVisible = false
+                    viewModel.loadCards(viewModel.stateDeck.value.asLoaded()!!.result)
+                }
             }
 
             if (state is LoadingState.Loaded) {
                 val cards = state.result
 
-                binding.deckHolder.recycleViewCards.apply {
+                binding.recycleViewCards.apply {
                     layoutManager = GridLayoutManager(
-                        context, CardAdapter.TOTAL_ITEMS_HORIZONTAL,
+                        context, CardSmallAdapter.TOTAL_ITEMS_HORIZONTAL,
                         LinearLayoutManager.VERTICAL, false
                     )
-                    adapter = CardAdapter().apply { set(cards) }
+                    adapter = CardSmallAdapter().apply { set(cards) }
                     isNestedScrollingEnabled = false
                 }
+
+                binding.btnFavorite.layoutTransition
+                    .enableTransitionType(LayoutTransition.CHANGING)
+
+                binding.btnFavorite.setOnClickListener {
+                    val deck = viewModel.stateDeck.value.asLoaded()!!.result
+                    viewModel.clickedOnSaveButton(deck, cards)
+                }
+
+                doOnEnterTransitionEnd {
+                    Log.i("tag_state", "Observe CARDS  : doOnEnterTransitionEnd()")
+                    binding.layoutProgressBar.layoutProgressBar.isVisible = false
+                    expand(binding.deckHolder)
+                }
             }
+        }
+
+        viewModel.stateDeckSaved.observe(viewLifecycleOwner) { state ->
+            val isSaved = state is Saved
+            val newIconRes = when (isSaved) {
+                true -> R.drawable.ic_star_filled
+                false -> R.drawable.ic_star_not_filled
+            }
+            val newTextRes = when (isSaved) {
+                true -> R.string.saved
+                false -> R.string.save
+            }
+
+            binding.btnFavoriteIcon.setImageDrawable(drawable(newIconRes))
+            binding.btnFavoriteText.setText(newTextRes)
         }
 
         viewModel.error.observe(viewLifecycleOwner) { message ->
@@ -159,10 +196,17 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
         viewModel.loadDeck(deckPreview)
     }
 
-
-    private fun copyToClipboard(deck: Deck) {
+    private fun copyToClipboard(text: String) {
         (requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
-            .setPrimaryClip(ClipData.newPlainText("copy", deck.code))
+            .setPrimaryClip(ClipData.newPlainText("copy", text))
         toast("Copied to clipboard!")
+    }
+
+    private fun shareLink(url: String) {
+        ShareCompat.IntentBuilder(requireContext())
+            .setType("text/plain")
+            .setChooserTitle("Share URL")
+            .setText(url)
+            .startChooser()
     }
 }

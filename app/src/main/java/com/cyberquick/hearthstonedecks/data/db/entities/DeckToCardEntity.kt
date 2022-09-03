@@ -25,9 +25,11 @@ data class DeckToCardEntity(
     @PrimaryKey(autoGenerate = true) val randomId: Int = 0,
     val deck_id: Int,
     val card_id: Int,
+    val copies: Int,
 ) {
-    constructor(deckId: Int, cardId: Int) : this(
+    constructor(deckId: Int, cardId: Int, copies: Int) : this(
         deck_id = deckId,
         card_id = cardId,
+        copies = copies,
     )
 }

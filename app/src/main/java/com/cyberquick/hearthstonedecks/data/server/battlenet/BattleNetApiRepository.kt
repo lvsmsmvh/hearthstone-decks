@@ -14,14 +14,9 @@ class BattleNetApiRepository @Inject constructor(
 ) {
 
     private var oauthToken: OAuthToken? = null
+    private var currentToken: String? = null
 
     private suspend fun getToken(): Result<String> {
-        oauthToken?.let {
-            if (it.isValid()) {
-                return Result.Success(it.getToken())
-            }
-        }
-
         return try {
             val token = oAuthApi.retrieveOAuth().also {
                 oauthToken = OAuthToken(it)
@@ -33,19 +28,36 @@ class BattleNetApiRepository @Inject constructor(
     }
 
     suspend fun retrieveCards(code: String): Result<List<Card>> {
-        val token = when (val curToken = getToken()) {
-            is Result.Success -> curToken.data
-            is Result.Error -> return curToken
+        suspend fun getCards(token: String): Result<List<Card>> {
+            return try {
+                val deckResponse = deckApi.getDeck(
+                    token = "Bearer $token",
+                    code = code
+                )
+                Result.Success(deckResponse.cards)
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
         }
 
-        return try {
-            val deckResponse = deckApi.getDeck(
-                token = "Bearer $token",
-                code = code
-            )
-            Result.Success(deckResponse.cards)
-        } catch (e: Exception) {
-            Result.Error(e)
+        if (currentToken == null) {
+            currentToken = when (val tokenResult = getToken()) {
+                is Result.Success -> tokenResult.data
+                is Result.Error -> return Result.Error(tokenResult.exception)
+            }
+        }
+
+        return when (val result = getCards(currentToken!!)) {
+            is Result.Success -> result
+            else -> {
+                when (val tokenResult = getToken()) {
+                    is Result.Success -> {
+                        currentToken = tokenResult.data
+                        getCards(tokenResult.data)
+                    }
+                    is Result.Error -> Result.Error(tokenResult.exception)
+                }
+            }
         }
     }
 }

@@ -1,50 +1,66 @@
 package com.cyberquick.hearthstonedecks.presentation.activities
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
 import android.view.View
-import android.widget.AbsListView
-import android.widget.EdgeEffect
+import android.view.animation.DecelerateInterpolator
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.ActivityMainBinding
-import com.cyberquick.hearthstonedecks.presentation.common.Toolbar
+import com.cyberquick.hearthstonedecks.presentation.common.ToolbarTitleChanger
 import com.cyberquick.hearthstonedecks.presentation.fragments.*
 import com.cyberquick.hearthstonedecks.utils.color
-import com.cyberquick.hearthstonedecks.utils.drawable
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.reflect.Field
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), Toolbar {
+class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var drawerToggle: ActionBarDrawerToggle
+
+    private enum class HomeButton { Menu, Back; }
+
+    private var homeButton = HomeButton.Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.iconBack.setOnClickListener {
-            onBackPressed()
-        }
-
+        initToolbar()
         initNavigationDrawer()
+
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewCreated(
+                    fm: FragmentManager, fragment: Fragment,
+                    v: View, savedInstanceState: Bundle?
+                ) {
+                    super.onFragmentViewCreated(fm, fragment, v, savedInstanceState)
+                    Log.i("tag_nav", "Fragment created ${fragment.javaClass.simpleName}")
+                    val newHomeButton = when (fragment) {
+                        is DeckFragment, is AboutAppFragment -> HomeButton.Back
+                        else -> HomeButton.Menu
+                    }
+                    if (newHomeButton != homeButton) {
+                        homeButton = newHomeButton
+                        updateHomeButtonState(newHomeButton)
+                    }
+                }
+            }, false
+        )
         simpleNavigate(OnlinePageFragment())
-
-        setEdgeEffectColors()
-    }
-
-    @SuppressLint("SoonBlockedPrivateApi")
-    private fun setEdgeEffectColors() {
-
     }
 
     override fun onBackPressed() {
@@ -54,12 +70,47 @@ class MainActivity : AppCompatActivity(), Toolbar {
             finish()
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun initNavigationDrawer() {
-        binding.toolbar.iconMenu.setOnClickListener {
-            binding.drawerLayout.openDrawer(binding.navigationDrawer)
+    private fun initToolbar() {
+        setSupportActionBar(binding.toolbar)
+        (supportActionBar as ActionBar).apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
         }
 
+        drawerToggle = ActionBarDrawerToggle(
+            this,
+            binding.drawerLayout,
+            binding.toolbar,
+            R.string.open_menu_go_back,
+            R.string.open_menu_go_back,
+        )
+        drawerToggle.isDrawerIndicatorEnabled = true
+        drawerToggle.syncState()
+
+        binding.toolbar.setNavigationOnClickListener {
+            when (homeButton) {
+                HomeButton.Menu -> binding.drawerLayout.openDrawer(binding.navigationDrawer)
+                HomeButton.Back -> onBackPressed()
+            }
+        }
+    }
+
+    private fun updateHomeButtonState(state: HomeButton) {
+        val anim =
+            if (state == HomeButton.Back) ValueAnimator.ofFloat(0f, 1f)
+            else ValueAnimator.ofFloat(1f, 0f)
+
+        anim.addUpdateListener { valueAnimator ->
+            val slideOffset = valueAnimator.animatedValue as Float
+            drawerToggle.onDrawerSlide(binding.drawerLayout, slideOffset)
+        }
+        anim.interpolator = DecelerateInterpolator()
+        anim.duration = 200     // 400
+        anim.start()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun initNavigationDrawer() {
         binding.navigationDrawer.setNavigationItemSelectedListener { menuItem ->
             binding.drawerLayout.closeDrawer(binding.navigationDrawer)
             when (menuItem.itemId) {
@@ -90,7 +141,6 @@ class MainActivity : AppCompatActivity(), Toolbar {
             }
         })
     }
-
 
     private fun showExitWindow() {
         val dialog = MaterialAlertDialogBuilder(this)
@@ -127,36 +177,7 @@ class MainActivity : AppCompatActivity(), Toolbar {
             .setTextColor(color(R.color.colorPrimary))
     }
 
-    /**
-     * Toolbar configuration from Fragments
-     */
-
-    override fun updateLeftButtonState(left: Toolbar.LeftButtonState) {
-        binding.toolbar.iconBack.isVisible = left is Toolbar.LeftButtonState.BackButton
-        binding.toolbar.iconMenu.isVisible = left is Toolbar.LeftButtonState.MenuButton
-    }
-
-    override fun updateRightButtonState(right: Toolbar.RightButtonState) {
-        binding.toolbar.iconAdditional.isVisible = right is Toolbar.RightButtonState.SaveButton
-
-        when (right) {
-            is Toolbar.RightButtonState.SaveButton -> {
-                val iconId = when (right.isSaved) {
-                    true -> R.drawable.ic_star_filled
-                    false -> R.drawable.ic_star_not_filled
-                }
-                binding.toolbar.iconAdditional.setImageDrawable(drawable(iconId))
-            }
-            is Toolbar.RightButtonState.None -> {
-            }
-        }
-    }
-
-    override fun setRightButtonListener(onClickListener: View.OnClickListener) {
-        binding.toolbar.iconAdditional.setOnClickListener(onClickListener)
-    }
-
     override fun setText(text: String) {
-        binding.toolbar.toolbarText.text = text
+        binding.toolbar.title = text
     }
 }

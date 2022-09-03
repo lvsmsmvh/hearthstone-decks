@@ -22,10 +22,11 @@
         android:id="@+id/tv_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="5dp"
         android:background="@drawable/bg_card_amount"
         android:paddingHorizontal="3dp"
         android:text="x1"
         android:textColor="@color/palette_text_1"
-        android:textSize="11sp" />
+        android:textSize="12sp" />
 </FrameLayout>

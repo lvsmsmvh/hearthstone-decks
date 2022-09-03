@@ -8,7 +8,7 @@ import com.cyberquick.hearthstonedecks.data.db.entities.DeckEntity
 import com.cyberquick.hearthstonedecks.data.db.entities.DeckToCardEntity
 
 const val DATABASE_NAME = "room_local_db"
-private const val CURRENT_DB_VERSION = 5
+private const val CURRENT_DB_VERSION = 1
 
 @Database(
     entities = [

@@ -13,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/button_solid"
         android:paddingHorizontal="10dp"
         android:paddingVertical="8dp">
 
@@ -41,8 +42,8 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/palette_text_1"
-                android:textSize="12sp"
-                tools:text="Title" />
+                android:textSize="15sp"
+                tools:text="Title\ntitle2" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,36 +57,37 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:textColor="@color/palette_text_2"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     tools:text="Standard" />
 
                 <ImageView
                     android:id="@+id/deck_format_img"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginStart="5dp"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_wild"
                     app:tint="@color/palette_text_2" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/palette_text_3"
+                    android:paddingVertical="3dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@color/palette_text_3" />
 
                 <TextView
                     android:id="@+id/deck_dust"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/palette_text_2"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     tools:text="2340" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_marginStart="3dp"
                     android:contentDescription="@string/dust_icon"
                     android:src="@drawable/dust" />
@@ -101,8 +103,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:contentDescription="@string/dust_icon"
                 android:src="@drawable/ic_eye"
                 app:tint="@color/palette_text_3" />
@@ -113,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:textColor="@color/palette_text_3"
-                android:textSize="11sp"
+                android:textSize="14sp"
                 tools:text="2340" />
         </LinearLayout>
 
@@ -126,8 +128,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:contentDescription="@string/dust_icon"
                 android:src="@drawable/ic_baseline_calendar_month_24"
                 app:tint="@color/palette_text_3" />
@@ -138,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:textColor="@color/palette_text_3"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 tools:text="16 min ago" />
         </LinearLayout>
 

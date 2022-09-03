@@ -36,6 +36,8 @@
     <color name="palette_800">#424242</color>
     <color name="palette_850">#212121</color>
     <color name="palette_900">#121212</color>
+    <color name="palette_950">#0f0f0f</color>
+    <color name="palette_1000">#000000</color>
 
     <color name="palette_bg">@color/palette_900</color>
     <color name="palette_dark_transparent">#88000000</color>
@@ -44,7 +46,7 @@
     <color name="palette_text_1">@color/palette_50</color>
     <color name="palette_text_2">@color/palette_400</color>
     <color name="palette_text_3">@color/palette_600</color>
-    <color name="palette_text_on_button">@color/palette_800</color>
-    <color name="palette_ripple">#33ffffff</color>
+    <color name="palette_text_4">@color/palette_850</color>
+    <color name="palette_ripple">#22ffffff</color>
 
 </resources>

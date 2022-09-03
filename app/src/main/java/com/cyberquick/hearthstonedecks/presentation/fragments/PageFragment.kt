@@ -1,6 +1,7 @@
 package com.cyberquick.hearthstonedecks.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +10,16 @@ import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.TransitionInflater
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
+import com.cyberquick.hearthstonedecks.domain.common.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
-import com.cyberquick.hearthstonedecks.presentation.common.Toolbar
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.setActive
+import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
-
 
 @AndroidEntryPoint
 class OnlinePageFragment : PageFragment() {
@@ -27,6 +29,11 @@ class OnlinePageFragment : PageFragment() {
 @AndroidEntryPoint
 class FavoritePageFragment : PageFragment() {
     override val viewModel: FavoritePageViewModel by viewModels()
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateCurrentPage()
+    }
 }
 
 abstract class PageFragment : BaseFragment() {
@@ -36,6 +43,7 @@ abstract class PageFragment : BaseFragment() {
     private var totalPages by Delegates.notNull<Int>()
     private var currentPageNumber = 1
     private var deckPreviewIdClicked: Int? = null
+    private var clickedOnDeck = false
 
     abstract val viewModel: PageViewModel
 
@@ -45,7 +53,11 @@ abstract class PageFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPageBinding.inflate(layoutInflater)
-        postponeEnterTransition()
+        if (clickedOnDeck) {
+            postponeEnterTransition()
+            sharedElementEnterTransition = TransitionInflater.from(context)
+                .inflateTransition(android.R.transition.move)
+        }
         return binding.root
     }
 
@@ -57,31 +69,30 @@ abstract class PageFragment : BaseFragment() {
     }
 
     private fun initView() {
-        toolbar.updateLeftButtonState(Toolbar.LeftButtonState.MenuButton)
-        toolbar.updateRightButtonState(Toolbar.RightButtonState.None)
-
         deckAdapter = DeckAdapter()
         binding.recycleViewDecks.layoutManager = LinearLayoutManager(context)
         binding.recycleViewDecks.adapter = deckAdapter
         binding.layoutFailed.btnReloadData.setOnClickListener {
             loadPage(currentPageNumber)
         }
+
         binding.btnPrevious.setOnClickListener {
             loadPage(currentPageNumber - 1)
+            updateButtons()
         }
         binding.btnNext.setOnClickListener {
             loadPage(currentPageNumber + 1)
+            updateButtons()
         }
     }
 
     private fun initData() {
         viewModel.amountOfPages.observe(viewLifecycleOwner) { state ->
+            Log.i("tag_state", "STATE amountOfPages ${state.javaClass.simpleName}")
             when (state) {
-                is LoadingState.Idle -> {
-                }
                 is LoadingState.Loading -> {
                     updateLayout(state)
-                    toolbar.setText("Loading...")
+                    toolbarTitleChanger.setText("Loading...")
                 }
                 is LoadingState.Failed -> {
                     updateLayout(state)
@@ -89,23 +100,25 @@ abstract class PageFragment : BaseFragment() {
                 is LoadingState.Loaded -> {
                     totalPages = state.result
                     loadPage(currentPageNumber)
+                    updateButtons()
                 }
             }
         }
 
         viewModel.page.observe(viewLifecycleOwner) { state ->
+            Log.i("tag_state", "STATE page ${state.javaClass.simpleName}")
             when (state) {
-                is LoadingState.Idle -> {
-                }
                 is LoadingState.Loading -> {
+                    Log.i("tag_anim", "Page state : Loading")
                     updateLayout(state)
                 }
                 is LoadingState.Failed -> {
+                    Log.i("tag_anim", "Page state : Failed")
                     updateLayout(state)
                 }
                 is LoadingState.Loaded -> {
+                    Log.i("tag_anim", "Page state : Loaded")
                     updateLayout(state)
-
                     deckAdapter.set(
                         list = state.result.deckPreviews,
                         deckPreviewIdToAnimate = deckPreviewIdClicked,
@@ -114,21 +127,44 @@ abstract class PageFragment : BaseFragment() {
                                 override fun onMapSharedElements(
                                     names: List<String>, sharedElements: MutableMap<String, View>
                                 ) {
+                                    Log.i(
+                                        "tag_anim",
+                                        "setExitSharedElementCallback() : prepare for RETURN anim"
+                                    )
+                                    exitTransition = null
                                     sharedElements[names[0]] = it.content.root
                                 }
                             })
+                            if (clickedOnDeck) {
+                                Log.i(
+                                    "tag_anim",
+                                    "startPostponedEnterTransition"
+                                )
+                                clickedOnDeck = false
+                                requireView().doOnPreDraw {
+                                    startPostponedEnterTransition()
+                                }
+                            }
                         },
                         onClickListener = { data ->
+                            clickedOnDeck = true
                             deckPreviewIdClicked = data.deckPreview.id
+                            exitTransition = TransitionInflater.from(requireContext())
+                                .inflateTransition(R.transition.items_exit_transition)
 
                             val targetView = data.content.root
                             setExitSharedElementCallback(object : SharedElementCallback() {
                                 override fun onMapSharedElements(
                                     names: List<String>, sharedElements: MutableMap<String, View>
                                 ) {
+                                    Log.i(
+                                        "tag_anim",
+                                        "setExitSharedElementCallback() : prepare for ENTER anim"
+                                    )
                                     sharedElements[names[0]] = data.content.root
                                 }
                             })
+
                             val fragment = DeckFragment(data.deckPreview)
                             requireActivity().supportFragmentManager
                                 .beginTransaction()
@@ -139,8 +175,6 @@ abstract class PageFragment : BaseFragment() {
                                 .commit()
                         },
                     )
-
-                    requireView().doOnPreDraw { startPostponedEnterTransition() }
                 }
             }
         }
@@ -151,7 +185,7 @@ abstract class PageFragment : BaseFragment() {
     private fun loadPage(pageIndex: Int) {
         currentPageNumber = pageIndex
         viewModel.loadPage(pageIndex)
-        toolbar.setText("Page: $currentPageNumber/$totalPages")
+        toolbarTitleChanger.setText("Page: $currentPageNumber/$totalPages")
     }
 
     private fun updateLayout(loadingState: LoadingState<Any>) {
@@ -159,11 +193,36 @@ abstract class PageFragment : BaseFragment() {
         binding.layoutFailed.layoutFailed.isVisible = loadingState.isFailed()
         binding.layoutLoaded.isVisible = loadingState.isLoaded()
 
-        binding.btnPrevious.setActive(loadingState.isLoaded() && currentPageNumber > 1)
-        binding.btnNext.setActive(loadingState.isLoaded() && currentPageNumber < totalPages)
-
-        if (loadingState is LoadingState.Failed) {
-            binding.layoutFailed.tvErrorLoadingDataSmall.text = loadingState.message
+        when (val exception = (loadingState as? LoadingState.Failed)?.exception) {
+            null -> {
+                Log.i("tag_state", "Failed: exception is null")
+            }
+            is NoSavedDecksFoundException -> {
+                Log.i("tag_state", "Failed: exception is NoSavedDecksFoundException")
+                binding.layoutFailed.tvErrorLoadingData.text =
+                    getString(R.string.no_saved_decks_found_title)
+                binding.layoutFailed.tvErrorLoadingDataSmall.text =
+                    getString(R.string.no_saved_decks_found_desc)
+                binding.layoutFailed.btnReloadData.isVisible = false
+            }
+            else -> {
+                Log.i("tag_state", "Failed: exception is else")
+                binding.layoutFailed.tvErrorLoadingData.text =
+                    getString(R.string.error_loading_data)
+                binding.layoutFailed.tvErrorLoadingDataSmall.text = exception.message
+                binding.layoutFailed.btnReloadData.isVisible = true
+                if (this is OnlinePageFragment) {
+                    binding.layoutFailed.btnOpenFavorite.isVisible = true
+                    binding.layoutFailed.btnOpenFavorite.setOnClickListener {
+                        requireActivity().simpleNavigate(FavoritePageFragment())
+                    }
+                }
+            }
         }
+    }
+
+    private fun updateButtons() {
+        binding.btnPrevious.setActive(currentPageNumber > 1)
+        binding.btnNext.setActive(currentPageNumber < totalPages)
     }
 }

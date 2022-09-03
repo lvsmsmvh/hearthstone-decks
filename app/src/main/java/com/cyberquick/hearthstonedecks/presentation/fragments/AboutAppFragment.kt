@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.cyberquick.hearthstonedecks.BuildConfig
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentAboutAppBinding
-import com.cyberquick.hearthstonedecks.presentation.common.Toolbar
 
 class AboutAppFragment: BaseFragment() {
 
@@ -25,9 +24,7 @@ class AboutAppFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar.setText("About app")
-        toolbar.updateLeftButtonState(Toolbar.LeftButtonState.BackButton)
-        toolbar.updateRightButtonState(Toolbar.RightButtonState.None)
+        toolbarTitleChanger.setText("About app")
 
         val textForAppName = getString(R.string.app_name) + " (v" + BuildConfig.VERSION_NAME + ")"
         binding.tvAppNameInAbout.text = textForAppName

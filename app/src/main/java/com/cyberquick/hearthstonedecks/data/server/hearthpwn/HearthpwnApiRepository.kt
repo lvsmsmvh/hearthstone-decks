@@ -158,11 +158,11 @@ class HearthpwnApiRepository @Inject constructor() {
      */
     private fun formatToCorrectDate(source: String): String {
         var sourceCorrectable = source
-        val month = sourceCorrectable.take(2)
+        val month = sourceCorrectable.take(2).trim()
         sourceCorrectable = sourceCorrectable.substringAfter(" ")
-        val day = sourceCorrectable.take(2)
+        val day = sourceCorrectable.take(2).trim()
         sourceCorrectable = sourceCorrectable.substringAfter(" ")
-        val year = sourceCorrectable.take(4)
+        val year = sourceCorrectable.take(4).trim()
         return "$day.$month.$year"
     }
 }

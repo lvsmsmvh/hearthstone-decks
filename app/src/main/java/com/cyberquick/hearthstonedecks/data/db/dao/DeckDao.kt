@@ -13,7 +13,7 @@ interface DeckDao {
     @Query("SELECT * FROM decks LIMIT :from, :to")
     fun getDeckEntities(from: Int, to: Int): List<DeckEntity>
 
-    @Query("SELECT * FROM decks WHERE id LIKE :id")
+    @Query("SELECT * FROM decks WHERE id = :id")
     fun getDeckEntity(id: Int): DeckEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -29,15 +29,18 @@ interface DeckDao {
     fun delete(deckEntity: DeckEntity?)
 
     @Query(
-        "SELECT * FROM cards " +
-                "INNER JOIN deck_ids_to_card_ids ON id = card_id " +
-                "WHERE deck_id = :deckId"
+        "SELECT * FROM deck_ids_to_card_ids WHERE deck_id = :deckId"
     )
-    fun getCardsForDeckId(deckId: Int): List<CardEntity>
+    fun getCardsForDeckId(deckId: Int): List<DeckToCardEntity>
+
+    @Query(
+        "SELECT * FROM cards WHERE id IN (:cardIds)"
+    )
+    fun getCards(cardIds: List<Int>): List<CardEntity>
 
     @Query(
         "DELETE FROM cards WHERE id NOT IN " +
-                "(SELECT A.deck_id FROM deck_ids_to_card_ids AS A)"
+                "(SELECT A.card_id FROM deck_ids_to_card_ids AS A)"
     )
     fun deleteCardsThatDoesNotHaveDeck()
 }

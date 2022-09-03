@@ -3,6 +3,7 @@ package com.cyberquick.hearthstonedecks.data.db
 import com.cyberquick.hearthstonedecks.data.db.dao.DeckDao
 import com.cyberquick.hearthstonedecks.data.db.entities.DeckToCardEntity
 import com.cyberquick.hearthstonedecks.data.db.mappers.DBMapper
+import com.cyberquick.hearthstonedecks.domain.common.toCardsCountable
 import com.cyberquick.hearthstonedecks.domain.entities.Card
 import com.cyberquick.hearthstonedecks.domain.entities.Deck
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
@@ -20,12 +21,16 @@ class RoomDBApi @Inject constructor(
     }
 
     fun insert(deck: Deck, cards: List<Card>) {
+        val cardsCountable = cards.toCardsCountable()
+
         deckDao.insert(dbMapper.toDeckEntity(deck))
-        cards.forEach { card ->
-            deckDao.insert(dbMapper.toCardEntity(card))
-            deckDao.insert(DeckToCardEntity(
-                deckId = deck.deckPreview.id, cardId = card.id
-            ))
+        cardsCountable.forEach {
+            deckDao.insert(dbMapper.toCardEntity(it.card))
+            deckDao.insert(
+                DeckToCardEntity(
+                    deckId = deck.deckPreview.id, cardId = it.card.id, copies = it.amount
+                )
+            )
         }
     }
 
@@ -58,6 +63,13 @@ class RoomDBApi @Inject constructor(
     }
 
     fun getCards(deckPreview: DeckPreview): List<Card> {
-        return deckDao.getCardsForDeckId(deckPreview.id).map { dbMapper.toCard(it) }
+        val cardIds = mutableListOf<Int>()
+        deckDao.getCardsForDeckId(deckPreview.id).forEach { deckToCardEntity ->
+            repeat(deckToCardEntity.copies) { cardIds.add(deckToCardEntity.card_id) }
+        }
+        val cardSet = deckDao.getCards(cardIds).map { dbMapper.toCard(it) }
+        return cardIds.map { id ->
+            cardSet.first { card -> card.id == id }
+        }
     }
 }
