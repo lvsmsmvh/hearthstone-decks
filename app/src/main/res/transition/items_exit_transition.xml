@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="200"
+    android:duration="250"
     android:interpolator="@android:interpolator/fast_out_slow_in"
     android:startDelay="0">
     <fade>
-        <targets android:excludeId="@+id/layout_nav_buttons">
-            <target android:targetId="@+id/card_view" />
-        </targets>
+        <targets android:targetId="@id/card_view" />
     </fade>
+
     <slide android:slideEdge="start">
-        <targets android:excludeId="@+id/layout_nav_buttons">
-            <target android:targetId="@+id/card_view"/>
-        </targets>
+        <targets android:targetId="@id/card_view" />
     </slide>
+
+    <!--    <explode>-->
+    <!--        <targets android:targetId="@+id/layout_nav_buttons" />-->
+    <!--    </explode>-->
+
+    <!--    <fade>-->
+    <!--        <targets android:excludeId="@id/layout_nav_buttons" />-->
+    <!--    </fade>-->
+    <!--    <slide android:slideEdge="start">-->
+    <!--        <targets android:excludeId="@id/layout_nav_buttons" />-->
+    <!--    </slide>-->
+
+
+    <!--    <fade>-->
+    <!--        <targets android:excludeId="@+id/layout_nav_buttons">-->
+    <!--            <target android:targetId="@+id/card_view" />-->
+    <!--        </targets>-->
+    <!--    </fade>-->
+    <!--    <slide android:slideEdge="start">-->
+    <!--        <targets android:excludeId="@+id/layout_nav_buttons">-->
+    <!--            <target android:targetId="@+id/card_view"/>-->
+    <!--        </targets>-->
+    <!--    </slide>-->
 </transitionSet>

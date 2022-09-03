@@ -55,8 +55,6 @@ abstract class PageFragment : BaseFragment() {
         binding = FragmentPageBinding.inflate(layoutInflater)
         if (clickedOnDeck) {
             postponeEnterTransition()
-            sharedElementEnterTransition = TransitionInflater.from(context)
-                .inflateTransition(android.R.transition.move)
         }
         return binding.root
     }
@@ -135,16 +133,16 @@ abstract class PageFragment : BaseFragment() {
                                     sharedElements[names[0]] = it.content.root
                                 }
                             })
-                            if (clickedOnDeck) {
-                                Log.i(
-                                    "tag_anim",
-                                    "startPostponedEnterTransition"
-                                )
-                                clickedOnDeck = false
-                                requireView().doOnPreDraw {
-                                    startPostponedEnterTransition()
-                                }
-                            }
+//                            if (clickedOnDeck) {
+//                                Log.i(
+//                                    "tag_anim",
+//                                    "startPostponedEnterTransition"
+//                                )
+//                                clickedOnDeck = false
+//                                requireView().doOnPreDraw {
+//                                    startPostponedEnterTransition()
+//                                }
+//                            }
                         },
                         onClickListener = { data ->
                             clickedOnDeck = true
@@ -180,6 +178,13 @@ abstract class PageFragment : BaseFragment() {
         }
 
         viewModel.loadAmountOfPages()
+
+        if (clickedOnDeck) {
+            clickedOnDeck = false
+            requireView().doOnPreDraw {
+                startPostponedEnterTransition()
+            }
+        }
     }
 
     private fun loadPage(pageIndex: Int) {
