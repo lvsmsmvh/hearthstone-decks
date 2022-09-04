@@ -3,7 +3,6 @@ package com.cyberquick.hearthstonedecks.presentation.fragments
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.transition.Transition
@@ -15,57 +14,6 @@ abstract class BaseFragment : Fragment() {
 
     private var enterTransitionEnded = false
     private var enterTransitionEndedCallback: (() -> Unit)? = null
-
-    private var exitTransitionEnded = false
-    private var exitTransitionEndedCallback: (() -> Unit)? = null
-
-    protected fun doOnEnterTransitionEnd(callback: () -> Unit) {
-        when (enterTransitionEnded) {
-            true -> {
-                callback()
-            }
-            false -> {
-                enterTransitionEndedCallback = callback
-            }
-        }
-    }
-
-    protected fun doOnExitTransitionEnd1(callback: () -> Unit) {
-        when (exitTransitionEnded) {
-            true -> {
-                callback()
-            }
-            false -> {
-                exitTransitionEndedCallback = callback
-            }
-        }
-    }
-
-    protected fun doOnExitTransitionEnd(callback: () -> Unit) {
-        val listener = object : Transition.TransitionListener {
-            override fun onTransitionStart(transition: Transition) {
-                Log.i("tag_shared", "onExitTransitionStart")
-            }
-
-            override fun onTransitionEnd(transition: Transition) {
-                Log.i("tag_shared", "onExitTransitionEnd")
-                callback()
-                transition.removeListener(this)
-            }
-
-            override fun onTransitionCancel(transition: Transition) {
-            }
-
-            override fun onTransitionPause(transition: Transition) {
-            }
-
-            override fun onTransitionResume(transition: Transition) {
-            }
-        }
-        Log.i("tag_shared", "exit transition is null = " +
-                "${(exitTransition as? Transition) == null}")
-        (exitTransition as? Transition)?.addListener(listener) ?: callback()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -100,22 +48,25 @@ abstract class BaseFragment : Fragment() {
         })
     }
 
-    private fun addExitTransitionListener() {
-        val transition = exitTransition as? Transition
-        if (transition == null) exitTransitionEnded = true
-        transition?.addListener(object : Transition.TransitionListener {
+    protected fun doOnEnterTransitionEnd(callback: () -> Unit) {
+        when (enterTransitionEnded) {
+            true -> {
+                callback()
+            }
+            false -> {
+                enterTransitionEndedCallback = callback
+            }
+        }
+    }
+
+    protected fun doOnExitTransitionEnd(callback: () -> Unit) {
+        val listener = object : Transition.TransitionListener {
             override fun onTransitionStart(transition: Transition) {
-                Log.i("tag_shared", "onExitTransitionStart1")
             }
 
             override fun onTransitionEnd(transition: Transition) {
-                Log.i("tag_shared", "onExitTransitionEnded1")
-                exitTransitionEnded = true
-                // A period of time needed for the animation to become
-                // ready for showing after a transition is finished
-                Handler(Looper.getMainLooper()).postDelayed({
-                    exitTransitionEndedCallback?.invoke()
-                }, 100L)
+                callback()
+                transition.removeListener(this)
             }
 
             override fun onTransitionCancel(transition: Transition) {
@@ -126,6 +77,7 @@ abstract class BaseFragment : Fragment() {
 
             override fun onTransitionResume(transition: Transition) {
             }
-        })
+        }
+        (exitTransition as? Transition)?.addListener(listener) ?: callback()
     }
 }

@@ -7,12 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.utils.delayIfExecutionTimeIsSmall
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.yield
+import kotlinx.coroutines.*
 
-open class BaseViewModel: ViewModel() {
+open class BaseViewModel : ViewModel() {
 
     /**
      * We need this jobs to cancel them in the 'clear()' method,

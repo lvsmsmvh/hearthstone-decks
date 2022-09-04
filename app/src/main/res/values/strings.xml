@@ -67,7 +67,7 @@
     <string name="text">Text:</string>
     <string name="flavor_text">Flavor text:</string>
 
-    <string name="artist_name_ph"><b>Artist:</b> %s</string>
+    <string name="artist_ph"><b>Artist:</b> %s</string>
     <string name="quote_ph">%s</string>
     <string name="copy">Copy</string>
     <string name="save">Save</string>

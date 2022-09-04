@@ -1,42 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:animateLayoutChanges="true"
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/blurred_background"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@null"
-        android:scaleType="fitXY" />
+        android:orientation="vertical">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/blurred_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="fitXY" />
 
-    <LinearLayout
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
-<!--        <TextView-->
-<!--            android:id="@+id/view_pager_indicator_text"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textColor="@color/palette_text_1"-->
-<!--            android:textSize="15sp"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="horizontal" />-->
-        <LinearLayout
-            android:id="@+id/view_pager_indicators"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_height="2dp"
-            android:visibility="gone"
-            android:orientation="horizontal" />
-    </LinearLayout>
+        android:background="@color/text_shadow"
+        android:paddingHorizontal="30dp"
+        android:animateLayoutChanges="true"
+        app:behavior_peekHeight="80dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:paddingHorizontal="25dp"
+            android:animateLayoutChanges="true"
+            android:paddingTop="20dp"
+            android:paddingBottom="40dp">
+
+            <TextView
+                android:id="@+id/quote"
+                style="@style/LightTextWithShadow"
+                android:textSize="15sp"
+                android:animateLayoutChanges="true"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/artist"
+                style="@style/LightTextWithShadow"
+                android:layout_gravity="end"
+                android:layout_marginTop="5dp"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/bottom_sheet_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_gradient_transparent" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,6 +3,19 @@ package com.cyberquick.hearthstonedecks.utils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
+fun <A, B> transform(
+    source: LiveData<A>,
+    mapper: (A) -> Unit,
+): LiveData<B> {
+    val mediatorLiveData = MediatorLiveData<B>()
+
+    mediatorLiveData.addSource(source) { aValue ->
+        mapper(aValue)
+    }
+
+    return mediatorLiveData
+}
+
 fun <A, B> transformWithDefault(
     source: LiveData<A>,
     defaultValue: B,

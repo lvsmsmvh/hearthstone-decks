@@ -5,18 +5,15 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.DialogCardFullSizeBinding
 import com.cyberquick.hearthstonedecks.domain.entities.CardCountable
 import com.cyberquick.hearthstonedecks.presentation.adapters.CardFullSizeAdapter
 import com.cyberquick.hearthstonedecks.presentation.common.entities.CardFullSizeData
-import com.cyberquick.hearthstonedecks.utils.color
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import jp.wasabeef.blurry.Blurry
 
 class DialogPreviewCard(
@@ -45,38 +42,44 @@ class DialogPreviewCard(
             dismiss()
         }
 
-        repeat(cards.size) {
-            layoutInflater.inflate(R.layout.item_view_pager_indicator, binding.viewPagerIndicators)
+        val bottomSheet = binding.bottomSheet
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheet.setOnClickListener {
+            bottomSheetBehavior.state = when (bottomSheetBehavior.state) {
+                BottomSheetBehavior.STATE_EXPANDED -> BottomSheetBehavior.STATE_COLLAPSED
+                else -> BottomSheetBehavior.STATE_EXPANDED
+            }
         }
 
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            private var currentSelectedPage = 0
-            set(value) {
-                updatePosition(field, false)
-                updatePosition(value, true)
-                field = value
-            }
-
             override fun onPageSelected(position: Int) {
-                currentSelectedPage = position
-            }
-
-            private fun updatePosition(position: Int, isSelected: Boolean) {
-                val tintRes = if (isSelected) R.color.palette_text_1 else R.color.palette_950
-                (binding.viewPagerIndicators[position] as ImageView).setColorFilter(
-                    context.color(tintRes), PorterDuff.Mode.SRC_IN
-                )
+                super.onPageSelected(position)
+                val card = cards[position].cardCountable.card
+                binding.artist.text = context.getString(R.string.artist_ph, card.artistName)
+                binding.quote.text = context.getString(R.string.quote_ph, card.flavorText)
             }
         })
 
-        binding.viewPager.adapter = CardFullSizeAdapter().apply { set(cards) }
+        binding.artist.text = context.getString(R.string.artist_ph, selectedCard.card.artistName)
+        binding.quote.text = context.getString(R.string.quote_ph, selectedCard.card.flavorText)
+
+        binding.viewPager.offscreenPageLimit = cards.size
+        binding.viewPager.adapter = CardFullSizeAdapter(
+            onPreviousItemClicked = { instantOpenPage(binding.viewPager.currentItem - 1) },
+            onNextItemClicked = { instantOpenPage(binding.viewPager.currentItem + 1) },
+        ).apply { set(cards) }
+
         val selectedCardIndex = cards.indexOfFirst { it.cardCountable == selectedCard }
-        binding.viewPager.setCurrentItem(selectedCardIndex, false)
+        instantOpenPage(selectedCardIndex)
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         onClosed()
+    }
+
+    private fun instantOpenPage(index: Int) {
+        binding.viewPager.setCurrentItem(index, false)
     }
 
     private fun screenShot(view: View): Bitmap? {

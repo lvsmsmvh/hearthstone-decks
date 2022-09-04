@@ -12,6 +12,7 @@ import androidx.transition.TransitionInflater
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
 import com.cyberquick.hearthstonedecks.domain.common.NoSavedDecksFoundException
+import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.color
@@ -36,6 +37,7 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
 
     private var deckIdClicked: Int? = null
     private var clickedOnDeck = false
+    private var wasPreviouslyLoaded = false
 
     abstract val viewModel: PageViewModel
 
@@ -59,8 +61,6 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
     }
 
     private fun initView() {
-        toolbarTitleChanger.setText(getString(R.string.loading))
-
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
 
         deckAdapter = DeckAdapter()
@@ -72,6 +72,9 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
     }
 
     private fun initData() {
+        Log.i("tag_page", "PageFragment: pageLoading state = ${viewModel.pageLoading.value}")
+        Log.i("tag_page", "PageFragment: onViewCreated")
+
         viewModel.positionOutput.observe(viewLifecycleOwner) {
             Log.i("tag_lv", "POSITION change: ${it.javaClass.simpleName}")
             val text = when (it) {
@@ -83,11 +86,11 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
 
         viewModel.allowNavigation.observe(viewLifecycleOwner) {
             Log.i("tag_lv", "ALLOW NAVIGATION change: $it")
-            updateButtons(it)
+            updateMenuButtons(it)
         }
 
         viewModel.totalPagesAmountLoading.observe(viewLifecycleOwner) { state ->
-            Log.i("tag_state", "STATE amountOfPages ${state.javaClass.simpleName}")
+            Log.i("tag_page", "STATE amountOfPages ${state.javaClass.simpleName}")
             when (state) {
                 is LoadingState.Loading -> {
                     updateLayout(state)
@@ -96,13 +99,13 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
                     updateLayout(state)
                 }
                 is LoadingState.Loaded -> {
-                    viewModel.updateCurrentPage(evenIfLoaded = this is FavoritePageFragment)
                 }
             }
         }
 
         viewModel.pageLoading.observe(viewLifecycleOwner) { state ->
-            Log.i("tag_state", "STATE page ${state.javaClass.simpleName}")
+            val extraInfo = state.asLoaded()?.result?.deckPreviews?.size?.toString() ?: ""
+            Log.i("tag_page", "STATE page ${state.javaClass.simpleName} $extraInfo")
             when (state) {
                 is LoadingState.Loading -> {
                     updateLayout(state)
@@ -112,55 +115,16 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
                 }
                 is LoadingState.Loaded -> {
                     updateLayout(state)
-                    deckAdapter.set(
-                        list = state.result.deckPreviews,
-                        deckPreviewIdToAnimate = deckIdClicked,
-                        onAnimateItemReady = {
-                            (exitTransition as? Transition)?.excludeTarget(
-                                it.content.root, true
-                            )
-                            setExitSharedElementCallback(object : SharedElementCallback() {
-                                override fun onMapSharedElements(
-                                    names: List<String>, sharedElements: MutableMap<String, View>
-                                ) {
-                                    exitTransition = null
-                                    sharedElements[names[0]] = it.content.root
-                                }
-                            })
-                        },
-                        onClickListener = { data ->
-                            clickedOnDeck = true
-                            deckIdClicked = data.deckPreview.id
-                            val targetView = data.content.root
-
-                            val transition = TransitionInflater.from(requireContext())
-                                .inflateTransition(R.transition.items_exit_transition)
-                            transition.addTarget(R.id.card_view)
-                            transition.excludeTarget(targetView, true)
-                            exitTransition = transition
-                            setExitSharedElementCallback(object : SharedElementCallback() {
-                                override fun onMapSharedElements(
-                                    names: List<String>, sharedElements: MutableMap<String, View>
-                                ) {
-                                    sharedElements[names[0]] = targetView
-                                }
-                            })
-
-                            val fragment = DeckFragment(data.deckPreview)
-                            requireActivity().supportFragmentManager
-                                .beginTransaction()
-                                .setReorderingAllowed(true)
-                                .addSharedElement(targetView, targetView.transitionName)
-                                .replace(R.id.fragment_container, fragment)
-                                .addToBackStack(fragment.javaClass.name)
-                                .commit()
-                        },
-                    )
+                    setItems(state.result.deckPreviews)
+                    wasPreviouslyLoaded = true
                 }
             }
         }
 
+
+
         doOnExitTransitionEnd {
+            Log.i("tag_page", "updateAmountOfPages")
             viewModel.updateAmountOfPages(evenIfLoaded = this is FavoritePageFragment)
         }
 
@@ -172,10 +136,59 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         }
     }
 
+    private fun setItems(deckPreviews: List<DeckPreview>) = deckAdapter.set(
+        list = deckPreviews,
+        deckPreviewIdToAnimate = deckIdClicked,
+        onAnimateItemReady = {
+            (exitTransition as? Transition)?.excludeTarget(
+                it.content.root, true
+            )
+            setExitSharedElementCallback(object : SharedElementCallback() {
+                override fun onMapSharedElements(
+                    names: List<String>, sharedElements: MutableMap<String, View>
+                ) {
+                    exitTransition = null
+                    sharedElements[names[0]] = it.content.root
+                }
+            })
+        },
+        onClickListener = { data ->
+            clickedOnDeck = true
+            deckIdClicked = data.deckPreview.id
+            val targetView = data.content.root
+
+            val transition = TransitionInflater.from(requireContext())
+                .inflateTransition(R.transition.items_exit_transition)
+            transition.addTarget(R.id.card_view)
+            transition.excludeTarget(targetView, true)
+            exitTransition = transition
+            setExitSharedElementCallback(object : SharedElementCallback() {
+                override fun onMapSharedElements(
+                    names: List<String>, sharedElements: MutableMap<String, View>
+                ) {
+                    sharedElements[names[0]] = targetView
+                }
+            })
+
+            val fragment = DeckFragment(data.deckPreview)
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .addSharedElement(targetView, targetView.transitionName)
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(fragment.javaClass.name)
+                .commit()
+        },
+    )
+
     private fun updateLayout(loadingState: LoadingState<Any>) {
-        binding.layoutLoading.layoutProgressBar.isVisible = loadingState.isLoading()
+        val hideLoading = this is FavoritePageFragment && wasPreviouslyLoaded
+        Log.i("tag_page", "hideLoading $hideLoading")
+        binding.layoutLoading.layoutProgressBar.isVisible =
+            loadingState.isLoading() && !hideLoading
         binding.layoutFailed.layoutFailed.isVisible = loadingState.isFailed()
         binding.layoutLoaded.isVisible = loadingState.isLoaded()
+                || (loadingState.isLoading() && hideLoading)
 
         when (val exception = (loadingState as? LoadingState.Failed)?.exception) {
             null -> {}
@@ -203,10 +216,9 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        Log.i("tag_menu", "onCreateMenu")
         menuInflater.inflate(R.menu.menu_fragment_deck, menu)
         this.menu = menu
-        updateButtons(viewModel.allowNavigation.value!!)
+        updateMenuButtons(viewModel.allowNavigation.value!!)
     }
 
     override fun onDestroyView() {
@@ -222,11 +234,12 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         return true
     }
 
-    private fun updateButtons(allowNavigation: PageViewModel.AllowNavigation) = menu?.let { menu ->
-        menu.previousButton().update(allowNavigation.previous)
-        menu.nextButton().update(allowNavigation.next)
-        onPrepareMenu(menu)
-    }
+    private fun updateMenuButtons(allowNavigation: PageViewModel.AllowNavigation) =
+        menu?.let { menu ->
+            menu.previousButton().update(allowNavigation.previous)
+            menu.nextButton().update(allowNavigation.next)
+            onPrepareMenu(menu)
+        }
 
     private fun Menu.previousButton() = findItem(R.id.menu_button_previous)
     private fun Menu.nextButton() = findItem(R.id.menu_button_next)

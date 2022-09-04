@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.presentation.common.entities.CardFullSizeData
 
-class CardFullSizeAdapter: RecyclerView.Adapter<CardFullSizeViewHolder>() {
+class CardFullSizeAdapter(
+    private val onPreviousItemClicked: () -> Unit,
+    private val onNextItemClicked: () -> Unit,
+): RecyclerView.Adapter<CardFullSizeViewHolder>() {
 
     private val listOfCards = mutableListOf<CardFullSizeData>()
 
@@ -20,7 +23,7 @@ class CardFullSizeAdapter: RecyclerView.Adapter<CardFullSizeViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CardFullSizeViewHolder, position: Int) {
-        holder.bind(listOfCards[position])
+        holder.bind(listOfCards[position], onPreviousItemClicked, onNextItemClicked)
     }
 
     fun set(list: List<CardFullSizeData>) {
