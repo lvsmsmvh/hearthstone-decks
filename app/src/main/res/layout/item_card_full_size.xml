@@ -37,17 +37,6 @@
             app:layout_constraintGuide_percent="0.85" />
 
         <ImageView
-            android:id="@+id/card_full_size_image_preview"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@null"
-            android:src="@drawable/card_placeholder"
-            app:layout_constraintBottom_toBottomOf="@id/card_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/card_top" />
-
-        <ImageView
             android:id="@+id/card_full_size_image"
             android:layout_width="0dp"
             android:layout_height="0dp"

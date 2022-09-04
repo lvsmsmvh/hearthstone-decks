@@ -27,7 +27,21 @@ class HearthpwnApiRepository @Inject constructor() {
     }
 
     fun getPagesQuantity(): Result<Int> {
-        return Result.Success(100)
+        val document = try {
+            getDocument(url = "$API_URL_PAGE&page=1")
+        } catch (e: IOException) {
+            return Result.Error(e)
+        }
+
+        val totalPages = document
+            .select("ul[class=b-pagination-list paging-list j-tablesorter-pager j-listing-pagination]")
+            .select("li")
+            .eq(6)
+            .select("a")
+            .text()
+            .toInt()
+
+        return Result.Success(totalPages)
     }
 
     fun getPage(pageNumber: Int): Result<Page> {
@@ -43,6 +57,7 @@ class HearthpwnApiRepository @Inject constructor() {
             .select("table[class=listing listing-decks b-table b-table-a]")
             .select("tbody")
             .select("tr")
+
 
         for (i in 0 until element.size) {
             val currentElement = element.eq(i)

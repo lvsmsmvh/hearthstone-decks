@@ -1,8 +1,6 @@
 package com.cyberquick.hearthstonedecks.presentation.adapters
 
 import android.annotation.SuppressLint
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -10,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.presentation.common.entities.CardFullSizeData
+import com.cyberquick.hearthstonedecks.utils.drawable
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.squareup.picasso.Picasso
 
@@ -17,17 +16,16 @@ class CardFullSizeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     @SuppressLint("SetTextI18n")
     fun bind(
-        cardFullSizeData: CardFullSizeData,
+        cardData: CardFullSizeData,
     ) {
         val context = view.context
-        val card = cardFullSizeData.cardCountable.card
+        val card = cardData.cardCountable.card
 
-        val imagePreview = view.findViewById<ImageView>(R.id.card_full_size_image_preview)
-        imagePreview.setImageDrawable(cardFullSizeData.preview)
-
+        val placeholder = cardData.preview ?: view.context.drawable(R.drawable.card_loading)
         Picasso.with(context)
             .load(card.image)
-            .error(R.drawable.ic_failed)
+            .placeholder(placeholder)
+            .error(R.drawable.card_failed)
             .fit()
             .centerInside()
             .into(view.findViewById<ImageView>(R.id.card_full_size_image))
@@ -38,7 +36,7 @@ class CardFullSizeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         quote.text = context.getString(R.string.quote_ph, card.flavorText)
         author.text = context.getString(R.string.artist_name_ph, card.artistName)
-        copies.text = "x${cardFullSizeData.cardCountable.amount}"
+        copies.text = "x${cardData.cardCountable.amount}"
 
         val bottomSheet = view.findViewById<FrameLayout>(R.id.bottom_sheet)
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)

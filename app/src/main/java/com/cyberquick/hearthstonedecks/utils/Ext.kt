@@ -4,16 +4,15 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.ContextWrapper
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.isVisible
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -35,9 +34,21 @@ tailrec fun Context.getActivity(): AppCompatActivity? = this as? AppCompatActivi
     ?: (this as? ContextWrapper)?.baseContext?.getActivity()
 
 fun Context.color(color: Int) = ContextCompat.getColor(this, color)
+fun Fragment.color(color: Int) = requireContext().color(color)
 
-fun Context.drawable(drawable: Int) = ContextCompat.getDrawable(this, drawable)
-fun Fragment.drawable(drawable: Int) = requireContext().drawable(drawable)
+fun Context.drawable(drawableRes: Int, tintColorRes: Int? = null): Drawable {
+    val drawable = ContextCompat.getDrawable(this, drawableRes)!!
+    tintColorRes?.let {
+        DrawableCompat.setTint(
+            DrawableCompat.wrap(drawable),
+            ContextCompat.getColor(this, it)
+        )
+    }
+    return drawable
+}
+fun Fragment.drawable(drawableRes: Int, tintColorRes: Int? = null): Drawable {
+    return requireContext().drawable(drawableRes, tintColorRes)
+}
 
 fun FragmentManager.isFragmentInBackstack(tag: String): Boolean {
     for (entry in 0 until backStackEntryCount) {
@@ -62,8 +73,9 @@ fun FragmentActivity.simpleNavigate(fragment: Fragment) {
 fun View.color(color: Int) = context.color(color)
 
 fun View.setActive(active: Boolean) {
-    alpha = if (active) 1f else 0.1f
+    background.setTint(color(if (active) R.color.palette_100 else R.color.palette_700))
     isEnabled = active
+    isClickable = active
 }
 
 suspend fun delayIfExecutionTimeIsSmall(executionTime: Long) {
@@ -111,31 +123,30 @@ fun newText(target: TextView, text: String) {
     })
 }
 
-fun expand(target: View) {
+fun View.expand() {
     val matchParentMeasureSpec = View.MeasureSpec.makeMeasureSpec(
-        (target.parent as View).width, View.MeasureSpec.EXACTLY
+        (parent as View).width, View.MeasureSpec.EXACTLY
     )
     val wrapContentMeasureSpec = View.MeasureSpec.makeMeasureSpec(
         0, View.MeasureSpec.UNSPECIFIED
     )
-    target.measure(matchParentMeasureSpec, wrapContentMeasureSpec)
-    val targetHeight = min(target.measuredHeight, (target.parent as View).height)
-    val durations = ((targetHeight / target.context.resources
-        .displayMetrics.density)).toLong() / 4
+    measure(matchParentMeasureSpec, wrapContentMeasureSpec)
+    val targetHeight = min(measuredHeight, (parent as View).height)
+    val durations = (targetHeight / context.resources.displayMetrics.density).toLong() / 4
 
-    target.layoutParams.height = 0
-    target.visibility = View.VISIBLE
+    layoutParams.height = 0
+    visibility = View.VISIBLE
 
-    target.startAnimation(object : Animation() {
+    startAnimation(object : Animation() {
         override fun applyTransformation(
             interpolatedTime: Float,
             t: Transformation
         ) {
-            target.layoutParams.height = when (interpolatedTime) {
+            layoutParams.height = when (interpolatedTime) {
                 1f -> LinearLayout.LayoutParams.WRAP_CONTENT
                 else -> (targetHeight * interpolatedTime).toInt()
             }
-            target.requestLayout()
+            requestLayout()
         }
 
         override fun willChangeBounds(): Boolean {
@@ -147,22 +158,23 @@ fun expand(target: View) {
     })
 }
 
+fun View.collapse() {
+    if (visibility == View.GONE) return
 
-fun collapse(v: View) {
-    if (v.visibility == View.GONE) return
-    val durations: Long
-    val initialHeight = v.measuredHeight
+    val initialHeight = measuredHeight
+//    val durations = (initialHeight / context.resources.displayMetrics.density).toLong()
+    val durations = 200L
+
     val a: Animation = object : Animation() {
         override fun applyTransformation(
             interpolatedTime: Float,
             t: Transformation
         ) {
             if (interpolatedTime == 1f) {
-                v.visibility = View.GONE
+                visibility = View.GONE
             } else {
-                v.layoutParams.height =
-                    initialHeight - (initialHeight * interpolatedTime).toInt()
-                v.requestLayout()
+                layoutParams.height = initialHeight - (initialHeight * interpolatedTime).toInt()
+                requestLayout()
             }
         }
 
@@ -171,19 +183,16 @@ fun collapse(v: View) {
         }
     }
 
-    durations = (initialHeight / v.context.resources
-        .displayMetrics.density).toLong()
-
-    v.alpha = 1.0F
-    v.animate().alpha(0.0F).setDuration(durations)
+    alpha = 1.0F
+    animate().alpha(0.0F).setDuration(durations)
         .setListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                v.visibility = View.GONE
-                v.alpha = 1.0F
+                visibility = View.GONE
+                alpha = 1.0F
             }
         })
 
     // Collapse speed of 1dp/ms
     a.duration = durations
-    v.startAnimation(a)
+    startAnimation(a)
 }

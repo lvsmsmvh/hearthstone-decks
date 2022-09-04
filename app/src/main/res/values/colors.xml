@@ -47,6 +47,7 @@
     <color name="palette_text_2">@color/palette_400</color>
     <color name="palette_text_3">@color/palette_600</color>
     <color name="palette_text_4">@color/palette_850</color>
-    <color name="palette_ripple">#22ffffff</color>
+    <color name="palette_ripple_light">#22ffffff</color>
+    <color name="palette_ripple_dark">#22000000</color>
 
 </resources>

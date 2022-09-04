@@ -39,8 +39,8 @@ open class BaseViewModel: ViewModel() {
     }
 
     /**
-     * Delay if we get error and response time was very small, because user
-     * might get the idea that the app has not reacted on his click.
+     * Delay if we get an error and a response time was very small, because a user
+     * might get an idea that the app has not reacted on his click.
      */
     protected fun <T : Any> makeLoadingRequest(
         liveData: LiveData<LoadingState<T>>,

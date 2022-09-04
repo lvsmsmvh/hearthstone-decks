@@ -168,7 +168,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
                 doOnEnterTransitionEnd {
                     Log.i("tag_state", "Observe CARDS  : doOnEnterTransitionEnd()")
                     binding.layoutProgressBar.layoutProgressBar.isVisible = false
-                    expand(binding.deckHolder)
+                    binding.deckHolder.expand()
                 }
             }
         }

@@ -23,14 +23,13 @@ class CardSmallViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         Picasso.with(view.context)
             .load(cardCountable.card.image)
-            .error(R.drawable.ic_failed)
+            .placeholder(R.drawable.card_loading)
+            .error(R.drawable.card_failed)
             .fit()
             .centerInside()
             .into(imageSmall, object : Callback {
                 override fun onSuccess() {
-                    imageSmall.drawable.constantState?.newDrawable()?.let {
-                        onImageLoaded(it)
-                    }
+                    imageSmall.drawable.constantState?.newDrawable()?.let { onImageLoaded(it) }
                 }
 
                 override fun onError() {

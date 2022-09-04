@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AlwaysShowAction">
+    <item
+        android:id="@+id/menu_button_previous"
+        android:icon="@drawable/ic_left"
+        android:title="@string/previous"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_button_next"
+        android:icon="@drawable/ic_right"
+        android:title="@string/next"
+        app:showAsAction="always" />
+</menu>

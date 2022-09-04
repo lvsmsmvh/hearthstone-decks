@@ -30,7 +30,7 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    protected fun doOnExitTransitionEnd(callback: () -> Unit) {
+    protected fun doOnExitTransitionEnd1(callback: () -> Unit) {
         when (exitTransitionEnded) {
             true -> {
                 callback()
@@ -39,6 +39,32 @@ abstract class BaseFragment : Fragment() {
                 exitTransitionEndedCallback = callback
             }
         }
+    }
+
+    protected fun doOnExitTransitionEnd(callback: () -> Unit) {
+        val listener = object : Transition.TransitionListener {
+            override fun onTransitionStart(transition: Transition) {
+                Log.i("tag_shared", "onExitTransitionStart")
+            }
+
+            override fun onTransitionEnd(transition: Transition) {
+                Log.i("tag_shared", "onExitTransitionEnd")
+                callback()
+                transition.removeListener(this)
+            }
+
+            override fun onTransitionCancel(transition: Transition) {
+            }
+
+            override fun onTransitionPause(transition: Transition) {
+            }
+
+            override fun onTransitionResume(transition: Transition) {
+            }
+        }
+        Log.i("tag_shared", "exit transition is null = " +
+                "${(exitTransition as? Transition) == null}")
+        (exitTransition as? Transition)?.addListener(listener) ?: callback()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,10 +105,11 @@ abstract class BaseFragment : Fragment() {
         if (transition == null) exitTransitionEnded = true
         transition?.addListener(object : Transition.TransitionListener {
             override fun onTransitionStart(transition: Transition) {
+                Log.i("tag_shared", "onExitTransitionStart1")
             }
 
             override fun onTransitionEnd(transition: Transition) {
-                Log.i("tag_shared", "onExitTransitionEnded")
+                Log.i("tag_shared", "onExitTransitionEnded1")
                 exitTransitionEnded = true
                 // A period of time needed for the animation to become
                 // ready for showing after a transition is finished
