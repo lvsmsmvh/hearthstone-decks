@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
         if (supportFragmentManager.backStackEntryCount > 1)
             supportFragmentManager.popBackStack()
         else
-            finish()
+            showExitWindow()
     }
 
     private fun initToolbar() {
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
                     simpleNavigate(AboutAppFragment())
                 }
                 R.id.drawer_menu_item_exit -> {
-                    finish()
+                    showExitWindow()
                 }
             }
             return@setNavigationItemSelectedListener true
@@ -144,18 +144,18 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
 
     private fun showExitWindow() {
         val dialog = MaterialAlertDialogBuilder(this)
-            .setTitle("Quit app?")
-            .setPositiveButton("Quit") { dialog, _ ->
+            .setTitle(R.string.quit_app_question)
+            .setPositiveButton(R.string.quit) { dialog, _ ->
                 dialog.dismiss()
                 finish()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
 
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(color(R.color.colorPrimary))
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(color(R.color.colorPrimary))
+//        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(color(R.color.colorPrimary))
+//        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(color(R.color.colorPrimary))
     }
 
     private fun showLogoutWindow() {

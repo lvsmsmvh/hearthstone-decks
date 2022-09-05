@@ -69,7 +69,6 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
             title = binding.deckPreview.deckTitle,
             dust = binding.deckPreview.deckDust,
             deckClassImg = binding.deckPreview.deckClassImg,
-            deckFormat = binding.deckPreview.deckFormat,
             deckFormatImg = binding.deckPreview.deckFormatImg,
             deckTimeCreated = binding.deckPreview.deckTimeCreated,
             views = binding.deckPreview.deckViews,

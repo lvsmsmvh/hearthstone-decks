@@ -31,24 +31,7 @@
     <string name="retry">Retry</string>
     <string name="error">Error :(</string>
 
-    <string name="app_description">In this app you can find good community decks and save them into your account.\nMore information you shall find in FAQ.</string>
-
-    <string name="app_description_detailed">
-        In this app you can find good community decks and save them into your account.
-        \n
-        \n   —  This app works only with internet;
-        \n   —  For each card you can view its image and its personal quote;
-        \n   —  You can copy deck code in order to export it into Hearthstone;
-        \n   —  To save the deck, press the Star icon.
-        \n   —  To remove the deck from favorite list, visit it from Favorite decks screen and press Star icon.
-        \n\n
-        Any of your data is <b>NOT</b> saved and used by me — it is stored at Firebase servers.
-        Your authorization is needed to save decks to Firebase Realtime Database.
-        \n\n
-        All decks are taken from www.hearthpwn.com
-        \n\n
-        If you have any questions or comments, feel free to email me at iamajavagod@gmail.com.
-    </string>
+    <string name="app_description">Find community decks and save them for offline viewing.</string>
 
 <!--    CardFragment-->
     <string name="id">Id:</string>
@@ -78,4 +61,25 @@
     <string name="open_menu_go_back">Menu/Go back</string>
     <string name="no_saved_decks_found_title">Empty</string>
     <string name="no_saved_decks_found_desc">There is no saved decks found.</string>
+
+    <string name="quit_app_question">Quit app?</string>
+    <string name="quit">Quit</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="decks">Decks</string>
+    <string name="all_decks">All decks</string>
+    <string name="favorite_decks">Favorite decks</string>
+    <string name="faq">FAQ</string>
+    <string name="about_app">About app</string>
+    <string name="other">Other</string>
+    <string name="exit">Exit</string>
+
+<!--    Guide-->
+    <string name="click_on_a_card">Click on a card to view its full-size image and its personal quote</string>
+    <string name="copy_deck_in_order">Copy deck code for later pasting it into Hearthstone</string>
+    <string name="save_deck_description">Press the Star icon to save the deck for offline viewing</string>
+    <string name="format_standard_description">Standard format</string>
+    <string name="format_wild_description">Wild format</string>
+    <string name="all_decks_are_taken_from">All decks are taken from — <a href="https://hearthpwn.com">hearthpwn.com</a></string>
+    <string name="question_suggestions">Questions &amp; Suggestions — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
 </resources>

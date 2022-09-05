@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.presentation.common.enums.GameClasses
 import com.cyberquick.hearthstonedecks.presentation.common.enums.GameFormat
-import com.cyberquick.hearthstonedecks.utils.color
 import com.cyberquick.hearthstonedecks.utils.drawable
 
 class DeckViewHolder(
@@ -25,7 +24,6 @@ class DeckViewHolder(
         val title: TextView,
         val dust: TextView,
         val deckClassImg: ImageView,
-        val deckFormat: TextView,
         val deckFormatImg: ImageView,
         val deckTimeCreated: TextView,
         val views: TextView,
@@ -55,15 +53,7 @@ class DeckViewHolder(
         )
 
         val gameFormatEnum = GameFormat.from(deckPreview)
-        content.deckFormatImg.apply {
-            setImageDrawable(context.drawable(gameFormatEnum.iconRes))
-            setColorFilter(context.color(gameFormatEnum.colorRes))
-        }
-
-        content.deckFormat.apply {
-            text = gameFormatEnum.name
-//            setTextColor(context.color(gameFormatEnum.colorRes))
-        }
+        content.deckFormatImg.setImageDrawable(context.drawable(gameFormatEnum.iconRes))
 
         content.root.setOnClickListener {
             onClickListener?.invoke(itemData)

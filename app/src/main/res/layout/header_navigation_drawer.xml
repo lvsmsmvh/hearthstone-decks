@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
@@ -11,31 +10,35 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingHorizontal="24dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="25dp">
+        android:paddingTop="25dp"
+        android:paddingBottom="10dp">
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:contentDescription="@null"
+            android:src="@mipmap/ic_launcher" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/app_name_new_line"
                 android:textColor="@color/palette_text_1"
-                android:textSize="15sp"
-                android:text="@string/app_name_new_line" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tv_app_version"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:text="Version: 1.0.0"
                 android:textColor="@color/palette_text_3"
-                android:text="Version: 1.0.0" />
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -44,10 +47,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="30dp"
-        android:textSize="14sp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/app_description"
         android:textColor="@color/palette_text_3"
-        android:text="@string/app_description" />
+        android:textSize="14sp" />
 </LinearLayout>

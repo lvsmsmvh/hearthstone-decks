@@ -5,16 +5,16 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/subtitle1"
-            android:title="Decks">
+            android:title="@string/decks">
             <menu>
                 <item
                     android:id="@+id/drawer_menu_item_all_decks"
                     android:icon="@drawable/ic_baseline_view_list_24"
-                    android:title="All decks"/>
+                    android:title="@string/all_decks"/>
                 <item
                     android:id="@+id/drawer_menu_item_my_decks"
                     android:icon="@drawable/ic_star_filled"
-                    android:title="Favorite decks"/>
+                    android:title="@string/favorite_decks"/>
             </menu>
         </item>
     </group>
@@ -23,12 +23,12 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/subtitle3"
-            android:title="FAQ">
+            android:title="@string/faq">
             <menu>
                 <item
                     android:id="@+id/drawer_menu_item_about"
                     android:icon="@drawable/ic_baseline_info_24"
-                    android:title="About app"/>
+                    android:title="@string/about_app"/>
             </menu>
         </item>
     </group>
@@ -37,12 +37,12 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/subtitle2"
-            android:title="Other">
+            android:title="@string/other">
             <menu>
                 <item
                     android:id="@+id/drawer_menu_item_exit"
-                    android:icon="@drawable/ic_baseline_exit_to_app_24"
-                    android:title="Exit"/>
+                    android:icon="@drawable/ic_logout_svgrepo_com"
+                    android:title="@string/exit"/>
             </menu>
         </item>
     </group>

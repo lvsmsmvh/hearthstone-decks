@@ -23,7 +23,6 @@ class DeckAdapter : RecyclerView.Adapter<DeckViewHolder>() {
             title = binding.deckTitle,
             dust = binding.deckDust,
             deckClassImg = binding.deckClassImg,
-            deckFormat = binding.deckFormat,
             deckFormatImg = binding.deckFormatImg,
             deckTimeCreated = binding.deckTimeCreated,
             views = binding.deckViews,
