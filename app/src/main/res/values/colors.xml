@@ -1,28 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    // default
-    <color name="colorPrimary">#392921</color>
-    <color name="colorPrimaryDark">#251911</color>
-    <color name="colorAccent">#392921</color>
-
-    <color name="colorPrimary_transparent">#CC392921</color>
-
-    // ui
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-    <color name="smooth_yellow_pressed">#CCCCBB</color>
-    <color name="background_yellow">#EEEEDD</color>
-    <color name="blue_cool">#050A33</color>
-    <color name="text_shadow">#7F000000</color>
-    <color name="text_shadow_2">#CF000000</color>
-
-    // other
-    <color name="purple">#a656c4</color>
-    <color name="blue">#4578cb</color>
-    <color name="green">#30bb30</color>
-    <color name="orange">#df9930</color>
-
-    // new
     <color name="palette_00">#ffffff</color>
     <color name="palette_50">#fafafa</color>
     <color name="palette_100">#f5f5f5</color>
@@ -39,15 +16,21 @@
     <color name="palette_950">#0f0f0f</color>
     <color name="palette_1000">#000000</color>
 
-    <color name="palette_bg">@color/palette_900</color>
-    <color name="palette_dark_transparent">#88000000</color>
-    <color name="palette_item_on_bg">@color/palette_850</color>
-    <color name="palette_button">@color/palette_100</color>
-    <color name="palette_text_1">@color/palette_50</color>
-    <color name="palette_text_2">@color/palette_400</color>
-    <color name="palette_text_3">@color/palette_600</color>
-    <color name="palette_text_4">@color/palette_850</color>
-    <color name="palette_ripple_light">#22ffffff</color>
-    <color name="palette_ripple_dark">#22000000</color>
+    <color name="bg">@color/palette_900</color>
+    <color name="on_bg">@color/palette_850</color>
+    <color name="button">@color/palette_100</color>
+    <color name="text_1">@color/palette_50</color>
+    <color name="text_2">@color/palette_400</color>
+    <color name="text_3">@color/palette_600</color>
+    <color name="text_4">@color/palette_850</color>
 
+    <color name="ripple_light">#22ffffff</color>
+    <color name="ripple_dark">#22000000</color>
+
+    <color name="black_transparent_1">#7F000000</color>
+    <color name="black_transparent_2">#88000000</color>
+    <color name="black_transparent_3">#CF000000</color>
+
+    <color name="purple">#a656c4</color>
+    <color name="blue">#4578cb</color>
 </resources>

@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/palette_bg"
+    android:background="@color/bg"
     tools:openDrawer="start">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:theme="@style/Toolbar"
-                app:titleTextColor="@color/palette_text_1" />
+                app:titleTextColor="@color/text_1" />
 
             <FrameLayout
                 android:id="@+id/fragment_container"
@@ -40,9 +40,9 @@
         android:layout_gravity="start"
         android:theme="@style/NavDrawer"
         app:headerLayout="@layout/header_navigation_drawer"
-        app:itemIconTint="@color/palette_text_1"
+        app:itemIconTint="@color/text_1"
         app:itemRippleColor="?android:attr/colorControlNormal"
         app:itemTextAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:itemTextColor="@color/palette_text_1"
+        app:itemTextColor="@color/text_1"
         app:menu="@menu/menu_navigation" />
 </androidx.drawerlayout.widget.DrawerLayout>

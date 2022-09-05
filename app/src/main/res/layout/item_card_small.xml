@@ -27,6 +27,6 @@
         android:background="@drawable/bg_card_amount"
         android:paddingHorizontal="3dp"
         android:text="x1"
-        android:textColor="@color/palette_text_1"
+        android:textColor="@color/text_1"
         android:textSize="12sp" />
 </FrameLayout>

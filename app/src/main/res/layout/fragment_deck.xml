@@ -55,9 +55,9 @@
                         android:id="@+id/btn_favorite_icon"
                         android:layout_width="17dp"
                         android:layout_height="17dp"
-                        android:contentDescription="@null"
+                        android:contentDescription="@string/save"
                         android:src="@drawable/ic_star_not_filled"
-                        app:tint="@color/palette_button" />
+                        app:tint="@color/button" />
 
                     <TextView
                         android:id="@+id/btn_favorite_text"
@@ -66,7 +66,7 @@
                         android:layout_marginStart="5dp"
                         android:text="@string/save"
                         android:textAllCaps="true"
-                        android:textColor="@color/palette_button"
+                        android:textColor="@color/button"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -83,9 +83,9 @@
                     <ImageView
                         android:layout_width="17dp"
                         android:layout_height="17dp"
-                        android:contentDescription="@null"
+                        android:contentDescription="@string/copy"
                         android:src="@drawable/ic_baseline_content_copy_24"
-                        app:tint="@color/palette_button" />
+                        app:tint="@color/button" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/btn_share"
@@ -100,9 +100,9 @@
                     <ImageView
                         android:layout_width="17dp"
                         android:layout_height="17dp"
-                        android:contentDescription="@null"
+                        android:contentDescription="@string/share"
                         android:src="@drawable/ic_baseline_share_24"
-                        app:tint="@color/palette_button" />
+                        app:tint="@color/button" />
                 </LinearLayout>
             </LinearLayout>
 

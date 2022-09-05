@@ -2,44 +2,15 @@
     <string name="app_name">Decks for Hearthstone</string>
     <string name="app_name_new_line">Decks for\nHearthstone</string>
     <string name="app_name_short">Decks for HS</string>
-    <string name="main_image">Main image</string>
+    <string name="app_description">Find community decks and save them for offline viewing.</string>
 
-    //deck classes
+    <string name="main_image">Main image</string>
     <string name="dust_icon">Dust icon</string>
-    <string name="dust_needed">Dust needed: </string>
-    <string name="class_tip">Class: </string>
-    <string name="format">Format:</string>
-    <string name="created">Created:</string>
-    <string name="random_big_text">random big text random big text random big text random big text random big text random big text random big text </string>
-    <string name="no_description">No description</string>
-    <string name="no_image">Image failed to load :(</string>
-    <string name="description">Description</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="please_wait">Please, wait…</string>
     <string name="error_loading_data">Error loading data :(</string>
     <string name="loading">Loading…</string>
     <string name="retry">Retry</string>
-    <string name="error">Error :(</string>
-
-    <string name="app_description">Find community decks and save them for offline viewing.</string>
-
-<!--    CardFragment-->
-    <string name="id">Id:</string>
-    <string name="collectible">Collectible:</string>
-    <string name="slug">Slug:</string>
-    <string name="class_id">Class id:</string>
-    <string name="multiclass_ids">Multiclass ids:</string>
-    <string name="card_type_id">Card type id:</string>
-    <string name="card_set_id">Card set id:</string>
-    <string name="rarity_id">Rarity id:</string>
-    <string name="artist_name">Artist name:</string>
-    <string name="health">Health:</string>
-    <string name="attack">Attack:</string>
-    <string name="mana_cost">Mana cost:</string>
-    <string name="name">Name:</string>
-    <string name="text">Text:</string>
-    <string name="flavor_text">Flavor text:</string>
 
     <string name="artist_ph"><b>Artist:</b> %s</string>
     <string name="quote_ph">%s</string>
@@ -65,7 +36,6 @@
     <string name="other">Other</string>
     <string name="exit">Exit</string>
 
-<!--    Guide-->
     <string name="click_on_a_card">Click on a card to view its full-size image and its personal quote</string>
     <string name="copy_deck_in_order">Copy deck code for later pasting it into Hearthstone</string>
     <string name="save_deck_description">Press the Star icon to save the deck for offline viewing</string>

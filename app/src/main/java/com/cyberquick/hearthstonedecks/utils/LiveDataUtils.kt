@@ -48,19 +48,3 @@ fun <A, B, C> transformWithDoubleTrigger(
     }
     return mediatorLiveData
 }
-
-//class DoubleTrigger<A, B>(
-//    a: LiveData<A>,
-//    b: LiveData<B>,
-//) : MediatorLiveData<Pair<A?, B?>>() {
-//    init {
-//        addSource(a) { aValue ->
-//            val bValue = b.value
-//            value = aValue to bValue
-//        }
-//        addSource(b) { bValue ->
-//            val aValue = a.value
-//            value = aValue to bValue
-//        }
-//    }
-//}

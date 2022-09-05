@@ -1,5 +1,6 @@
 package com.cyberquick.hearthstonedecks.data.server.hearthpwn
 
+import android.util.Log
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.Deck
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
@@ -27,6 +28,8 @@ class HearthpwnApiRepository @Inject constructor() {
     }
 
     fun getPagesQuantity(): Result<Int> {
+        val startExecutionTime = System.currentTimeMillis()
+
         val document = try {
             getDocument(url = "$API_URL_PAGE&page=1")
         } catch (e: IOException) {
@@ -41,10 +44,16 @@ class HearthpwnApiRepository @Inject constructor() {
             .text()
             .toInt()
 
+        val endExecutionTime = System.currentTimeMillis()
+        val executionTime = endExecutionTime - startExecutionTime
+        Log.i("tag_time","getPagesQuantity() -> $executionTime ms")
+
         return Result.Success(totalPages)
     }
 
     fun getPage(pageNumber: Int): Result<Page> {
+        val startExecutionTime = System.currentTimeMillis()
+
         val deckPreviews = mutableListOf<DeckPreview>()
 
         val document = try {
@@ -134,6 +143,10 @@ class HearthpwnApiRepository @Inject constructor() {
                 ),
             )
         }
+
+        val endExecutionTime = System.currentTimeMillis()
+        val executionTime = endExecutionTime - startExecutionTime
+        Log.i("tag_time","getPage() -> $executionTime ms")
 
         return Result.Success(Page(pageNumber, deckPreviews))
     }

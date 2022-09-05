@@ -19,11 +19,11 @@ class CardFullSizeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         onPreviousItemClicked: () -> Unit,
         onNextItemClicked: () -> Unit,
     ) {
-        val context = view.context
         val card = cardData.cardCountable.card
 
         val placeholder = cardData.preview ?: view.context.drawable(R.drawable.card_loading)
-        Picasso.with(context)
+
+        Picasso.get()
             .load(card.image)
             .placeholder(placeholder)
             .error(R.drawable.card_failed)

@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.35"
-        app:tint="@color/palette_text_1" />
+        app:tint="@color/text_1" />
 
     <LinearLayout
         android:id="@+id/info_layout"
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/error_loading_data"
-            android:textColor="@color/palette_text_1"
+            android:textColor="@color/text_1"
             android:textSize="20sp" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/error_loading_data"
-            android:textColor="@color/palette_text_3"
+            android:textColor="@color/text_3"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -89,7 +89,7 @@
                 android:layout_marginEnd="5dp"
                 android:text="@string/retry"
                 android:textAllCaps="true"
-                android:textColor="@color/palette_text_4"
+                android:textColor="@color/text_4"
                 android:textSize="14sp" />
 
             <ImageView
@@ -98,7 +98,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_baseline_replay_24"
-                app:tint="@color/palette_text_4" />
+                app:tint="@color/text_4" />
         </LinearLayout>
 
         <LinearLayout
@@ -124,7 +124,7 @@
                 android:layout_marginEnd="5dp"
                 android:text="@string/saved_decks"
                 android:textAllCaps="true"
-                android:textColor="@color/palette_text_4"
+                android:textColor="@color/text_4"
                 android:textSize="14sp" />
 
             <ImageView
@@ -132,8 +132,8 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_baseline_arrow_right_alt_24"
-                app:tint="@color/palette_text_4" />
+                android:src="@drawable/ic_right"
+                app:tint="@color/text_4" />
         </LinearLayout>
     </LinearLayout>
 

@@ -27,7 +27,7 @@
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/text_shadow"
+        android:background="@color/black_transparent_1"
         android:paddingHorizontal="30dp"
         android:animateLayoutChanges="true"
         app:behavior_peekHeight="80dp"

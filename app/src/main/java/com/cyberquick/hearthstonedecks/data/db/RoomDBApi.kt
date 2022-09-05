@@ -54,7 +54,7 @@ class RoomDBApi @Inject constructor(
         val firstIndex = lastIndex - ITEMS_ON_A_PAGE + 1
 
         val entities = deckDao.getDeckEntities(firstIndex, lastIndex)
-        val deckPreviews = entities.map { dbMapper.toDeck(it).deckPreview }
+        val deckPreviews = entities.map { dbMapper.toDeck(it).deckPreview }.reversed()
         return Page(pageNumber, deckPreviews)
     }
 

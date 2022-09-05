@@ -10,6 +10,7 @@ import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.domain.entities.CardCountable
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 class CardSmallViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -21,7 +22,7 @@ class CardSmallViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     ) {
         val imageSmall = view.findViewById<ImageView>(R.id.img_card_small)
 
-        Picasso.with(view.context)
+        Picasso.get()
             .load(cardCountable.card.image)
             .placeholder(R.drawable.card_loading)
             .error(R.drawable.card_failed)
@@ -32,7 +33,8 @@ class CardSmallViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
                     imageSmall.drawable.constantState?.newDrawable()?.let { onImageLoaded(it) }
                 }
 
-                override fun onError() {
+                override fun onError(e: Exception?) {
+                    e?.printStackTrace()
                 }
             })
 

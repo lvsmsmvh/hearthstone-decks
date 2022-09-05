@@ -56,7 +56,7 @@
             android:gravity="center"
             android:paddingHorizontal="10dp"
             android:paddingVertical="5dp"
-            android:textColor="@color/palette_text_1"
+            android:textColor="@color/text_1"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="@id/card_end_real"
             app:layout_constraintTop_toTopOf="@id/card_top_real" />
