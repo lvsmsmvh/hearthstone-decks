@@ -17,7 +17,7 @@ class RoomDBApi @Inject constructor(
 ) {
 
     companion object {
-        private const val ITEMS_ON_A_PAGE = 10
+        private const val ITEMS_ON_A_PAGE = 25
     }
 
     fun insert(deck: Deck, cards: List<Card>) {
@@ -39,23 +39,26 @@ class RoomDBApi @Inject constructor(
         deckDao.deleteCardsThatDoesNotHaveDeck()
     }
 
-    fun getPagesQuantity(): Int {
-        var pages = ceil(deckDao.amountDecks() / ITEMS_ON_A_PAGE.toFloat()).toInt()
-        if (pages == 0) pages++
-        return pages
-    }
-
     fun isSaved(deckPreview: DeckPreview): Boolean {
         return deckDao.getDeckEntity(deckPreview.id) != null
     }
 
     fun getPage(pageNumber: Int): Page {
-        val lastIndex = pageNumber * ITEMS_ON_A_PAGE - 1
+        var totalPages = ceil(deckDao.amountDecks() / ITEMS_ON_A_PAGE.toFloat()).toInt()
+        if (totalPages <1) totalPages = 1
+
+        val pageNumberToLoad = when {
+            pageNumber > totalPages -> totalPages
+            pageNumber < 1 -> 1
+            else -> pageNumber
+        }
+
+        val lastIndex = pageNumberToLoad * ITEMS_ON_A_PAGE - 1
         val firstIndex = lastIndex - ITEMS_ON_A_PAGE + 1
 
         val entities = deckDao.getDeckEntities(firstIndex, lastIndex)
         val deckPreviews = entities.map { dbMapper.toDeck(it).deckPreview }.reversed()
-        return Page(pageNumber, deckPreviews)
+        return Page(totalPages, pageNumberToLoad, deckPreviews)
     }
 
     fun getDeck(deckPreview: DeckPreview): Deck? {

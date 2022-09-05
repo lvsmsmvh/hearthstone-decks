@@ -6,32 +6,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import com.cyberquick.hearthstonedecks.domain.usecases.base.GetPageUseCase
-import com.cyberquick.hearthstonedecks.domain.usecases.base.GetPagesQuantityUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.online.GetOnlinePageUseCase
-import com.cyberquick.hearthstonedecks.domain.usecases.online.GetOnlinePagesQuantityUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.GetFavoritePageUseCase
-import com.cyberquick.hearthstonedecks.domain.usecases.favorite.GetFavoritePagesQuantityUseCase
-import com.cyberquick.hearthstonedecks.utils.transform
 import com.cyberquick.hearthstonedecks.utils.transformWithDefault
-import com.cyberquick.hearthstonedecks.utils.transformWithDoubleTrigger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 @HiltViewModel
 class OnlinePageViewModel @Inject constructor(
-    getOnlinePagesQuantityUseCase: GetOnlinePagesQuantityUseCase,
     getOnlinePageUseCase: GetOnlinePageUseCase,
-) : PageViewModel(getOnlinePagesQuantityUseCase, getOnlinePageUseCase)
+) : PageViewModel(getOnlinePageUseCase)
 
 @HiltViewModel
 class FavoritePageViewModel @Inject constructor(
-    getFavoritePagesQuantityUseCase: GetFavoritePagesQuantityUseCase,
     getFavoritePageUseCase: GetFavoritePageUseCase,
-) : PageViewModel(getFavoritePagesQuantityUseCase, getFavoritePageUseCase)
+) : PageViewModel(getFavoritePageUseCase)
 
 open class PageViewModel(
-    private val getPagesQuantityUseCase: GetPagesQuantityUseCase,
     private val getPageUseCase: GetPageUseCase,
 ) : BaseViewModel() {
 
@@ -39,85 +31,49 @@ open class PageViewModel(
         private const val FIRST_PAGE_INDEX = 1
     }
 
-    sealed class PositionOutput {
-        object Loading : PositionOutput()
-        data class Show(val current: Int, val total: Int) : PositionOutput()
-    }
+    data class Position(val current: Int, val total: Int?)
+    data class AllowNavigation(val previous: Boolean, val next: Boolean)
 
-    data class AllowNavigation(val previous: Boolean, val next: Boolean) {
-        companion object {
-            fun blocked() = AllowNavigation(previous = false, next = false)
-        }
-    }
+    val pageLoading: LiveData<LoadingState<Page>> = MutableLiveData()
 
-    private val currentPosition: LiveData<Int> = MutableLiveData(FIRST_PAGE_INDEX)
-    val totalPagesAmountLoading: LiveData<LoadingState<Int>> = MutableLiveData()
-
-    val pageLoading: LiveData<LoadingState<Page>> =
-        transform(totalPagesAmountLoading) { totalPagesAmountLoading ->
-            if (totalPagesAmountLoading.isLoaded()) updateCurrentPage(true)
-        }
-
-    val positionOutput: LiveData<PositionOutput> = transformWithDoubleTrigger(
-        firstSource = currentPosition,
-        secondSource = totalPagesAmountLoading
-    ) { current, totalLiveData ->
-        val total = totalLiveData?.asLoaded()?.result
-        return@transformWithDoubleTrigger if (current != null && total != null) {
-            PositionOutput.Show(current, total)
-        } else PositionOutput.Loading
-    }
-
-    val allowNavigation: LiveData<AllowNavigation> = transformWithDefault(
-        source = positionOutput,
-        defaultValue = AllowNavigation.blocked(),
-    ) { data ->
-        return@transformWithDefault when (data) {
-            is PositionOutput.Loading -> AllowNavigation.blocked()
-            is PositionOutput.Show -> {
-                AllowNavigation(data.current > 1, data.current < data.total)
+    val position: LiveData<Position> = transformWithDefault(
+        source = pageLoading,
+        defaultValue = Position(FIRST_PAGE_INDEX, null)
+    ) {
+        return@transformWithDefault it.asLoaded()?.result?.let { page ->
+            Position(page.number, page.totalPagesAmount).apply {
+                Log.i("tag_wtf", "Page loaded : ${this}")
             }
         }
     }
 
-    private var loadingPageJob: Job? = null
-
-    fun updateAmountOfPages(evenIfLoaded: Boolean) {
-        if (totalPagesAmountLoading.value.isLoaded() && !evenIfLoaded) return
-        makeLoadingRequest(totalPagesAmountLoading) {
-            getPagesQuantityUseCase()
-        }
+    val allowNavigation: LiveData<AllowNavigation> = Transformations.map(position) {
+        val previousAllowed = it.current > 1
+        val nextAllowed = (it.total != null) && (it.current < it.total)
+        return@map AllowNavigation(previousAllowed, nextAllowed)
     }
 
-    fun updateCurrentPage(evenIfLoaded: Boolean) {
-        Log.i("tag_page", "updateCurrentPage")
-        val total = totalPagesAmountLoading.value.asLoaded()?.result ?: run {
-            updateAmountOfPages(true)
-            return
-        }
+    private var loadingPageJob: Job? = null
 
-        val current = currentPosition.value
-        val nextToLoad = when {
-            current == null -> 1
-            current > total -> total
-            else -> current
-        }
-        loadPage(nextToLoad, evenIfLoaded)
+    fun updateCurrentPage(evenIfLoaded: Boolean) {
+        loadPage(position.value!!.current, evenIfLoaded)
     }
 
     fun loadNextPage() {
-        loadPage(currentPosition.value!! + 1)
+        loadPage(position.value!!.current + 1)
     }
 
     fun loadPreviousPage() {
-        loadPage(currentPosition.value!! - 1)
+        loadPage(position.value!!.current - 1)
     }
 
     private fun loadPage(pageNumber: Int, evenIfLoaded: Boolean = false) {
-        Log.i("tag_lv", "Load page $pageNumber")
         if (isPageLoaded(pageNumber) && !evenIfLoaded) return
+        Log.i("tag_wtf", "Previous position is ${Position(position.value!!.current, position.value!!.total)}")
+        Log.i("tag_wtf", "Load page $pageNumber")
+        position.postValue(Position(pageNumber, position.value!!.total))
+        Log.i("tag_wtf", "Current position is ${Position(pageNumber, position.value!!.total)}")
         loadingPageJob?.cancel()
-        currentPosition.postValue(pageNumber)
         loadingPageJob = makeLoadingRequest(pageLoading, allowInterrupt = true) {
             getPageUseCase(pageNumber)
         }

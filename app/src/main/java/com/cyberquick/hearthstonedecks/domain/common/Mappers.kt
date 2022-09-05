@@ -8,13 +8,3 @@ fun List<Card>.toCardsCountable(): List<CardCountable> {
     forEach { card -> listCountable.first { it.card == card }.amount++ }
     return listCountable
 }
-
-fun List<CardCountable>.toCards(): List<Card> {
-    val cards = mutableListOf<Card>()
-    forEach { cardCountable ->
-        repeat(cardCountable.amount) {
-            cards.add(cardCountable.card)
-        }
-    }
-    return cards
-}

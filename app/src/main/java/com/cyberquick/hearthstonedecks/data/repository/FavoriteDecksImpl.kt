@@ -1,6 +1,5 @@
 package com.cyberquick.hearthstonedecks.data.repository
 
-import android.util.Log
 import com.cyberquick.hearthstonedecks.data.db.RoomDBApi
 import com.cyberquick.hearthstonedecks.domain.common.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.domain.common.Result
@@ -23,11 +22,6 @@ class FavoriteDecksImpl @Inject constructor(
         return Result.Success(Unit)
     }
 
-    override suspend fun getPagesQuantity(): Result<Int> {
-        val pages = roomDBApi.getPagesQuantity()
-        return Result.Success(pages)
-    }
-
     override suspend fun getPage(pageNumber: Int): Result<Page> {
         val page = roomDBApi.getPage(pageNumber)
         return when (page.deckPreviews.isEmpty()) {
@@ -38,20 +32,14 @@ class FavoriteDecksImpl @Inject constructor(
 
     override suspend fun getDeck(deckPreview: DeckPreview): Result<Deck> {
         val deck = roomDBApi.getDeck(deckPreview)
-        val result = deck?.let { Result.Success(it) } ?: Result.Error(NullPointerException())
-        return result.apply {
-            Log.i("tag_db", "DB get deck result is ${this.simpleOutput()}")
-        }
+        return deck?.let { Result.Success(it) } ?: Result.Error(NullPointerException())
     }
 
     override suspend fun getCards(deck: Deck): Result<List<Card>> {
         val cards = roomDBApi.getCards(deck.deckPreview)
-        val result = when (cards.isNotEmpty()) {
+        return when (cards.isNotEmpty()) {
             true -> Result.Success(cards)
             false -> Result.Error(NullPointerException())
-        }
-        return result.apply {
-            Log.i("tag_db", "DB get cards result is ${this.simpleOutput()}")
         }
     }
 

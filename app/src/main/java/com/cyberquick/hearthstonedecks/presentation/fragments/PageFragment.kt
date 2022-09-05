@@ -75,32 +75,14 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         Log.i("tag_page", "PageFragment: pageLoading state = ${viewModel.pageLoading.value}")
         Log.i("tag_page", "PageFragment: onViewCreated")
 
-        viewModel.positionOutput.observe(viewLifecycleOwner) {
+        viewModel.position.observe(viewLifecycleOwner) {
             Log.i("tag_lv", "POSITION change: ${it.javaClass.simpleName}")
-            val text = when (it) {
-                is PageViewModel.PositionOutput.Loading -> getString(R.string.loading)
-                is PageViewModel.PositionOutput.Show -> "${it.current}/${it.total}"
-            }
-            toolbarTitleChanger.setText(text)
+            toolbarTitleChanger.setText("${it.current}/${it.total ?: "..."}")
         }
 
         viewModel.allowNavigation.observe(viewLifecycleOwner) {
             Log.i("tag_lv", "ALLOW NAVIGATION change: $it")
             updateMenuButtons(it)
-        }
-
-        viewModel.totalPagesAmountLoading.observe(viewLifecycleOwner) { state ->
-            Log.i("tag_page", "STATE amountOfPages ${state.javaClass.simpleName}")
-            when (state) {
-                is LoadingState.Loading -> {
-                    updateLayout(state)
-                }
-                is LoadingState.Failed -> {
-                    updateLayout(state)
-                }
-                is LoadingState.Loaded -> {
-                }
-            }
         }
 
         viewModel.pageLoading.observe(viewLifecycleOwner) { state ->
@@ -121,11 +103,8 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
             }
         }
 
-
-
         doOnExitTransitionEnd {
-            Log.i("tag_page", "updateAmountOfPages")
-            viewModel.updateAmountOfPages(evenIfLoaded = this is FavoritePageFragment)
+            viewModel.updateCurrentPage(evenIfLoaded = this is FavoritePageFragment)
         }
 
         if (clickedOnDeck) {

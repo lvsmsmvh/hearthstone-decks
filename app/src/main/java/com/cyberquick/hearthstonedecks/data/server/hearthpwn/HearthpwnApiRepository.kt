@@ -13,10 +13,11 @@ import javax.inject.Inject
 class HearthpwnApiRepository @Inject constructor() {
 
     companion object {
-        private const val API_URL_ROOT = "https://www.hearthpwn.com"
-        private const val API_URL_PAGE =
-            "$API_URL_ROOT/decks?filter-deck-tag=2&filter-show-constructed-only=y"
         private const val MAX_TIMEOUT_LOADING = 10 * 1000   // 10s
+        private const val URL_ROOT = "https://www.hearthpwn.com"
+        private const val URL_ALL = "$URL_ROOT/decks?"
+        private const val URL_CONSTRUCTED =
+            "$URL_ROOT/decks?filter-deck-tag=2&filter-show-constructed-only=y"
     }
 
     private fun getDocument(url: String): Document {
@@ -27,37 +28,39 @@ class HearthpwnApiRepository @Inject constructor() {
             .get()
     }
 
-    fun getPagesQuantity(): Result<Int> {
-        val startExecutionTime = System.currentTimeMillis()
-
-        val document = try {
-            getDocument(url = "$API_URL_PAGE&page=1")
-        } catch (e: IOException) {
-            return Result.Error(e)
-        }
-
-        val totalPages = document
-            .select("ul[class=b-pagination-list paging-list j-tablesorter-pager j-listing-pagination]")
-            .select("li")
-            .eq(6)
-            .select("a")
-            .text()
-            .toInt()
-
-        val endExecutionTime = System.currentTimeMillis()
-        val executionTime = endExecutionTime - startExecutionTime
-        Log.i("tag_time","getPagesQuantity() -> $executionTime ms")
-
-        return Result.Success(totalPages)
-    }
+//    fun getPagesQuantity(): Result<Int> {
+//        val startExecutionTime = System.currentTimeMillis()
+//
+//        val document = try {
+//            getDocument(url = "$API_URL_PAGE&page=1")
+//        } catch (e: IOException) {
+//            return Result.Error(e)
+//        }
+//
+//        val totalPages = document
+//            .select("ul[class=b-pagination-list paging-list j-tablesorter-pager j-listing-pagination]")
+//            .select("li")
+//            .eq(6)
+//            .select("a")
+//            .text()
+//            .toInt()
+//
+//        val endExecutionTime = System.currentTimeMillis()
+//        val executionTime = endExecutionTime - startExecutionTime
+//        Log.i("tag_time","getPagesQuantity() -> $executionTime ms")
+//
+//        return Result.Success(totalPages)
+//    }
 
     fun getPage(pageNumber: Int): Result<Page> {
+        Log.i("tag_wtf", "API, get page $pageNumber")
+
         val startExecutionTime = System.currentTimeMillis()
 
         val deckPreviews = mutableListOf<DeckPreview>()
 
         val document = try {
-            getDocument(url = "$API_URL_PAGE&page=$pageNumber")
+            getDocument(url = "$URL_CONSTRUCTED&page=$pageNumber")
         } catch (e: IOException) {
             return Result.Error(e)
         }
@@ -67,6 +70,17 @@ class HearthpwnApiRepository @Inject constructor() {
             .select("tbody")
             .select("tr")
 
+        val totalPages = document
+            .select("ul[class=b-pagination-list paging-list j-tablesorter-pager j-listing-pagination]")
+            .select("li[class=b-pagination-item]")
+            .let { numbers ->
+                val lastNumber = numbers.eq(numbers.size - 1)
+                var result = lastNumber.select("a").text()
+                Log.i("tag_wtf", "Parse from a : $result")
+                if (result.isBlank()) result = lastNumber.select("span").text()
+                Log.i("tag_wtf", "Parse from span : $result")
+                return@let result.toInt()
+            }
 
         for (i in 0 until element.size) {
             val currentElement = element.eq(i)
@@ -91,7 +105,7 @@ class HearthpwnApiRepository @Inject constructor() {
                 .attr("title")
                 .let { return@let formatToCorrectDate(it) }
 
-            val detailsUrl = API_URL_ROOT + currentElement
+            val detailsUrl = URL_ROOT + currentElement
                 .select("td.col-name")
                 .select("div")
                 .select("span.tip")
@@ -148,7 +162,7 @@ class HearthpwnApiRepository @Inject constructor() {
         val executionTime = endExecutionTime - startExecutionTime
         Log.i("tag_time","getPage() -> $executionTime ms")
 
-        return Result.Success(Page(pageNumber, deckPreviews))
+        return Result.Success(Page(totalPages, pageNumber, deckPreviews))
     }
 
     fun getDeck(deckPreview: DeckPreview): Result<Deck> {
