@@ -5,7 +5,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,6 @@ import com.cyberquick.hearthstonedecks.presentation.adapters.DeckViewHolder
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.DeckViewModel
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.LoadingState
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.SavedState.Saved
-import com.cyberquick.hearthstonedecks.presentation.viewmodels.asLoaded
 import com.cyberquick.hearthstonedecks.utils.drawable
 import com.cyberquick.hearthstonedecks.utils.expand
 import com.cyberquick.hearthstonedecks.utils.toast
@@ -100,7 +98,6 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
         binding.layoutProgressBar.layoutProgressBar.isVisible = true
 
         viewModel.stateDeck.observe(viewLifecycleOwner) { state ->
-            Log.i("tag_state", "Observe DECK  : ${state.javaClass.simpleName}")
             if (state is LoadingState.Loading) {
                 binding.layoutProgressBar.layoutProgressBar.isVisible = true
             }
@@ -119,6 +116,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
                 val deck = state.result
 
                 binding.btnCopyDeck.setOnClickListener {
+                    binding.btnCopyDeckIcon.setImageDrawable(drawable(R.drawable.ic_copy_filled))
                     copyToClipboard(deck.code)
                 }
                 binding.btnShare.setOnClickListener {

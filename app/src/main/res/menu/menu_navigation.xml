@@ -41,7 +41,7 @@
             <menu>
                 <item
                     android:id="@+id/drawer_menu_item_exit"
-                    android:icon="@drawable/ic_logout_svgrepo_com"
+                    android:icon="@drawable/ic_logout"
                     android:title="@string/exit"/>
             </menu>
         </item>

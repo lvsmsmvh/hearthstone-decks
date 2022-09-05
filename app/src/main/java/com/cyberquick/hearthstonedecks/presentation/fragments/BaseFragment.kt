@@ -30,8 +30,6 @@ abstract class BaseFragment : Fragment() {
 
             override fun onTransitionEnd(transition: Transition) {
                 enterTransitionEnded = true
-                // A period of time needed for the animation to become
-                // ready for showing after a transition is finished
                 Handler(Looper.getMainLooper()).postDelayed({
                     enterTransitionEndedCallback?.invoke()
                 }, 100L)

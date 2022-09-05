@@ -4,6 +4,7 @@ import com.cyberquick.hearthstonedecks.domain.common.Result
 
 sealed class SavedState {
 
+    object Loading : SavedState()
     object NotSaved : SavedState()
     object Saved : SavedState()
 
@@ -18,6 +19,9 @@ sealed class SavedState {
         fun opposite(state: SavedState) = when (state) {
             is NotSaved -> Saved
             is Saved -> NotSaved
+            is Loading -> throw Exception(
+                "Clicked on the save button while a database is doing its job."
+            )
         }
     }
 }

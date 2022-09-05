@@ -1,14 +1,12 @@
 package com.cyberquick.hearthstonedecks.utils
 
 import android.content.Context
-import android.content.ContextWrapper
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
@@ -18,7 +16,6 @@ import com.cyberquick.hearthstonedecks.R
 import kotlinx.coroutines.delay
 import kotlin.math.min
 
-
 fun Context.toast(message: String?) {
     if (message == null) return
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -27,9 +24,6 @@ fun Context.toast(message: String?) {
 fun Fragment.toast(message: String?) {
     requireContext().toast(message)
 }
-
-tailrec fun Context.getActivity(): AppCompatActivity? = this as? AppCompatActivity
-    ?: (this as? ContextWrapper)?.baseContext?.getActivity()
 
 fun Context.color(color: Int) = ContextCompat.getColor(this, color)
 fun Fragment.color(color: Int) = requireContext().color(color)

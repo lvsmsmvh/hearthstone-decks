@@ -3,7 +3,6 @@ package com.cyberquick.hearthstonedecks.presentation.activities
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
@@ -39,34 +38,9 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
 
         initToolbar()
         initNavigationDrawer()
+        initHomeButtonIcon()
 
-        supportFragmentManager.registerFragmentLifecycleCallbacks(
-            object : FragmentManager.FragmentLifecycleCallbacks() {
-                override fun onFragmentViewCreated(
-                    fm: FragmentManager, fragment: Fragment,
-                    v: View, savedInstanceState: Bundle?
-                ) {
-                    super.onFragmentViewCreated(fm, fragment, v, savedInstanceState)
-                    Log.i("tag_nav", "Fragment created ${fragment.javaClass.simpleName}")
-                    val newHomeButton = when (fragment) {
-                        is DeckFragment, is AboutAppFragment -> HomeButton.Back
-                        else -> HomeButton.Menu
-                    }
-                    if (newHomeButton != homeButton) {
-                        homeButton = newHomeButton
-                        updateHomeButtonState(newHomeButton)
-                    }
-                }
-            }, false
-        )
         simpleNavigate(OnlinePageFragment())
-    }
-
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1)
-            supportFragmentManager.popBackStack()
-        else
-            showExitWindow()
     }
 
     private fun initToolbar() {
@@ -92,20 +66,6 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
                 HomeButton.Back -> onBackPressed()
             }
         }
-    }
-
-    private fun updateHomeButtonState(state: HomeButton) {
-        val anim =
-            if (state == HomeButton.Back) ValueAnimator.ofFloat(0f, 1f)
-            else ValueAnimator.ofFloat(1f, 0f)
-
-        anim.addUpdateListener { valueAnimator ->
-            val slideOffset = valueAnimator.animatedValue as Float
-            drawerToggle.onDrawerSlide(binding.drawerLayout, slideOffset)
-        }
-        anim.interpolator = DecelerateInterpolator()
-        anim.duration = 200     // 400
-        anim.start()
     }
 
     @SuppressLint("SetTextI18n")
@@ -134,6 +94,37 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
             .findViewById<TextView>(R.id.tv_app_version).text = versionText
     }
 
+    private fun initHomeButtonIcon() {
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewCreated(
+                    fm: FragmentManager, fragment: Fragment,
+                    v: View, savedInstanceState: Bundle?
+                ) {
+                    super.onFragmentViewCreated(fm, fragment, v, savedInstanceState)
+                    val newHomeButton = when (fragment) {
+                        is DeckFragment, is AboutAppFragment -> HomeButton.Back
+                        else -> HomeButton.Menu
+                    }
+                    if (newHomeButton == homeButton) return
+                    homeButton = newHomeButton
+                    val anim = when (newHomeButton) {
+                        HomeButton.Back -> ValueAnimator.ofFloat(0f, 1f)
+                        HomeButton.Menu -> ValueAnimator.ofFloat(1f, 0f)
+                    }
+
+                    anim.addUpdateListener { valueAnimator ->
+                        val slideOffset = valueAnimator.animatedValue as Float
+                        drawerToggle.onDrawerSlide(binding.drawerLayout, slideOffset)
+                    }
+                    anim.interpolator = DecelerateInterpolator()
+                    anim.duration = 200     // 400
+                    anim.start()
+                }
+            }, false
+        )
+    }
+
     private fun showExitWindow() {
         MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
             .setTitle(R.string.quit_app_question)
@@ -145,6 +136,13 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 1)
+            supportFragmentManager.popBackStack()
+        else
+            showExitWindow()
     }
 
     override fun setText(text: String) {

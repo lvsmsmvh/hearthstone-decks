@@ -1,7 +1,6 @@
 package com.cyberquick.hearthstonedecks.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.app.SharedElementCallback
 import androidx.core.view.*
@@ -72,22 +71,15 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
     }
 
     private fun initData() {
-        Log.i("tag_page", "PageFragment: pageLoading state = ${viewModel.pageLoading.value}")
-        Log.i("tag_page", "PageFragment: onViewCreated")
-
         viewModel.position.observe(viewLifecycleOwner) {
-            Log.i("tag_lv", "POSITION change: ${it.javaClass.simpleName}")
             toolbarTitleChanger.setText("${it.current}/${it.total ?: "..."}")
         }
 
         viewModel.allowNavigation.observe(viewLifecycleOwner) {
-            Log.i("tag_lv", "ALLOW NAVIGATION change: $it")
             updateMenuButtons(it)
         }
 
         viewModel.pageLoading.observe(viewLifecycleOwner) { state ->
-            val extraInfo = state.asLoaded()?.result?.deckPreviews?.size?.toString() ?: ""
-            Log.i("tag_page", "STATE page ${state.javaClass.simpleName} $extraInfo")
             when (state) {
                 is LoadingState.Loading -> {
                     updateLayout(state)
@@ -162,7 +154,6 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
 
     private fun updateLayout(loadingState: LoadingState<Any>) {
         val hideLoading = this is FavoritePageFragment && wasPreviouslyLoaded
-        Log.i("tag_page", "hideLoading $hideLoading")
         binding.layoutLoading.layoutProgressBar.isVisible =
             loadingState.isLoading() && !hideLoading
         binding.layoutFailed.layoutFailed.isVisible = loadingState.isFailed()
@@ -179,7 +170,6 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
                 binding.layoutFailed.btnReloadData.isVisible = false
             }
             else -> {
-                Log.i("tag_state", "Failed: exception is else")
                 binding.layoutFailed.tvErrorLoadingData.text =
                     getString(R.string.error_loading_data)
                 binding.layoutFailed.tvErrorLoadingDataSmall.text = exception.message

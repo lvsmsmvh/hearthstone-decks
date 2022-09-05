@@ -1,6 +1,5 @@
 package com.cyberquick.hearthstonedecks.data.repository
 
-import android.util.Log
 import com.cyberquick.hearthstonedecks.data.server.battlenet.BattleNetApi
 import com.cyberquick.hearthstonedecks.data.server.hearthpwn.HearthpwnApi
 import com.cyberquick.hearthstonedecks.domain.common.Result
@@ -21,11 +20,9 @@ class OnlineDecksImpl @Inject constructor(
         return when (val deckDetailsResult = hearthpwnApi.getDeckDetails(deckPreview)) {
             is Result.Error -> deckDetailsResult
             is Result.Success -> {
-                Log.i("tag_niko", "Deck loaded")
                 when (val cardsResult = battleNetApi.retrieveCards(deckDetailsResult.data.code)) {
                     is Result.Error -> cardsResult
                     is Result.Success -> {
-                        Log.i("tag_niko", "Cards loaded")
                         Result.Success(Deck(
                             deckPreview,
                             deckDetailsResult.data.description,

@@ -1,6 +1,5 @@
 package com.cyberquick.hearthstonedecks.data.server.hearthpwn
 
-import android.util.Log
 import com.cyberquick.hearthstonedecks.data.server.entities.DeckDetails
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
@@ -29,10 +28,6 @@ class HearthpwnApi @Inject constructor() {
     }
 
     fun getPage(pageNumber: Int): Result<Page> {
-        Log.i("tag_wtf", "API, get page $pageNumber")
-
-        val startExecutionTime = System.currentTimeMillis()
-
         val deckPreviews = mutableListOf<DeckPreview>()
 
         val document = try {
@@ -131,10 +126,6 @@ class HearthpwnApi @Inject constructor() {
                 ),
             )
         }
-
-        val endExecutionTime = System.currentTimeMillis()
-        val executionTime = endExecutionTime - startExecutionTime
-        Log.i("tag_time","getPage() -> $executionTime ms")
 
         return Result.Success(Page(totalPages, pageNumber, deckPreviews))
     }

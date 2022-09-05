@@ -29,7 +29,7 @@ class AboutAppFragment : BaseFragment() {
         toolbarTitleChanger.setText("About app")
 
         val items = listOf(
-            AboutAppItem(R.drawable.ic_baseline_content_copy_24, R.string.copy_deck_in_order),
+            AboutAppItem(R.drawable.ic_copy, R.string.copy_deck_in_order),
             AboutAppItem(R.drawable.ic_star_not_filled, R.string.save_deck_description),
             AboutAppItem(R.drawable.ic_standard, R.string.format_standard_description),
             AboutAppItem(R.drawable.ic_wild, R.string.format_wild_description),

@@ -81,10 +81,11 @@
                     android:paddingHorizontal="15dp">
 
                     <ImageView
+                        android:id="@+id/btn_copy_deck_icon"
                         android:layout_width="17dp"
                         android:layout_height="17dp"
                         android:contentDescription="@string/copy"
-                        android:src="@drawable/ic_baseline_content_copy_24"
+                        android:src="@drawable/ic_copy"
                         app:tint="@color/button" />
                 </LinearLayout>
                 <LinearLayout

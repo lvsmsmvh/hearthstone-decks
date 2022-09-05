@@ -1,6 +1,5 @@
 package com.cyberquick.hearthstonedecks.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,17 +11,17 @@ import kotlinx.coroutines.*
 open class BaseViewModel : ViewModel() {
 
     /**
-     * We need this jobs to cancel them in the 'clear()' method,
+     * We need this jobs to cancel them in 'onCleared()',
      * so all of them will stop their work and they will not change
-     * the live data anymore after 'clear()' is called.
+     * the live data anymore after 'onCleared()' is called.
      */
+
     private var jobs = mutableListOf<Job>()
 
     protected fun createJob() = Job().apply { jobs.add(this) }
 
     override fun onCleared() {
         super.onCleared()
-        Log.i("tag_vm", "onCleared")
         jobs.forEach { it.cancel() }
         jobs.clear()
     }
@@ -39,6 +38,7 @@ open class BaseViewModel : ViewModel() {
      * Delay if we get an error and a response time was very small, because a user
      * might get an idea that the app has not reacted on his click.
      */
+
     protected fun <T : Any> makeLoadingRequest(
         liveData: LiveData<LoadingState<T>>,
         allowInterrupt: Boolean = false,

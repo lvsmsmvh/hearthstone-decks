@@ -1,6 +1,5 @@
 package com.cyberquick.hearthstonedecks.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -41,9 +40,7 @@ open class PageViewModel(
         defaultValue = Position(FIRST_PAGE_INDEX, null)
     ) {
         return@transformWithDefault it.asLoaded()?.result?.let { page ->
-            Position(page.number, page.totalPagesAmount).apply {
-                Log.i("tag_wtf", "Page loaded : ${this}")
-            }
+            Position(page.number, page.totalPagesAmount)
         }
     }
 
@@ -69,10 +66,7 @@ open class PageViewModel(
 
     private fun loadPage(pageNumber: Int, evenIfLoaded: Boolean = false) {
         if (isPageLoaded(pageNumber) && !evenIfLoaded) return
-        Log.i("tag_wtf", "Previous position is ${Position(position.value!!.current, position.value!!.total)}")
-        Log.i("tag_wtf", "Load page $pageNumber")
         position.postValue(Position(pageNumber, position.value!!.total))
-        Log.i("tag_wtf", "Current position is ${Position(pageNumber, position.value!!.total)}")
         loadingPageJob?.cancel()
         loadingPageJob = makeLoadingRequest(pageLoading, allowInterrupt = true) {
             getPageUseCase(pageNumber)

@@ -37,17 +37,24 @@ class DeckViewModel @Inject constructor(
 
     fun clickedOnSaveButton(deck: Deck, cards: List<Card>) {
         viewModelScope.launch(createJob() + Dispatchers.IO) {
-            val oldSavedState = stateDeckSaved.value ?: SavedState.NotSaved
+            val oldSavedState = stateDeckSaved.value ?: return@launch
 
-            val newSavingState = when (oldSavedState) {
-                SavedState.Saved -> removeDeckFromFavoriteUseCase(deck.deckPreview)
-                SavedState.NotSaved -> addDeckToFavoriteUseCase(deck, cards)
+            val newSavingRequest = when (oldSavedState) {
+                SavedState.Loading -> return@launch
+                SavedState.NotSaved -> {
+                    stateDeckSaved.postValue(SavedState.Loading)
+                    addDeckToFavoriteUseCase(deck, cards)
+                }
+                SavedState.Saved -> {
+                    stateDeckSaved.postValue(SavedState.Loading)
+                    removeDeckFromFavoriteUseCase(deck.deckPreview)
+                }
             }
 
-            when (newSavingState) {
+            when (newSavingRequest) {
                 is Result.Success -> stateDeckSaved.postValue(SavedState.opposite(oldSavedState))
                 is Result.Error -> {
-                    error.postValue(newSavingState.exception.message.toString())
+                    error.postValue(newSavingRequest.exception.message.toString())
                     error.postValue(null)
                 }
             }

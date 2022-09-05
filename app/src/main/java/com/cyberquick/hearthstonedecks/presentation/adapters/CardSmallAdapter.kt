@@ -64,8 +64,4 @@ class CardSmallAdapter : RecyclerView.Adapter<CardSmallViewHolder>() {
         listOfCards.addAll(list.toCardsCountable().sortedBy { it.card.manaCost })
         notifyItemRangeChanged(0, list.size)
     }
-
-    private fun getImages() {
-
-    }
 }

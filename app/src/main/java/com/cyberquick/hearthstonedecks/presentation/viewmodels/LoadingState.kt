@@ -22,4 +22,3 @@ fun <T : Any> LoadingState<T>?.asLoaded() = this as? LoadingState.Loaded
 fun <T : Any> LoadingState<T>?.isLoading() = this is LoadingState.Loading
 fun <T : Any> LoadingState<T>?.isFailed() = this is LoadingState.Failed
 fun <T : Any> LoadingState<T>?.isLoaded() = this is LoadingState.Loaded
-fun <T : Any> LoadingState<T>?.isLoadingOrLoaded() = isLoading() || isLoaded()
