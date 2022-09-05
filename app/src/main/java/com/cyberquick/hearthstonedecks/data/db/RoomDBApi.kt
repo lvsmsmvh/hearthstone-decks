@@ -57,22 +57,20 @@ class RoomDBApi @Inject constructor(
         val firstIndex = lastIndex - ITEMS_ON_A_PAGE + 1
 
         val entities = deckDao.getDeckEntities(firstIndex, lastIndex)
-        val deckPreviews = entities.map { dbMapper.toDeck(it).deckPreview }.reversed()
+        val deckPreviews = entities.map { dbMapper.toDeckPreview(it) }.reversed()
         return Page(totalPages, pageNumberToLoad, deckPreviews)
     }
 
     fun getDeck(deckPreview: DeckPreview): Deck? {
-        return deckDao.getDeckEntity(deckPreview.id)?.let { dbMapper.toDeck(it) }
-    }
+        val deckEntity = deckDao.getDeckEntity(deckPreview.id) ?: return null
 
-    fun getCards(deckPreview: DeckPreview): List<Card> {
         val cardIds = mutableListOf<Int>()
         deckDao.getCardsForDeckId(deckPreview.id).forEach { deckToCardEntity ->
             repeat(deckToCardEntity.copies) { cardIds.add(deckToCardEntity.card_id) }
         }
         val cardSet = deckDao.getCards(cardIds).map { dbMapper.toCard(it) }
-        return cardIds.map { id ->
-            cardSet.first { card -> card.id == id }
-        }
+        val cardsWithDuplicates = cardIds.map { id -> cardSet.first { card -> card.id == id } }
+
+        return dbMapper.toDeck(deckEntity, cardsWithDuplicates)
     }
 }

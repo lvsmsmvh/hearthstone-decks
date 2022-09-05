@@ -6,5 +6,4 @@ import com.cyberquick.hearthstonedecks.domain.entities.*
 interface BaseDecksRepository {
     suspend fun getPage(pageNumber: Int): Result<Page>
     suspend fun getDeck(deckPreview: DeckPreview): Result<Deck>
-    suspend fun getCards(deck: Deck): Result<List<Card>>
 }

@@ -117,7 +117,6 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
 
             if (state is LoadingState.Loaded) {
                 val deck = state.result
-                viewModel.loadCards(deck)
 
                 binding.btnCopyDeck.setOnClickListener {
                     copyToClipboard(deck.code)
@@ -125,27 +124,8 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
                 binding.btnShare.setOnClickListener {
                     shareLink(deck.deckPreview.deckUrl)
                 }
-            }
-        }
 
-        viewModel.stateCards.observe(viewLifecycleOwner) { state ->
-            Log.i("tag_state", "Observe CARDS  : ${state.javaClass.simpleName}")
-            if (state is LoadingState.Loading) {
-                binding.layoutProgressBar.layoutProgressBar.isVisible = true
-            }
-
-            if (state is LoadingState.Failed) {
-                binding.layoutProgressBar.layoutProgressBar.isVisible = false
-                binding.layoutFailed.layoutFailed.isVisible = true
-                binding.layoutFailed.tvErrorLoadingDataSmall.text = state.exception.message.toString()
-                binding.layoutFailed.btnReloadData.setOnClickListener {
-                    binding.layoutFailed.layoutFailed.isVisible = false
-                    viewModel.loadCards(viewModel.stateDeck.value.asLoaded()!!.result)
-                }
-            }
-
-            if (state is LoadingState.Loaded) {
-                val cards = state.result
+                val cards = state.result.cards
 
                 binding.recycleViewCards.apply {
                     layoutManager = GridLayoutManager(
@@ -160,12 +140,10 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
                     .enableTransitionType(LayoutTransition.CHANGING)
 
                 binding.btnFavorite.setOnClickListener {
-                    val deck = viewModel.stateDeck.value.asLoaded()!!.result
                     viewModel.clickedOnSaveButton(deck, cards)
                 }
 
                 doOnEnterTransitionEnd {
-                    Log.i("tag_state", "Observe CARDS  : doOnEnterTransitionEnd()")
                     binding.layoutProgressBar.layoutProgressBar.isVisible = false
                     binding.deckHolder.expand()
                 }
@@ -174,6 +152,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
 
         viewModel.stateDeckSaved.observe(viewLifecycleOwner) { state ->
             val isSaved = state is Saved
+
             val newIconRes = when (isSaved) {
                 true -> R.drawable.ic_star_filled
                 false -> R.drawable.ic_star_not_filled
@@ -198,13 +177,13 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
     private fun copyToClipboard(text: String) {
         (requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
             .setPrimaryClip(ClipData.newPlainText("copy", text))
-        toast("Copied to clipboard!")
+        toast(getString(R.string.copied_to_clipboard))
     }
 
     private fun shareLink(url: String) {
         ShareCompat.IntentBuilder(requireContext())
             .setType("text/plain")
-            .setChooserTitle("Share URL")
+            .setChooserTitle(getString(R.string.share_url))
             .setText(url)
             .startChooser()
     }

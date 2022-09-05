@@ -1,6 +1,6 @@
 package com.cyberquick.hearthstonedecks.data.server.battlenet.hearthstone
 
-import com.cyberquick.hearthstonedecks.data.server.battlenet.entities.GameClassEntity
+import com.cyberquick.hearthstonedecks.data.server.entities.GameClassEntity
 import com.cyberquick.hearthstonedecks.domain.entities.Card
 
 data class DeckResponse(

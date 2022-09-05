@@ -8,22 +8,25 @@ import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import javax.inject.Inject
 
 class DBMapper @Inject constructor() {
-    fun toDeck(deckEntity: DeckEntity) = Deck(
-        deckPreview = DeckPreview(
-            id = deckEntity.id,
-            title = deckEntity.title,
-            gameClass = deckEntity.gameClass,
-            dust = deckEntity.dust,
-            timeCreated = deckEntity.timeCreated,
-            deckUrl = deckEntity.deckUrl,
-            gameFormat = deckEntity.gameFormat,
-            views = deckEntity.views,
-            author = deckEntity.author,
-            rating = deckEntity.rating,
-            deckType = deckEntity.deckType,
-        ),
+    fun toDeck(deckEntity: DeckEntity, cards: List<Card>) = Deck(
+        deckPreview = toDeckPreview(deckEntity),
         description = deckEntity.description,
         code = deckEntity.code,
+        cards = cards,
+    )
+
+    fun toDeckPreview(deckEntity: DeckEntity) = DeckPreview(
+        id = deckEntity.id,
+        title = deckEntity.title,
+        gameClass = deckEntity.gameClass,
+        dust = deckEntity.dust,
+        timeCreated = deckEntity.timeCreated,
+        deckUrl = deckEntity.deckUrl,
+        gameFormat = deckEntity.gameFormat,
+        views = deckEntity.views,
+        author = deckEntity.author,
+        rating = deckEntity.rating,
+        deckType = deckEntity.deckType,
     )
 
     fun toDeckEntity(deck: Deck) = DeckEntity(

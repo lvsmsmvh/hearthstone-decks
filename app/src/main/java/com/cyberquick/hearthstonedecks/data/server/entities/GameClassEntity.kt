@@ -1,4 +1,4 @@
-package com.cyberquick.hearthstonedecks.data.server.battlenet.entities
+package com.cyberquick.hearthstonedecks.data.server.entities
 
 data class GameClassEntity(
     val slug: String,

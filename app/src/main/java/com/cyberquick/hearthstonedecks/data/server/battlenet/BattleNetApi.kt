@@ -8,7 +8,7 @@ import com.cyberquick.hearthstonedecks.domain.entities.Card
 import java.lang.Exception
 import javax.inject.Inject
 
-class BattleNetApiRepository @Inject constructor(
+class BattleNetApi @Inject constructor(
     private val deckApi: DeckApi,
     private val oAuthApi: OAuthApi,
 ) {

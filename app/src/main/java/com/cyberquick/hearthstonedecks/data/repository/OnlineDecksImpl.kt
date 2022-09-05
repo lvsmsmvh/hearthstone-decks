@@ -1,26 +1,40 @@
 package com.cyberquick.hearthstonedecks.data.repository
 
-import com.cyberquick.hearthstonedecks.data.server.battlenet.BattleNetApiRepository
-import com.cyberquick.hearthstonedecks.data.server.hearthpwn.HearthpwnApiRepository
+import android.util.Log
+import com.cyberquick.hearthstonedecks.data.server.battlenet.BattleNetApi
+import com.cyberquick.hearthstonedecks.data.server.hearthpwn.HearthpwnApi
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.*
 import com.cyberquick.hearthstonedecks.domain.repositories.OnlineDecksRepository
 import javax.inject.Inject
 
 class OnlineDecksImpl @Inject constructor(
-    private val battleNetApiRepository: BattleNetApiRepository,
-    private val hearthpwnApiRepository: HearthpwnApiRepository,
+    private val battleNetApi: BattleNetApi,
+    private val hearthpwnApi: HearthpwnApi,
 ) : OnlineDecksRepository {
 
     override suspend fun getPage(pageNumber: Int): Result<Page> {
-        return hearthpwnApiRepository.getPage(pageNumber)
+        return hearthpwnApi.getPage(pageNumber)
     }
 
     override suspend fun getDeck(deckPreview: DeckPreview): Result<Deck> {
-        return hearthpwnApiRepository.getDeck(deckPreview)
-    }
-
-    override suspend fun getCards(deck: Deck): Result<List<Card>> {
-        return battleNetApiRepository.retrieveCards(deck.code)
+        return when (val deckDetailsResult = hearthpwnApi.getDeckDetails(deckPreview)) {
+            is Result.Error -> deckDetailsResult
+            is Result.Success -> {
+                Log.i("tag_niko", "Deck loaded")
+                when (val cardsResult = battleNetApi.retrieveCards(deckDetailsResult.data.code)) {
+                    is Result.Error -> cardsResult
+                    is Result.Success -> {
+                        Log.i("tag_niko", "Cards loaded")
+                        Result.Success(Deck(
+                            deckPreview,
+                            deckDetailsResult.data.description,
+                            deckDetailsResult.data.code,
+                            cardsResult.data
+                        ))
+                    }
+                }
+            }
+        }
     }
 }

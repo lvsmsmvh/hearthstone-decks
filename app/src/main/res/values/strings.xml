@@ -45,4 +45,6 @@
     <string name="question_suggestions">Questions &amp; Suggestions — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
     <string name="privacy_policy">Privacy Policy — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a></string>
     <string name="version_ph">Version: %s</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
+    <string name="share_url">Share URL</string>
 </resources>

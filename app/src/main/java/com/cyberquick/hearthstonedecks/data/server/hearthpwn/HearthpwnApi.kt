@@ -1,8 +1,8 @@
 package com.cyberquick.hearthstonedecks.data.server.hearthpwn
 
 import android.util.Log
+import com.cyberquick.hearthstonedecks.data.server.entities.DeckDetails
 import com.cyberquick.hearthstonedecks.domain.common.Result
-import com.cyberquick.hearthstonedecks.domain.entities.Deck
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import org.jsoup.Jsoup
@@ -10,14 +10,14 @@ import org.jsoup.nodes.Document
 import java.io.IOException
 import javax.inject.Inject
 
-class HearthpwnApiRepository @Inject constructor() {
+class HearthpwnApi @Inject constructor() {
 
     companion object {
         private const val MAX_TIMEOUT_LOADING = 10 * 1000   // 10s
         private const val URL_ROOT = "https://www.hearthpwn.com"
         private const val URL_ALL = "$URL_ROOT/decks?"
-        private const val URL_CONSTRUCTED =
-            "$URL_ROOT/decks?filter-deck-tag=2&filter-show-constructed-only=y"
+        private const val URL_CONSTRUCTED = URL_ROOT +
+                "/decks?filter-deck-tag=2&filter-show-constructed-only=y"
     }
 
     private fun getDocument(url: String): Document {
@@ -27,30 +27,6 @@ class HearthpwnApiRepository @Inject constructor() {
             .timeout(MAX_TIMEOUT_LOADING)
             .get()
     }
-
-//    fun getPagesQuantity(): Result<Int> {
-//        val startExecutionTime = System.currentTimeMillis()
-//
-//        val document = try {
-//            getDocument(url = "$API_URL_PAGE&page=1")
-//        } catch (e: IOException) {
-//            return Result.Error(e)
-//        }
-//
-//        val totalPages = document
-//            .select("ul[class=b-pagination-list paging-list j-tablesorter-pager j-listing-pagination]")
-//            .select("li")
-//            .eq(6)
-//            .select("a")
-//            .text()
-//            .toInt()
-//
-//        val endExecutionTime = System.currentTimeMillis()
-//        val executionTime = endExecutionTime - startExecutionTime
-//        Log.i("tag_time","getPagesQuantity() -> $executionTime ms")
-//
-//        return Result.Success(totalPages)
-//    }
 
     fun getPage(pageNumber: Int): Result<Page> {
         Log.i("tag_wtf", "API, get page $pageNumber")
@@ -76,9 +52,7 @@ class HearthpwnApiRepository @Inject constructor() {
             .let { numbers ->
                 val lastNumber = numbers.eq(numbers.size - 1)
                 var result = lastNumber.select("a").text()
-                Log.i("tag_wtf", "Parse from a : $result")
                 if (result.isBlank()) result = lastNumber.select("span").text()
-                Log.i("tag_wtf", "Parse from span : $result")
                 return@let result.toInt()
             }
 
@@ -165,7 +139,7 @@ class HearthpwnApiRepository @Inject constructor() {
         return Result.Success(Page(totalPages, pageNumber, deckPreviews))
     }
 
-    fun getDeck(deckPreview: DeckPreview): Result<Deck> {
+    fun getDeckDetails(deckPreview: DeckPreview): Result<DeckDetails> {
         val document = try {
             getDocument(url = deckPreview.deckUrl)
         } catch (e: IOException) {
@@ -189,7 +163,7 @@ class HearthpwnApiRepository @Inject constructor() {
         }
         description = description.trim()
 
-        return Result.Success(Deck(deckPreview, description, deckCode))
+        return Result.Success(DeckDetails(deckCode, description))
     }
 
     /**

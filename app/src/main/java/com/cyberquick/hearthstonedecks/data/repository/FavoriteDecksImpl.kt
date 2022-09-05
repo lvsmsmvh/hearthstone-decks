@@ -1,7 +1,7 @@
 package com.cyberquick.hearthstonedecks.data.repository
 
 import com.cyberquick.hearthstonedecks.data.db.RoomDBApi
-import com.cyberquick.hearthstonedecks.domain.common.NoSavedDecksFoundException
+import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.*
 import com.cyberquick.hearthstonedecks.domain.repositories.FavoriteDecksRepository
@@ -33,14 +33,6 @@ class FavoriteDecksImpl @Inject constructor(
     override suspend fun getDeck(deckPreview: DeckPreview): Result<Deck> {
         val deck = roomDBApi.getDeck(deckPreview)
         return deck?.let { Result.Success(it) } ?: Result.Error(NullPointerException())
-    }
-
-    override suspend fun getCards(deck: Deck): Result<List<Card>> {
-        val cards = roomDBApi.getCards(deck.deckPreview)
-        return when (cards.isNotEmpty()) {
-            true -> Result.Success(cards)
-            false -> Result.Error(NullPointerException())
-        }
     }
 
     override suspend fun isSaved(deckPreview: DeckPreview): Result<Boolean> {

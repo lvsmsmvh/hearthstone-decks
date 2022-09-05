@@ -7,7 +7,6 @@ import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.Card
 import com.cyberquick.hearthstonedecks.domain.entities.Deck
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
-import com.cyberquick.hearthstonedecks.domain.usecases.common.GetCardsUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.common.GetDeckUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.AddDeckToFavoriteUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.IsDeckInFavoriteUseCase
@@ -20,26 +19,20 @@ import javax.inject.Inject
 @HiltViewModel
 class DeckViewModel @Inject constructor(
     private val getDeckUseCase: GetDeckUseCase,
-    private val getCardsUseCase: GetCardsUseCase,
     private val isDeckFavoriteUseCase: IsDeckInFavoriteUseCase,
     private val addDeckToFavoriteUseCase: AddDeckToFavoriteUseCase,
     private val removeDeckFromFavoriteUseCase: RemoveDeckFromFavoriteUseCase,
 ) : BaseViewModel() {
 
     val stateDeck: LiveData<LoadingState<Deck>> = MutableLiveData()
-    val stateCards: LiveData<LoadingState<List<Card>>> = MutableLiveData()
     val stateDeckSaved: LiveData<SavedState> = MutableLiveData()
     val error: LiveData<String?> = MutableLiveData()
 
     fun loadDeck(deckPreview: DeckPreview) {
-        if (isDeckPreviewLoaded(deckPreview)) return
+        if (isDeckLoaded(deckPreview)) return
         makeLoadingRequest(stateDeck) {
             return@makeLoadingRequest getDeckUseCase(deckPreview)
         }
-    }
-
-    fun loadCards(deck: Deck) = makeLoadingRequest(stateCards) {
-        return@makeLoadingRequest getCardsUseCase(deck)
     }
 
     fun clickedOnSaveButton(deck: Deck, cards: List<Card>) {
@@ -67,13 +60,12 @@ class DeckViewModel @Inject constructor(
         }
     }
 
-    private fun isDeckPreviewLoaded(deckPreview: DeckPreview): Boolean {
+    private fun isDeckLoaded(deckPreview: DeckPreview): Boolean {
         return stateDeck.value.asLoaded()?.result?.deckPreview == deckPreview
     }
 
     override fun onCleared() {
         super.onCleared()
-        stateCards.setToDefault()
         stateDeck.setToDefault()
         stateDeckSaved.setToDefault()
         error.setToDefault()
