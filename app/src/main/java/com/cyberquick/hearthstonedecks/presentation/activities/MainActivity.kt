@@ -2,22 +2,21 @@ package com.cyberquick.hearthstonedecks.presentation.activities
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.cyberquick.hearthstonedecks.BuildConfig
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.ActivityMainBinding
 import com.cyberquick.hearthstonedecks.presentation.common.ToolbarTitleChanger
 import com.cyberquick.hearthstonedecks.presentation.fragments.*
-import com.cyberquick.hearthstonedecks.utils.color
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -130,20 +129,13 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
             return@setNavigationItemSelectedListener true
         }
 
-        binding.navigationDrawer.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-            override fun onLayoutChange(
-                v: View?, left: Int, top: Int, right: Int, bottom: Int,
-                oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int
-            ) {
-                binding.navigationDrawer.removeOnLayoutChangeListener(this)
-//                v?.findViewById<TextView>(R.id.tv_app_version)?.text =
-//                    "Version: " + BuildConfig.VERSION_NAME
-            }
-        })
+        val versionText = getString(R.string.version_ph, BuildConfig.VERSION_NAME)
+        binding.navigationDrawer.getHeaderView(0)
+            .findViewById<TextView>(R.id.tv_app_version).text = versionText
     }
 
     private fun showExitWindow() {
-        val dialog = MaterialAlertDialogBuilder(this)
+        MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
             .setTitle(R.string.quit_app_question)
             .setPositiveButton(R.string.quit) { dialog, _ ->
                 dialog.dismiss()
@@ -153,28 +145,6 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
                 dialog.dismiss()
             }
             .show()
-
-//        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(color(R.color.colorPrimary))
-//        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(color(R.color.colorPrimary))
-    }
-
-    private fun showLogoutWindow() {
-        val dialog = MaterialAlertDialogBuilder(this)
-            .setTitle("Quit?")
-            .setPositiveButton("Yes") { dialog, _ ->
-                dialog.dismiss()
-                finish()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-            .setTextColor(color(R.color.colorPrimary))
-
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE)
-            .setTextColor(color(R.color.colorPrimary))
     }
 
     override fun setText(text: String) {

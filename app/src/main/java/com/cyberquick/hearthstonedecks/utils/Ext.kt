@@ -1,7 +1,5 @@
 package com.cyberquick.hearthstonedecks.utils
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.drawable.Drawable
@@ -60,7 +58,7 @@ fun FragmentManager.isFragmentInBackstack(tag: String): Boolean {
 fun FragmentActivity.simpleNavigate(fragment: Fragment) {
     val tag = fragment.javaClass.name
 
-    if (supportFragmentManager.isFragmentInBackstack(tag)) {    // TODO Remove maybe???
+    if (supportFragmentManager.isFragmentInBackstack(tag)) {
         supportFragmentManager.popBackStackImmediate(tag, 0)
     } else {
         supportFragmentManager.beginTransaction()
@@ -72,12 +70,6 @@ fun FragmentActivity.simpleNavigate(fragment: Fragment) {
 
 fun View.color(color: Int) = context.color(color)
 
-fun View.setActive(active: Boolean) {
-    background.setTint(color(if (active) R.color.palette_100 else R.color.palette_700))
-    isEnabled = active
-    isClickable = active
-}
-
 suspend fun delayIfExecutionTimeIsSmall(executionTime: Long) {
     val minExecutionTime = 500L
     var delayTime = minExecutionTime - executionTime
@@ -85,42 +77,6 @@ suspend fun delayIfExecutionTimeIsSmall(executionTime: Long) {
         delayTime = 0
     }
     delay(delayTime)
-}
-
-fun newText(target: TextView, text: String) {
-    val matchParentMeasureSpec = View.MeasureSpec.makeMeasureSpec(
-        (target.parent as View).height, View.MeasureSpec.EXACTLY
-    )
-    val wrapContentMeasureSpec = View.MeasureSpec.makeMeasureSpec(
-        0, View.MeasureSpec.UNSPECIFIED
-    )
-    target.measure(wrapContentMeasureSpec, matchParentMeasureSpec)
-    val targetHeight = min(target.measuredHeight, (target.parent as View).height)
-    val durations = ((targetHeight / target.context.resources
-        .displayMetrics.density)).toLong() / 4
-
-    target.layoutParams.height = 0
-    target.visibility = View.VISIBLE
-
-    target.startAnimation(object : Animation() {
-        override fun applyTransformation(
-            interpolatedTime: Float,
-            t: Transformation
-        ) {
-            target.layoutParams.height = when (interpolatedTime) {
-                1f -> LinearLayout.LayoutParams.WRAP_CONTENT
-                else -> (targetHeight * interpolatedTime).toInt()
-            }
-            target.requestLayout()
-        }
-
-        override fun willChangeBounds(): Boolean {
-            return true
-        }
-    }.apply {
-        interpolator = AccelerateInterpolator(0.5f)
-        duration = durations
-    })
 }
 
 fun View.expand() {
@@ -156,43 +112,4 @@ fun View.expand() {
         interpolator = AccelerateInterpolator(0.5f)
         duration = durations
     })
-}
-
-fun View.collapse() {
-    if (visibility == View.GONE) return
-
-    val initialHeight = measuredHeight
-//    val durations = (initialHeight / context.resources.displayMetrics.density).toLong()
-    val durations = 200L
-
-    val a: Animation = object : Animation() {
-        override fun applyTransformation(
-            interpolatedTime: Float,
-            t: Transformation
-        ) {
-            if (interpolatedTime == 1f) {
-                visibility = View.GONE
-            } else {
-                layoutParams.height = initialHeight - (initialHeight * interpolatedTime).toInt()
-                requestLayout()
-            }
-        }
-
-        override fun willChangeBounds(): Boolean {
-            return true
-        }
-    }
-
-    alpha = 1.0F
-    animate().alpha(0.0F).setDuration(durations)
-        .setListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                visibility = View.GONE
-                alpha = 1.0F
-            }
-        })
-
-    // Collapse speed of 1dp/ms
-    a.duration = durations
-    startAnimation(a)
 }

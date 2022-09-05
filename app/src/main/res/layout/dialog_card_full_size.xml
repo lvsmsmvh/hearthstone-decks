@@ -46,7 +46,7 @@
             <TextView
                 android:id="@+id/quote"
                 style="@style/LightTextWithShadow"
-                android:textSize="15sp"
+                android:textSize="17sp"
                 android:animateLayoutChanges="true"
                 android:textStyle="italic" />
 
@@ -55,7 +55,7 @@
                 style="@style/LightTextWithShadow"
                 android:layout_gravity="end"
                 android:layout_marginTop="5dp"
-                android:textSize="13sp" />
+                android:textSize="15sp" />
         </LinearLayout>
     </FrameLayout>
 

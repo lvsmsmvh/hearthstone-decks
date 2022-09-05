@@ -91,7 +91,11 @@ open class PageViewModel(
 
     fun updateCurrentPage(evenIfLoaded: Boolean) {
         Log.i("tag_page", "updateCurrentPage")
-        val total = totalPagesAmountLoading.value.asLoaded()?.result ?: return
+        val total = totalPagesAmountLoading.value.asLoaded()?.result ?: run {
+            updateAmountOfPages(true)
+            return
+        }
+
         val current = currentPosition.value
         val nextToLoad = when {
             current == null -> 1

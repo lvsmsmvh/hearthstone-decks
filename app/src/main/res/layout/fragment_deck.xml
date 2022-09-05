@@ -39,7 +39,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:animateLayoutChanges="true"
                 android:gravity="center_vertical|end"
                 android:orientation="horizontal">
                 <LinearLayout

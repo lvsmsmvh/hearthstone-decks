@@ -36,6 +36,7 @@ class AboutAppFragment : BaseFragment() {
             AboutAppItem(R.drawable.card_loading, R.string.click_on_a_card),
             AboutAppItem(R.drawable.ic_fi_link, R.string.all_decks_are_taken_from, divider = true),
             AboutAppItem(R.drawable.ic_fi_link, R.string.question_suggestions),
+            AboutAppItem(R.drawable.ic_fi_link, R.string.privacy_policy),
         )
 
         binding.recycleViewAboutApp.layoutManager = LinearLayoutManager(requireContext())

@@ -31,8 +31,11 @@ class DeckViewModel @Inject constructor(
     val stateDeckSaved: LiveData<SavedState> = MutableLiveData()
     val error: LiveData<String?> = MutableLiveData()
 
-    fun loadDeck(deckPreview: DeckPreview) = makeLoadingRequest(stateDeck) {
-        return@makeLoadingRequest getDeckUseCase(deckPreview)
+    fun loadDeck(deckPreview: DeckPreview) {
+        if (isDeckPreviewLoaded(deckPreview)) return
+        makeLoadingRequest(stateDeck) {
+            return@makeLoadingRequest getDeckUseCase(deckPreview)
+        }
     }
 
     fun loadCards(deck: Deck) = makeLoadingRequest(stateCards) {
@@ -62,6 +65,10 @@ class DeckViewModel @Inject constructor(
         viewModelScope.launch(createJob() + Dispatchers.IO) {
             stateDeckSaved.postValue(SavedState.fromResult(isDeckFavoriteUseCase(deckPreview)))
         }
+    }
+
+    private fun isDeckPreviewLoaded(deckPreview: DeckPreview): Boolean {
+        return stateDeck.value.asLoaded()?.result?.deckPreview == deckPreview
     }
 
     override fun onCleared() {

@@ -122,7 +122,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:contentDescription="@string/dust_icon"
-                android:src="@drawable/ic_fi_clock"
+                android:src="@drawable/ic_baseline_calendar_month_24"
                 app:tint="@color/palette_text_3" />
 
             <TextView

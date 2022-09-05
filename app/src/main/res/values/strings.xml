@@ -1,19 +1,10 @@
 <resources>
     <string name="app_name">Decks for Hearthstone</string>
     <string name="app_name_new_line">Decks for\nHearthstone</string>
+    <string name="app_name_short">Decks for HS</string>
     <string name="main_image">Main image</string>
 
     //deck classes
-    <string name="demon_hunter">Demon Hunter</string>
-    <string name="druid">Druid</string>
-    <string name="priest">Priest</string>
-    <string name="warlock">Warlock</string>
-    <string name="warrior">Warrior</string>
-    <string name="rogue">Rogue</string>
-    <string name="paladin">Paladin</string>
-    <string name="shaman">Shaman</string>
-    <string name="mage">Mage</string>
-    <string name="hunter">Hunter</string>
     <string name="dust_icon">Dust icon</string>
     <string name="dust_needed">Dust needed: </string>
     <string name="class_tip">Class: </string>
@@ -82,4 +73,6 @@
     <string name="format_wild_description">Wild format</string>
     <string name="all_decks_are_taken_from">All decks are taken from — <a href="https://hearthpwn.com">hearthpwn.com</a></string>
     <string name="question_suggestions">Questions &amp; Suggestions — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
+    <string name="privacy_policy">Privacy Policy — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a></string>
+    <string name="version_ph">Version: %s</string>
 </resources>

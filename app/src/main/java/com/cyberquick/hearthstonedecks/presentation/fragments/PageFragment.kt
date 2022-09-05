@@ -244,7 +244,7 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
     private fun Menu.previousButton() = findItem(R.id.menu_button_previous)
     private fun Menu.nextButton() = findItem(R.id.menu_button_next)
     private fun MenuItem.update(isActive: Boolean) {
-        icon.setTint(color(if (isActive) R.color.palette_100 else R.color.palette_700))
+        icon?.setTint(color(if (isActive) R.color.palette_100 else R.color.palette_700))
         isEnabled = isActive
     }
 }
