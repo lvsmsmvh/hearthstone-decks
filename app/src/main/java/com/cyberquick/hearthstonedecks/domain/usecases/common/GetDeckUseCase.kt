@@ -12,9 +12,7 @@ class GetDeckUseCase @Inject constructor(
     private val favoriteDecksRepository: FavoriteDecksRepository,
 ) {
     suspend operator fun invoke(deckPreview: DeckPreview): Result<Deck> {
-        favoriteDecksRepository.getDeck(deckPreview).let { result ->
-            if (result is Result.Success) return result
-        }
-        return onlineDecksRepository.getDeck(deckPreview)
+        return (favoriteDecksRepository.getDeck(deckPreview) as? Result.Success)
+            ?: onlineDecksRepository.getDeck(deckPreview)
     }
 }
