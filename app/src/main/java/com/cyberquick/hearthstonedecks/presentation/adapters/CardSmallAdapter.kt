@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 class CardSmallAdapter : RecyclerView.Adapter<CardSmallViewHolder>() {
 
     companion object {
-        const val TOTAL_ITEMS_HORIZONTAL = 5
+        const val TOTAL_ITEMS_HORIZONTAL = 4
     }
 
     private val listOfCards = mutableListOf<CardCountable>()
