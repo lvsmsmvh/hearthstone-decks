@@ -160,8 +160,7 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         binding.layoutLoaded.isVisible = loadingState.isLoaded()
                 || (loadingState.isLoading() && hideLoading)
 
-        when (val exception = (loadingState as? LoadingState.Failed)?.exception) {
-            null -> {}
+        when (val exception = (loadingState as? LoadingState.Failed)?.exception ?: return) {
             is NoSavedDecksFoundException -> {
                 binding.layoutFailed.tvErrorLoadingData.text =
                     getString(R.string.no_saved_decks_found_title)
