@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentDeckBinding
+import com.cyberquick.hearthstonedecks.domain.common.toCardsCountable
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.presentation.adapters.CardSmallAdapter
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckViewHolder
@@ -130,7 +131,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
                         context, CardSmallAdapter.TOTAL_ITEMS_HORIZONTAL,
                         LinearLayoutManager.VERTICAL, false
                     )
-                    adapter = CardSmallAdapter().apply { set(cards) }
+                    adapter = CardSmallAdapter().apply { set(cards.toCardsCountable()) }
                     isNestedScrollingEnabled = false
                 }
 

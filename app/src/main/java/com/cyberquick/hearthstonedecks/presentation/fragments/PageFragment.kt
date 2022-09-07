@@ -11,7 +11,6 @@ import androidx.transition.TransitionInflater
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
 import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundException
-import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.color
@@ -62,7 +61,49 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
     private fun initView() {
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
 
-        deckAdapter = DeckAdapter()
+        deckAdapter = DeckAdapter(
+            onAnimateItemReady = {
+                (exitTransition as? Transition)?.excludeTarget(
+                    it.content.root, true
+                )
+                setExitSharedElementCallback(object : SharedElementCallback() {
+                    override fun onMapSharedElements(
+                        names: List<String>, sharedElements: MutableMap<String, View>
+                    ) {
+                        exitTransition = null
+                        sharedElements[names[0]] = it.content.root
+                    }
+                })
+            },
+            onClickListener = { data ->
+                clickedOnDeck = true
+                deckIdClicked = data.deckPreview.id
+                val targetView = data.content.root
+
+                val transition = TransitionInflater.from(requireContext())
+                    .inflateTransition(R.transition.items_exit_transition)
+                transition.addTarget(R.id.card_view)
+                transition.excludeTarget(targetView, true)
+                exitTransition = transition
+                setExitSharedElementCallback(object : SharedElementCallback() {
+                    override fun onMapSharedElements(
+                        names: List<String>, sharedElements: MutableMap<String, View>
+                    ) {
+                        sharedElements[names[0]] = targetView
+                    }
+                })
+
+                val fragment = DeckFragment(data.deckPreview)
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .addSharedElement(targetView, targetView.transitionName)
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(fragment.javaClass.name)
+                    .commit()
+            },
+        )
+
         binding.recycleViewDecks.layoutManager = LinearLayoutManager(context)
         binding.recycleViewDecks.adapter = deckAdapter
         binding.layoutFailed.btnReloadData.setOnClickListener {
@@ -89,8 +130,9 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
                 }
                 is LoadingState.Loaded -> {
                     updateLayout(state)
-                    setItems(state.result.deckPreviews)
                     wasPreviouslyLoaded = true
+                    deckAdapter.deckPreviewIdToAnimate = deckIdClicked
+                    deckAdapter.set(state.result.deckPreviews)
                 }
             }
         }
@@ -106,51 +148,6 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
             }
         }
     }
-
-    private fun setItems(deckPreviews: List<DeckPreview>) = deckAdapter.set(
-        list = deckPreviews,
-        deckPreviewIdToAnimate = deckIdClicked,
-        onAnimateItemReady = {
-            (exitTransition as? Transition)?.excludeTarget(
-                it.content.root, true
-            )
-            setExitSharedElementCallback(object : SharedElementCallback() {
-                override fun onMapSharedElements(
-                    names: List<String>, sharedElements: MutableMap<String, View>
-                ) {
-                    exitTransition = null
-                    sharedElements[names[0]] = it.content.root
-                }
-            })
-        },
-        onClickListener = { data ->
-            clickedOnDeck = true
-            deckIdClicked = data.deckPreview.id
-            val targetView = data.content.root
-
-            val transition = TransitionInflater.from(requireContext())
-                .inflateTransition(R.transition.items_exit_transition)
-            transition.addTarget(R.id.card_view)
-            transition.excludeTarget(targetView, true)
-            exitTransition = transition
-            setExitSharedElementCallback(object : SharedElementCallback() {
-                override fun onMapSharedElements(
-                    names: List<String>, sharedElements: MutableMap<String, View>
-                ) {
-                    sharedElements[names[0]] = targetView
-                }
-            })
-
-            val fragment = DeckFragment(data.deckPreview)
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .setReorderingAllowed(true)
-                .addSharedElement(targetView, targetView.transitionName)
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(fragment.javaClass.name)
-                .commit()
-        },
-    )
 
     private fun updateLayout(loadingState: LoadingState<Any>) {
         val hideLoading = this is FavoritePageFragment && wasPreviouslyLoaded

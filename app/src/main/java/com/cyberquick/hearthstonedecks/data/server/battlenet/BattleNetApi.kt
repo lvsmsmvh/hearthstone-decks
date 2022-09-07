@@ -30,7 +30,7 @@ class BattleNetApi @Inject constructor(
                     token = "Bearer $token",
                     code = code
                 )
-                Result.Success(deckResponse.cards)
+                Result.Success(deckResponse.cards.sortedBy { it.manaCost })
             } catch (e: Exception) {
                 Result.Error(e)
             }

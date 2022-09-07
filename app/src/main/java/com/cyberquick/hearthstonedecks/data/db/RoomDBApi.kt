@@ -70,7 +70,7 @@ class RoomDBApi @Inject constructor(
         }
         val cardSet = deckDao.getCards(cardIds).map { dbMapper.toCard(it) }
         val cardsWithDuplicates = cardIds.map { id -> cardSet.first { card -> card.id == id } }
-
+            .sortedBy { it.manaCost }
         return dbMapper.toDeck(deckEntity, cardsWithDuplicates)
     }
 }

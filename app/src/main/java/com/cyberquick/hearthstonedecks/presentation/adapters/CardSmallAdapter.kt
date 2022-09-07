@@ -1,43 +1,32 @@
 package com.cyberquick.hearthstonedecks.presentation.adapters
 
 import android.graphics.drawable.Drawable
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import android.view.View
 import com.cyberquick.hearthstonedecks.R
-import com.cyberquick.hearthstonedecks.domain.common.toCardsCountable
-import com.cyberquick.hearthstonedecks.domain.entities.Card
 import com.cyberquick.hearthstonedecks.domain.entities.CardCountable
+import com.cyberquick.hearthstonedecks.presentation.adapters.base.BaseRvAdapter
 import com.cyberquick.hearthstonedecks.presentation.common.entities.CardFullSizeData
 import com.cyberquick.hearthstonedecks.presentation.dialogs.DialogPreviewCard
 import java.util.concurrent.atomic.AtomicBoolean
 
-class CardSmallAdapter : RecyclerView.Adapter<CardSmallViewHolder>() {
+class CardSmallAdapter : BaseRvAdapter<CardCountable, CardSmallViewHolder>() {
 
     companion object {
         const val TOTAL_ITEMS_HORIZONTAL = 4
     }
 
-    private val listOfCards = mutableListOf<CardCountable>()
     private val images = mutableMapOf<CardCountable, Drawable>()
     private var clicksBlocked = AtomicBoolean(false)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardSmallViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_card_small, parent, false)
-        return CardSmallViewHolder(view)
-    }
+    override val layoutRes: Int = R.layout.item_card_small
 
-    override fun getItemCount(): Int {
-        return listOfCards.size
-    }
+    override fun createViewHolder(view: View) = CardSmallViewHolder(view)
 
-    override fun onBindViewHolder(holder: CardSmallViewHolder, position: Int) {
-        val cardCountable = listOfCards[position]
+    override fun onBind(holder: CardSmallViewHolder, item: CardCountable) {
         holder.bind(
-            cardCountable,
+            item,
             onImageLoaded = {
-                images[cardCountable] = it
+                images[item] = it
             },
             onClicked = {
                 if (clicksBlocked.getAndSet(true)) {
@@ -47,21 +36,15 @@ class CardSmallAdapter : RecyclerView.Adapter<CardSmallViewHolder>() {
                 DialogPreviewCard(
                     holder.view.context,
                     sourceScreen = holder.view,
-                    cards = listOfCards.map {
+                    cards = items.map {
                         CardFullSizeData(it, images[it])
                     },
-                    selectedCard = cardCountable,
+                    selectedCard = item,
                     onClosed = {
                         clicksBlocked.set(false)
                     },
                 ).show()
             },
         )
-    }
-
-    fun set(list: List<Card>) {
-        listOfCards.clear()
-        listOfCards.addAll(list.toCardsCountable().sortedBy { it.card.manaCost })
-        notifyItemRangeChanged(0, list.size)
     }
 }

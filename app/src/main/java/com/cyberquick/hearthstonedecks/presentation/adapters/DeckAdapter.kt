@@ -1,61 +1,25 @@
 package com.cyberquick.hearthstonedecks.presentation.adapters
 
-import android.annotation.SuppressLint
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.cyberquick.hearthstonedecks.databinding.ItemDeckPreviewBinding
+import android.view.View
+import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
+import com.cyberquick.hearthstonedecks.presentation.adapters.base.BaseRvAdapter
 
-class DeckAdapter : RecyclerView.Adapter<DeckViewHolder>() {
+class DeckAdapter(
+    private val onClickListener: (DeckViewHolder.ItemData) -> Unit,
+    private val onAnimateItemReady: (DeckViewHolder.ItemData) -> Unit,
+) : BaseRvAdapter<DeckPreview, DeckViewHolder>() {
 
-    private var listDecks = listOf<DeckPreview>()
-    private var deckPreviewIdToAnimate: Int? = null
-    private lateinit var onClickListener: (DeckViewHolder.ItemData) -> Unit
-    private lateinit var onAnimateItemReady: (DeckViewHolder.ItemData) -> Unit
+    var deckPreviewIdToAnimate: Int? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeckViewHolder {
-        val binding = ItemDeckPreviewBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        )
-        val content = DeckViewHolder.Content(
-            root = binding.root,
-            title = binding.deckTitle,
-            dust = binding.deckDust,
-            deckClassImg = binding.deckClassImg,
-            deckFormatImg = binding.deckFormatImg,
-            deckTimeCreated = binding.deckTimeCreated,
-            views = binding.deckViews,
-        )
-
-        return DeckViewHolder(content)
+    override val layoutRes: Int = R.layout.item_deck_preview
+    override fun createViewHolder(view: View): DeckViewHolder {
+        return DeckViewHolder(DeckViewHolder.Content.fromView(view))
     }
 
-    override fun getItemCount() = listDecks.size
-
-    override fun onBindViewHolder(holderDeck: DeckViewHolder, position: Int) = holderDeck.bind(
-        deckPreview = listDecks[position],
-        onClickListener = onClickListener,
-        onLoadedListener = {
-            val animateItem = listDecks[position].id == deckPreviewIdToAnimate
-            if (animateItem) {
-                onAnimateItemReady.invoke(it)
-            }
-        },
-    )
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun set(
-        list: List<DeckPreview>,
-        deckPreviewIdToAnimate: Int? = null,
-        onClickListener: (DeckViewHolder.ItemData) -> Unit,
-        onAnimateItemReady: (DeckViewHolder.ItemData) -> Unit,
-    ) {
-
-        this.listDecks = list
-        this.onClickListener = onClickListener
-        this.deckPreviewIdToAnimate = deckPreviewIdToAnimate
-        this.onAnimateItemReady = onAnimateItemReady
-        notifyDataSetChanged()
+    override fun onBind(holder: DeckViewHolder, item: DeckPreview) {
+        holder.bind(item, onClickListener, onLoadedListener = {
+            if (item.id == deckPreviewIdToAnimate) onAnimateItemReady(it)
+        })
     }
 }

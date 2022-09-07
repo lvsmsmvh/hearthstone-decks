@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.presentation.common.enums.GameClasses
 import com.cyberquick.hearthstonedecks.presentation.common.enums.GameFormat
@@ -16,7 +17,6 @@ class DeckViewHolder(
     data class ItemData(
         val deckPreview: DeckPreview,
         val content: Content,
-        val positionInAdapter: Int,
     )
 
     data class Content(
@@ -27,7 +27,19 @@ class DeckViewHolder(
         val deckFormatImg: ImageView,
         val deckTimeCreated: TextView,
         val views: TextView,
-    )
+    ) {
+        companion object {
+            fun fromView(view: View) = Content(
+                root = view.findViewById(R.id.card_view),
+                title = view.findViewById(R.id.deck_title),
+                dust = view.findViewById(R.id.deck_dust),
+                deckClassImg = view.findViewById(R.id.deck_class_img),
+                deckFormatImg = view.findViewById(R.id.deck_format_img),
+                deckTimeCreated = view.findViewById(R.id.deck_time_created),
+                views = view.findViewById(R.id.deck_views),
+            )
+        }
+    }
 
     fun bind(
         deckPreview: DeckPreview,
@@ -37,7 +49,6 @@ class DeckViewHolder(
         val itemData = ItemData(
             deckPreview = deckPreview,
             content = content,
-            positionInAdapter = absoluteAdapterPosition
         )
 
         content.root.transitionName = deckPreview.id.toString()
