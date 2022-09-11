@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
+import com.cyberquick.hearthstonedecks.databinding.ItemDeckPreviewBinding
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.presentation.common.enums.GameClasses
 import com.cyberquick.hearthstonedecks.presentation.common.enums.GameFormat
@@ -37,6 +38,15 @@ class DeckViewHolder(
                 deckFormatImg = view.findViewById(R.id.deck_format_img),
                 deckTimeCreated = view.findViewById(R.id.deck_time_created),
                 views = view.findViewById(R.id.deck_views),
+            )
+            fun fromView(binding: ItemDeckPreviewBinding) = Content(
+                root = binding.cardView,
+                title = binding.deckTitle,
+                dust = binding.deckDust,
+                deckClassImg = binding.deckClassImg,
+                deckFormatImg = binding.deckFormatImg,
+                deckTimeCreated = binding.deckTimeCreated,
+                views = binding.deckViews,
             )
         }
     }

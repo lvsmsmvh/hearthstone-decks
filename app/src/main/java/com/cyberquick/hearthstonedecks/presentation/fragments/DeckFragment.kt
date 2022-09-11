@@ -63,17 +63,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
     private fun initView() {
         toolbarTitleChanger.setText(deckPreview.title)
 
-        val content = DeckViewHolder.Content(
-            root = binding.deckPreview.root,
-            title = binding.deckPreview.deckTitle,
-            dust = binding.deckPreview.deckDust,
-            deckClassImg = binding.deckPreview.deckClassImg,
-            deckFormatImg = binding.deckPreview.deckFormatImg,
-            deckTimeCreated = binding.deckPreview.deckTimeCreated,
-            views = binding.deckPreview.deckViews,
-        )
-
-        DeckViewHolder(content).bind(
+        DeckViewHolder(DeckViewHolder.Content.fromView(binding.deckPreview)).bind(
             deckPreview,
             onLoadedListener = {
                 setEnterSharedElementCallback(
@@ -106,7 +96,8 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
             if (state is LoadingState.Failed) {
                 binding.layoutProgressBar.layoutProgressBar.isVisible = false
                 binding.layoutFailed.layoutFailed.isVisible = true
-                binding.layoutFailed.tvErrorLoadingDataSmall.text = state.exception.message.toString()
+                binding.layoutFailed.tvErrorLoadingDataSmall.text =
+                    state.exception.message.toString()
                 binding.layoutFailed.btnReloadData.setOnClickListener {
                     binding.layoutFailed.layoutFailed.isVisible = false
                     viewModel.loadDeck(deckPreview)

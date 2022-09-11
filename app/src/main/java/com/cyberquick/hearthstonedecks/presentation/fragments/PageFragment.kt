@@ -1,6 +1,7 @@
 package com.cyberquick.hearthstonedecks.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.app.SharedElementCallback
 import androidx.core.view.*
@@ -44,6 +45,7 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.i("tag_anim", "PageFragment onCreateView()")
         binding = FragmentPageBinding.inflate(layoutInflater)
         if (clickedOnDeck) {
             postponeEnterTransition()
@@ -70,6 +72,7 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
                     override fun onMapSharedElements(
                         names: List<String>, sharedElements: MutableMap<String, View>
                     ) {
+                        Log.i("tag_anim", "exitTransition = null")
                         exitTransition = null
                         sharedElements[names[0]] = it.content.root
                     }
