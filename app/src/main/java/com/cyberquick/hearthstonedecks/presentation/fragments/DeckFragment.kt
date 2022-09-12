@@ -9,13 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
-import androidx.core.app.SharedElementCallback
-import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.TransitionInflater
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentDeckBinding
 import com.cyberquick.hearthstonedecks.domain.common.toCardsCountable
@@ -36,13 +33,6 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
 
     private val viewModel: DeckViewModel by viewModels()
     private lateinit var binding: FragmentDeckBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        postponeEnterTransition()
-        sharedElementEnterTransition = TransitionInflater.from(context)
-            .inflateTransition(android.R.transition.move)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,15 +56,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
         DeckViewHolder(DeckViewHolder.Content.fromView(binding.deckPreview)).bind(
             deckPreview,
             onLoadedListener = {
-                setEnterSharedElementCallback(
-                    object : SharedElementCallback() {
-                        override fun onMapSharedElements(
-                            names: List<String?>, sharedElements: MutableMap<String?, View?>
-                        ) {
-                            val target = binding.deckPreview.root
-                            sharedElements[names[0]] = target
-                        }
-                    })
+                transitionAnimFinisher.setAnimItem(binding.deckPreview.root)
             },
         )
 
@@ -82,7 +64,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
             requireActivity().onBackPressed()
         }
 
-        requireView().doOnPreDraw { startPostponedEnterTransition() }
+        transitionAnimFinisher.startEnterTransition()
     }
 
     private fun initData() {
@@ -133,7 +115,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
                     viewModel.clickedOnSaveButton(deck, cards)
                 }
 
-                doOnEnterTransitionEnd {
+                transitionAnimFinisher.doOnEnterTransitionEnd {
                     binding.layoutProgressBar.layoutProgressBar.isVisible = false
                     binding.deckHolder.expand()
                 }

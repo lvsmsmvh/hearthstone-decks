@@ -7,54 +7,20 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.transition.Transition
 import com.cyberquick.hearthstonedecks.presentation.common.ToolbarTitleChanger
+import com.cyberquick.hearthstonedecks.presentation.common.anim.TransitionAnimBeginner
+import com.cyberquick.hearthstonedecks.presentation.common.anim.TransitionAnimFinisher
 
 abstract class BaseFragment : Fragment() {
 
     protected val toolbarTitleChanger by lazy { requireActivity() as ToolbarTitleChanger }
 
-    private var enterTransitionEnded = false
-    private var enterTransitionEndedCallback: (() -> Unit)? = null
+    protected lateinit var transitionAnimBeginner: TransitionAnimBeginner
+    protected lateinit var transitionAnimFinisher: TransitionAnimFinisher
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        addEnterTransitionListener()
-    }
-
-    private fun addEnterTransitionListener() {
-        val transition = sharedElementEnterTransition as? Transition
-        if (transition == null) enterTransitionEnded = true
-        transition?.addListener(object : Transition.TransitionListener {
-            override fun onTransitionStart(transition: Transition) {
-            }
-
-            override fun onTransitionEnd(transition: Transition) {
-                enterTransitionEnded = true
-                Handler(Looper.getMainLooper()).postDelayed({
-                    enterTransitionEndedCallback?.invoke()
-                }, 100L)
-            }
-
-            override fun onTransitionCancel(transition: Transition) {
-            }
-
-            override fun onTransitionPause(transition: Transition) {
-            }
-
-            override fun onTransitionResume(transition: Transition) {
-            }
-        })
-    }
-
-    protected fun doOnEnterTransitionEnd(callback: () -> Unit) {
-        when (enterTransitionEnded) {
-            true -> {
-                callback()
-            }
-            false -> {
-                enterTransitionEndedCallback = callback
-            }
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        transitionAnimBeginner = TransitionAnimBeginner(this)
+        transitionAnimFinisher = TransitionAnimFinisher(this)
     }
 
     protected fun doOnExitTransitionEnd(callback: () -> Unit) {
