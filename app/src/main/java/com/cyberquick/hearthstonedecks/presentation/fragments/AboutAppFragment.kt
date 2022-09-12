@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentAboutAppBinding
 import com.cyberquick.hearthstonedecks.presentation.adapters.AboutAppAdapter
+import com.cyberquick.hearthstonedecks.presentation.fragments.base.BaseFragment
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.AboutAppViewModel
 
 class AboutAppFragment : BaseFragment() {

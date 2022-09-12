@@ -1,18 +1,15 @@
 package com.cyberquick.hearthstonedecks.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.core.app.SharedElementCallback
 import androidx.core.view.*
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.Transition
-import androidx.transition.TransitionInflater
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
 import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
+import com.cyberquick.hearthstonedecks.presentation.fragments.base.TransitionBeginnerFragment
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.color
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
@@ -28,22 +25,16 @@ class FavoritePageFragment : PageFragment() {
     override val viewModel: FavoritePageViewModel by viewModels()
 }
 
-abstract class PageFragment : BaseFragment(), MenuProvider {
+abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
 
     private lateinit var binding: FragmentPageBinding
     private lateinit var deckAdapter: DeckAdapter
     private var menu: Menu? = null
 
     private var deckIdClicked: Int? = null
-    private var clickedOnDeck = false
     private var wasPreviouslyLoaded = false
 
-    abstract val viewModel: PageViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    protected abstract val viewModel: PageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,17 +42,11 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPageBinding.inflate(layoutInflater)
-        if (clickedOnDeck) {
-            postponeEnterTransition()
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
 
         initView()
         initData()
@@ -71,42 +56,17 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
 
         deckAdapter = DeckAdapter(
-            onAnimateItemReady = {
-                (exitTransition as? Transition)?.excludeTarget(
-                    it.content.root, true
-                )
-                setExitSharedElementCallback(object : SharedElementCallback() {
-                    override fun onMapSharedElements(
-                        names: List<String>, sharedElements: MutableMap<String, View>
-                    ) {
-                        exitTransition = null
-                        sharedElements[names[0]] = it.content.root
-                    }
-                })
-            },
+            onAnimateItemReady = { setItemForReturnAnimation(it.content.root) },
             onClickListener = { data ->
-                clickedOnDeck = true
                 deckIdClicked = data.deckPreview.id
-                val targetView = data.content.root
 
-                val transition = TransitionInflater.from(requireContext())
-                    .inflateTransition(R.transition.items_exit_transition)
-                transition.addTarget(R.id.card_view)
-                transition.excludeTarget(targetView, true)
-                exitTransition = transition
-                setExitSharedElementCallback(object : SharedElementCallback() {
-                    override fun onMapSharedElements(
-                        names: List<String>, sharedElements: MutableMap<String, View>
-                    ) {
-                        sharedElements[names[0]] = targetView
-                    }
-                })
+                val targetView = data.content.root
+                setItemForEnterAnimation(targetView)
 
                 val fragment = DeckFragment(data.deckPreview)
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .setReorderingAllowed(true)
-                    .addSharedElement(targetView, targetView.transitionName)
+                    .setupForTransition(targetView)
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack(fragment.javaClass.name)
                     .commit()
@@ -148,13 +108,6 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
 
         doOnExitTransitionEnd {
             viewModel.updateCurrentPage(evenIfLoaded = this is FavoritePageFragment)
-        }
-
-        if (clickedOnDeck) {
-            clickedOnDeck = false
-            requireView().doOnPreDraw {
-                startPostponedEnterTransition()
-            }
         }
     }
 
@@ -208,12 +161,13 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         return true
     }
 
-    private fun updateMenuButtons(allowNavigation: PageViewModel.AllowNavigation) =
+    private fun updateMenuButtons(allowNavigation: PageViewModel.AllowNavigation) {
         menu?.let { menu ->
             menu.previousButton().update(allowNavigation.previous)
             menu.nextButton().update(allowNavigation.next)
             onPrepareMenu(menu)
         }
+    }
 
     private fun Menu.previousButton() = findItem(R.id.menu_button_previous)
     private fun Menu.nextButton() = findItem(R.id.menu_button_next)

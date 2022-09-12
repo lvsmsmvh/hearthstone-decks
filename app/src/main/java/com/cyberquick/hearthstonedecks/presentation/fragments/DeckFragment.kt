@@ -19,6 +19,7 @@ import com.cyberquick.hearthstonedecks.domain.common.toCardsCountable
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.presentation.adapters.CardSmallAdapter
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckViewHolder
+import com.cyberquick.hearthstonedecks.presentation.fragments.base.TransitionFinisherFragment
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.DeckViewModel
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.LoadingState
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.SavedState.Saved
@@ -29,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
+class DeckFragment(private val deckPreview: DeckPreview) : TransitionFinisherFragment() {
 
     private val viewModel: DeckViewModel by viewModels()
     private lateinit var binding: FragmentDeckBinding
@@ -56,7 +57,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
         DeckViewHolder(DeckViewHolder.Content.fromView(binding.deckPreview)).bind(
             deckPreview,
             onLoadedListener = {
-                transitionAnimFinisher.setAnimItem(binding.deckPreview.root)
+                setAnimItem(binding.deckPreview.root)
             },
         )
 
@@ -64,7 +65,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
             requireActivity().onBackPressed()
         }
 
-        transitionAnimFinisher.startEnterTransition()
+        startEnterTransition()
     }
 
     private fun initData() {
@@ -115,7 +116,7 @@ class DeckFragment(private val deckPreview: DeckPreview) : BaseFragment() {
                     viewModel.clickedOnSaveButton(deck, cards)
                 }
 
-                transitionAnimFinisher.doOnEnterTransitionEnd {
+                doOnEnterTransitionEnd {
                     binding.layoutProgressBar.layoutProgressBar.isVisible = false
                     binding.deckHolder.expand()
                 }
