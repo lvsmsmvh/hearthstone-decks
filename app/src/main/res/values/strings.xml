@@ -8,7 +8,6 @@
     <string name="dust_icon">Dust icon</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="error_loading_data">Error loading data :(</string>
     <string name="loading">Loading…</string>
     <string name="retry">Retry</string>
 
@@ -21,8 +20,6 @@
     <string name="share">Share</string>
 
     <string name="open_menu_go_back">Menu/Go back</string>
-    <string name="no_saved_decks_found_title">Empty</string>
-    <string name="no_saved_decks_found_desc">There is no saved decks found.</string>
 
     <string name="quit_app_question">Quit app?</string>
     <string name="quit">Quit</string>
@@ -47,4 +44,9 @@
     <string name="version_ph">Version: %s</string>
     <string name="copied_to_clipboard">Copied to clipboard!</string>
     <string name="share_url">Share URL</string>
+
+    <string name="error_no_saved_decks_found_title">Empty</string>
+    <string name="error_no_saved_decks_found_desc">There is no saved decks found.</string>
+    <string name="error_loading_decks">Failed loading decks :(</string>
+    <string name="error_loading_cards">Failed loading cards :(</string>
 </resources>

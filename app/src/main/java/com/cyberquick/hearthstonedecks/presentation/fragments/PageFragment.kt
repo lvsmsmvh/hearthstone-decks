@@ -122,14 +122,14 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
         when (val exception = (loadingState as? LoadingState.Failed)?.exception ?: return) {
             is NoSavedDecksFoundException -> {
                 binding.layoutFailed.tvErrorLoadingData.text =
-                    getString(R.string.no_saved_decks_found_title)
+                    getString(R.string.error_no_saved_decks_found_title)
                 binding.layoutFailed.tvErrorLoadingDataSmall.text =
-                    getString(R.string.no_saved_decks_found_desc)
+                    getString(R.string.error_no_saved_decks_found_desc)
                 binding.layoutFailed.btnReloadData.isVisible = false
             }
             else -> {
                 binding.layoutFailed.tvErrorLoadingData.text =
-                    getString(R.string.error_loading_data)
+                    getString(R.string.error_loading_decks)
                 binding.layoutFailed.tvErrorLoadingDataSmall.text = exception.message
                 binding.layoutFailed.btnReloadData.isVisible = true
                 if (this is OnlinePageFragment) {
