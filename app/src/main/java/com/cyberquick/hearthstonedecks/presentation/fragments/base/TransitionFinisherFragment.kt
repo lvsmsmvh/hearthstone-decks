@@ -1,15 +1,14 @@
 package com.cyberquick.hearthstonedecks.presentation.fragments.base
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.core.app.SharedElementCallback
 import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.lifecycleScope
 import androidx.transition.Transition
 import androidx.transition.TransitionInflater
-import kotlinx.coroutines.delay
+import com.cyberquick.hearthstonedecks.utils.delayIfExecutionTimeIsLess
+import com.cyberquick.hearthstonedecks.utils.delayIfExecutionTimeIsSmall
 import kotlinx.coroutines.launch
 
 open class TransitionFinisherFragment: BaseFragment() {
@@ -26,13 +25,20 @@ open class TransitionFinisherFragment: BaseFragment() {
             .inflateTransition(android.R.transition.move)
             .also { sharedElementEnterTransition = it }
 
+        var timeStart = 0L
+
         transition?.addListener(object : Transition.TransitionListener {
             override fun onTransitionStart(transition: Transition) {
+                timeStart = System.currentTimeMillis()
             }
 
             override fun onTransitionEnd(transition: Transition) {
-                enterTransitionEnded = true
                 lifecycleScope.launch {
+                    delayIfExecutionTimeIsLess(
+                        System.currentTimeMillis() - timeStart, 200L
+                    )
+
+                    enterTransitionEnded = true
                     enterTransitionEndedCallback?.invoke()
                     enterTransitionEndedCallback = null
                 }

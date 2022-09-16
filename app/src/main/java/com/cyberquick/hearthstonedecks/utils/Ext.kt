@@ -67,6 +67,14 @@ fun FragmentActivity.simpleNavigate(fragment: Fragment) {
 
 fun View.color(color: Int) = context.color(color)
 
+suspend fun delayIfExecutionTimeIsLess(executionTime: Long, min: Long) {
+    var delayTime = min - executionTime
+    if (delayTime < 0) {
+        delayTime = 0
+    }
+    delay(delayTime)
+}
+
 suspend fun delayIfExecutionTimeIsSmall(executionTime: Long) {
     val minExecutionTime = 500L
     var delayTime = minExecutionTime - executionTime
