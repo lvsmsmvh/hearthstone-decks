@@ -27,9 +27,13 @@ class FavoritePageFragment : PageFragment() {
 
 abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
 
-    private lateinit var binding: FragmentPageBinding
-    private lateinit var deckAdapter: DeckAdapter
-    private var menu: Menu? = null
+    private var _binding: FragmentPageBinding? = null
+    private val binding get() = _binding!!
+
+    private var _deckAdapter: DeckAdapter? = null
+    private val deckAdapter get() = _deckAdapter!!
+
+    private var _menu: Menu? = null
 
     private var deckIdClicked: Int? = null
     private var wasPreviouslyLoaded = false
@@ -41,7 +45,7 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPageBinding.inflate(layoutInflater)
+        _binding = FragmentPageBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -55,7 +59,12 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
     private fun initView() {
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
 
-        deckAdapter = DeckAdapter(
+        binding.layoutFailed.btnReloadData.setOnClickListener {
+            viewModel.updateCurrentPage(evenIfLoaded = true)
+        }
+
+        binding.recycleViewDecks.layoutManager = LinearLayoutManager(context)
+        binding.recycleViewDecks.adapter = DeckAdapter(
             onAnimateItemReady = { setItemForReturnAnimation(it.content.root) },
             onClickListener = { data ->
                 deckIdClicked = data.deckPreview.id
@@ -71,13 +80,7 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
                     .addToBackStack(fragment.javaClass.name)
                     .commit()
             },
-        )
-
-        binding.recycleViewDecks.layoutManager = LinearLayoutManager(context)
-        binding.recycleViewDecks.adapter = deckAdapter
-        binding.layoutFailed.btnReloadData.setOnClickListener {
-            viewModel.updateCurrentPage(evenIfLoaded = true)
-        }
+        ).also { _deckAdapter = it }
     }
 
     private fun initData() {
@@ -144,13 +147,15 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.menu_fragment_deck, menu)
-        this.menu = menu
+        this._menu = menu
         updateMenuButtons(viewModel.allowNavigation.value!!)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        menu = null
+        _deckAdapter = null
+        _binding = null
+        _menu = null
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -162,7 +167,7 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
     }
 
     private fun updateMenuButtons(allowNavigation: PageViewModel.AllowNavigation) {
-        menu?.let { menu ->
+        _menu?.let { menu ->
             menu.previousButton().update(allowNavigation.previous)
             menu.nextButton().update(allowNavigation.next)
             onPrepareMenu(menu)

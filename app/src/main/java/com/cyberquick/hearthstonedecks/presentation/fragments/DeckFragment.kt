@@ -33,14 +33,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class DeckFragment(private val deckPreview: DeckPreview) : TransitionFinisherFragment() {
 
     private val viewModel: DeckViewModel by viewModels()
-    private lateinit var binding: FragmentDeckBinding
+
+    private var _binding: FragmentDeckBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDeckBinding.inflate(layoutInflater)
+        _binding = FragmentDeckBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -159,5 +161,10 @@ class DeckFragment(private val deckPreview: DeckPreview) : TransitionFinisherFra
             .setChooserTitle(getString(R.string.share_url))
             .setText(url)
             .startChooser()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

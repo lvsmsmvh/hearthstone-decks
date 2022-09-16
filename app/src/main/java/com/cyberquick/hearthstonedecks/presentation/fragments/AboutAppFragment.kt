@@ -16,15 +16,18 @@ class AboutAppFragment : BaseFragment() {
 
     private val viewModel: AboutAppViewModel by viewModels()
 
-    private lateinit var binding: FragmentAboutAppBinding
-    private lateinit var aboutAppAdapter: AboutAppAdapter
+    private var _binding: FragmentAboutAppBinding? = null
+    private val binding get() = _binding!!
+
+    private var _aboutAppAdapter: AboutAppAdapter? = null
+    private val aboutAppAdapter get() = _aboutAppAdapter!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAboutAppBinding.inflate(layoutInflater)
+        _binding = FragmentAboutAppBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -38,7 +41,7 @@ class AboutAppFragment : BaseFragment() {
     private fun initViews() {
         toolbarTitleChanger.setText(getString(R.string.about_app))
         binding.recycleViewAboutApp.layoutManager = LinearLayoutManager(requireContext())
-        binding.recycleViewAboutApp.adapter = AboutAppAdapter().apply { aboutAppAdapter = this }
+        binding.recycleViewAboutApp.adapter = AboutAppAdapter().also { _aboutAppAdapter = it }
     }
 
     private fun initViewModel() {
