@@ -3,7 +3,9 @@ package com.cyberquick.hearthstonedecks.presentation.adapters.base
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.max
 
 abstract class BaseRvAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
 
@@ -14,9 +16,25 @@ abstract class BaseRvAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Ada
     protected val items = mutableListOf<T>()
 
     open fun set(newItems: List<T>) {
+        if (items == newItems) return
+        val oldItems = items.toList()
         items.clear()
         items.addAll(newItems)
-        notifyItemChanged(0, items.size)
+
+//        notifyItemRangeChanged(0, newItems.size)
+        repeat(max(oldItems.size, newItems.size)) { index ->
+            val old = oldItems.getOrNull(index)
+            val new = newItems.getOrNull(index)
+
+            when {
+                old != null && new != null && old != new -> notifyItemChanged(index)
+                old == null && new != null -> notifyItemInserted(index)
+                old != null && new == null -> notifyItemRemoved(index)
+            }
+        }
+//
+//        notifyItemRangeRemoved(0, oldItems.size)
+//        notifyItemRangeInserted(0, newItems.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {

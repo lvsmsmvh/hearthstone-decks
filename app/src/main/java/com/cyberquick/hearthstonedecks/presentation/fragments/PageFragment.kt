@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.view.*
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
+import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
 import com.cyberquick.hearthstonedecks.presentation.fragments.base.TransitionBeginnerFragment
@@ -14,6 +16,8 @@ import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.color
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OnlinePageFragment : PageFragment() {

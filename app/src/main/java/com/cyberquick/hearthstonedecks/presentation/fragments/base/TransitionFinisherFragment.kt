@@ -6,8 +6,11 @@ import android.os.Looper
 import android.view.View
 import androidx.core.app.SharedElementCallback
 import androidx.core.view.doOnPreDraw
+import androidx.lifecycle.lifecycleScope
 import androidx.transition.Transition
 import androidx.transition.TransitionInflater
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 open class TransitionFinisherFragment: BaseFragment() {
 
@@ -29,9 +32,10 @@ open class TransitionFinisherFragment: BaseFragment() {
 
             override fun onTransitionEnd(transition: Transition) {
                 enterTransitionEnded = true
-                Handler(Looper.getMainLooper()).postDelayed({
+                lifecycleScope.launch {
                     enterTransitionEndedCallback?.invoke()
-                }, 100L)
+                    enterTransitionEndedCallback = null
+                }
             }
 
             override fun onTransitionCancel(transition: Transition) {
