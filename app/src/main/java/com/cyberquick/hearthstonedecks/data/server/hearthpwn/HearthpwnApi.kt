@@ -14,7 +14,6 @@ class HearthpwnApi @Inject constructor() {
     companion object {
         private const val MAX_TIMEOUT_LOADING = 10 * 1000   // 10s
         private const val URL_ROOT = "https://www.hearthpwn.com"
-        private const val URL_ALL = "$URL_ROOT/decks?"
         private const val URL_CONSTRUCTED = URL_ROOT +
                 "/decks?filter-deck-tag=2&filter-show-constructed-only=y"
     }

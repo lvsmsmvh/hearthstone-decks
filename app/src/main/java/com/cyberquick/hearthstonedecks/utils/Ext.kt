@@ -2,19 +2,17 @@ package com.cyberquick.hearthstonedecks.utils
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.Transformation
-import android.widget.*
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.*
 import com.cyberquick.hearthstonedecks.R
 import kotlinx.coroutines.delay
 import kotlin.math.min
@@ -116,14 +114,5 @@ fun View.expand() {
     }.apply {
         interpolator = AccelerateInterpolator(0.5f)
         duration = durations
-    })
-}
-
-fun Fragment.doOnCreate(callback: () -> Unit) {
-    lifecycle.addObserver(object : DefaultLifecycleObserver {
-        override fun onCreate(owner: LifecycleOwner) {
-            callback()
-            lifecycle.removeObserver(this)
-        }
     })
 }

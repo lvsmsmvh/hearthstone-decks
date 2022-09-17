@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.transition.Transition
 import androidx.transition.TransitionInflater
 import com.cyberquick.hearthstonedecks.utils.delayIfExecutionTimeIsLess
-import com.cyberquick.hearthstonedecks.utils.delayIfExecutionTimeIsSmall
 import kotlinx.coroutines.launch
 
 open class TransitionFinisherFragment: BaseFragment() {
