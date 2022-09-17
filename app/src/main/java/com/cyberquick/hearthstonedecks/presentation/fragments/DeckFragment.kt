@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentDeckBinding
+import com.cyberquick.hearthstonedecks.domain.common.deckPreviewFromJson
 import com.cyberquick.hearthstonedecks.domain.common.toCardsCountable
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.presentation.adapters.CardSmallAdapter
@@ -31,12 +32,18 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DeckFragment(private val deckPreview: DeckPreview) : TransitionFinisherFragment() {
+class DeckFragment : TransitionFinisherFragment() {
+
+    companion object {
+        const val KEY_DECK_PREVIEW = "deck_preview"
+    }
 
     private val viewModel: DeckViewModel by viewModels()
 
     private var _binding: FragmentDeckBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var deckPreview: DeckPreview
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,8 +57,13 @@ class DeckFragment(private val deckPreview: DeckPreview) : TransitionFinisherFra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        restoreExtras()
         initView()
         initData()
+    }
+
+    private fun restoreExtras() {
+        deckPreview = deckPreviewFromJson(arguments?.getString(KEY_DECK_PREVIEW)!!)
     }
 
     private fun initView() {

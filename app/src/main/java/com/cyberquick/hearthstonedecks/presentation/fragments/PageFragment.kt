@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.view.*
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
-import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
+import com.cyberquick.hearthstonedecks.domain.common.deckPreviewToJson
 import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
 import com.cyberquick.hearthstonedecks.presentation.fragments.base.TransitionBeginnerFragment
@@ -16,8 +15,6 @@ import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.color
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OnlinePageFragment : PageFragment() {
@@ -76,7 +73,10 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
                 val targetView = data.content.root
                 setItemForEnterAnimation(targetView)
 
-                val fragment = DeckFragment(data.deckPreview)
+                val fragment = DeckFragment()
+                fragment.arguments = Bundle().apply {
+                    putString(DeckFragment.KEY_DECK_PREVIEW, deckPreviewToJson(data.deckPreview))
+                }
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .setupForTransition(targetView)
