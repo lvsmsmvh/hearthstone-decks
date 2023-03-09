@@ -2,11 +2,11 @@ package com.cyberquick.hearthstonedecks.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import com.cyberquick.hearthstonedecks.domain.usecases.base.GetPageUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.online.GetOnlinePageUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.GetFavoritePageUseCase
+import com.cyberquick.hearthstonedecks.utils.transform
 import com.cyberquick.hearthstonedecks.utils.transformWithDefault
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -44,10 +44,10 @@ open class PageViewModel(
         }
     }
 
-    val allowNavigation: LiveData<AllowNavigation> = Transformations.map(position) {
+    val allowNavigation: LiveData<AllowNavigation> = transform(position) {
         val previousAllowed = it.current > 1
         val nextAllowed = (it.total != null) && (it.current < it.total)
-        return@map AllowNavigation(previousAllowed, nextAllowed)
+        return@transform AllowNavigation(previousAllowed, nextAllowed)
     }
 
     private var loadingPageJob: Job? = null

@@ -21,12 +21,12 @@ fun <A, B> transformWithDefault(
 
 fun <A, B> transform(
     source: LiveData<A>,
-    mapper: (A) -> Unit,
+    mapper: (A) -> B,
 ): LiveData<B> {
     val mediatorLiveData = MediatorLiveData<B>()
 
     mediatorLiveData.addSource(source) { aValue ->
-        mapper(aValue)
+        mediatorLiveData.value = mapper(aValue)
     }
 
     return mediatorLiveData
