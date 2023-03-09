@@ -1,10 +1,7 @@
 package com.cyberquick.hearthstonedecks.presentation.common.enums
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
-import com.cyberquick.hearthstonedecks.utils.drawable
 
 enum class GameClasses(
     val titleInEnglish: String,
@@ -19,7 +16,8 @@ enum class GameClasses(
     Rogue("Rogue", R.drawable.rogue),
     Warlock("Warlock", R.drawable.warlock),
     Warrior("Warrior", R.drawable.warrior),
-    Mage("Mage", R.drawable.mage);
+    Mage("Mage", R.drawable.mage),
+    DeathKnight("Death Knight", R.drawable.deathknight);
     companion object {
         fun from(deckPreview: DeckPreview) = values().firstOrNull {
             it.titleInEnglish == deckPreview.gameClass
