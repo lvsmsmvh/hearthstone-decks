@@ -2,7 +2,9 @@ package com.cyberquick.hearthstonedecks.presentation.activities
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
@@ -16,6 +18,8 @@ import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.ActivityMainBinding
 import com.cyberquick.hearthstonedecks.presentation.common.ToolbarTitleChanger
 import com.cyberquick.hearthstonedecks.presentation.fragments.*
+import com.cyberquick.hearthstonedecks.utils.CustomAppReviewer
+import com.cyberquick.hearthstonedecks.utils.Preferences
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +45,8 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
         initHomeButtonIcon()
 
         simpleNavigate(OnlinePageFragment())
+
+        handleIntent(intent)
     }
 
     private fun initToolbar() {
@@ -136,6 +142,25 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.let { handleIntent(it) }
+    }
+
+    private fun handleIntent(intent: Intent) {
+        Log.d("tag_rate_us", intent.action.toString())
+
+        when (intent.action) {
+            Intent.ACTION_MAIN -> {
+                Preferences.getInstance(this).increaseAmountOfTimesAppLaunch()
+
+                if (CustomAppReviewer.shouldShow(this)) {
+                    CustomAppReviewer(this).ask()
+                }
+            }
+        }
     }
 
     override fun onBackPressed() {

@@ -1,7 +1,10 @@
 package com.cyberquick.hearthstonedecks.utils
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
@@ -39,6 +42,7 @@ fun Context.drawable(drawableRes: Int, tintColorRes: Int? = null): Drawable {
     }
     return drawable
 }
+
 fun Fragment.drawable(drawableRes: Int, tintColorRes: Int? = null): Drawable {
     return requireContext().drawable(drawableRes, tintColorRes)
 }
@@ -115,4 +119,25 @@ fun View.expand() {
         interpolator = AccelerateInterpolator(0.5f)
         duration = durations
     })
+}
+
+fun Context.openUrl(url: String) {
+    val intentOpenBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    startActivity(intentOpenBrowser)
+}
+
+fun Context.openUrlCatching(url: String) {
+    try {
+        openUrl(url)
+    } catch (e: ActivityNotFoundException) {
+        Toast.makeText(this, getString(R.string.no_browser_found), Toast.LENGTH_SHORT).show()
+    }
+}
+
+fun Context.openGooglePlayStorePage() {
+    try {
+        openUrl("market://details?id=${packageName}")
+    } catch (e: ActivityNotFoundException) {
+        openUrlCatching("https://play.google.com/store/apps/details?id=$packageName")
+    }
 }

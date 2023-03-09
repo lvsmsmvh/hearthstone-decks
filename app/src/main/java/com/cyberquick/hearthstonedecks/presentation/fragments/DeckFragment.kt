@@ -123,10 +123,8 @@ class DeckFragment : BaseFragment() {
                     viewModel.clickedOnSaveButton(deck, cards)
                 }
 
-//                doOnEnterTransitionEnd {
                 binding.layoutProgressBar.layoutProgressBar.isVisible = false
                 binding.deckHolder.expand()
-//            }
             }
         }
 

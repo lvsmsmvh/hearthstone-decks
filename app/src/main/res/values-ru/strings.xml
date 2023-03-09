@@ -34,15 +34,19 @@
     <string name="exit">Выход</string>
 
     <string name="click_on_a_card">Нажмите на карту, чтобы просмотреть её в полноразмерном формате и прочитать цитату</string>
-    <string name="copy_deck_in_order">Нажмите на звезду, чтобы скопировать код колоды</string>
-    <string name="save_deck_description">Нажмите на иконку, чтобы сохранить колоду для оффлайн просмотра</string>
+    <string name="copy_deck_in_order">Нажмите на иконку, чтобы скопировать код колоды</string>
+    <string name="save_deck_description">Нажмите на звезду, чтобы сохранить колоду для оффлайн просмотра</string>
     <string name="format_standard_description">Стандартный режим</string>
     <string name="format_wild_description">Вольный режим</string>
     <string name="version_ph">Версия: %s</string>
-    <string name="copied_to_clipboard">Copied to clipboard!</string>
+    <string name="copied_to_clipboard">Скопировано в буфер обмена!</string>
     <string name="share_url">Поделиться URL</string>
 
     <string name="error_no_saved_decks_found_title">Пусто</string>
     <string name="error_no_saved_decks_found_desc">Сохранённые колоды не найдены.</string>
     <string name="error_loading_decks">Не удалось загрузить :(</string>
+    <string name="no_browser_found">Браузер не найден</string>
+
+    <string name="give_us_five_stars">Пожалуйста, поставьте нам\nпять звёзд uni-1F634</string>
+    <string name="your_review">Ваш отзыв имеет значение! Пожалуйста, оцените приложение в Google Play, если оно вам понравилось. uni-1F60A</string>
 </resources>

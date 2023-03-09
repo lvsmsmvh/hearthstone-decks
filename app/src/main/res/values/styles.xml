@@ -88,4 +88,9 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">true</item>
     </style>
+
+    <style name="RateAppDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
 </resources>
