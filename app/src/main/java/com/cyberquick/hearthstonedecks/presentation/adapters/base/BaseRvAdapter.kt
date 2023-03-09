@@ -1,5 +1,6 @@
 package com.cyberquick.hearthstonedecks.presentation.adapters.base
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,23 +15,32 @@ abstract class BaseRvAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Ada
 
     protected val items = mutableListOf<T>()
 
+    fun clear() {
+        set(emptyList())
+    }
+
     open fun set(newItems: List<T>) {
         if (items == newItems) return
         val oldItems = items.toList()
+        Log.i("tag_page", "Set ${newItems.size} items (old = ${items.size})")
         items.clear()
         items.addAll(newItems)
 
 //        notifyItemRangeChanged(0, newItems.size)
-        repeat(max(oldItems.size, newItems.size)) { index ->
-            val old = oldItems.getOrNull(index)
-            val new = newItems.getOrNull(index)
+//        repeat(max(oldItems.size, newItems.size)) { index ->
+//            val old = oldItems.getOrNull(index)
+//            val new = newItems.getOrNull(index)
+//
+//            when {
+//                old != null && new != null && old != new -> notifyItemChanged(index)
+//                old == null && new != null -> notifyItemInserted(index)
+//                old != null && new == null -> notifyItemRemoved(index)
+//            }
+//        }
 
-            when {
-                old != null && new != null && old != new -> notifyItemChanged(index)
-                old == null && new != null -> notifyItemInserted(index)
-                old != null && new == null -> notifyItemRemoved(index)
-            }
-        }
+        notifyDataSetChanged()
+
+        Log.i("tag_page", "Finish setting items")
 //
 //        notifyItemRangeRemoved(0, oldItems.size)
 //        notifyItemRangeInserted(0, newItems.size)

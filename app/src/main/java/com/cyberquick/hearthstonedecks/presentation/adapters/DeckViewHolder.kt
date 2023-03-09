@@ -54,7 +54,6 @@ class DeckViewHolder(
     fun bind(
         deckPreview: DeckPreview,
         onClickListener: ((ItemData) -> Unit)? = null,
-        onLoadedListener: ((ItemData) -> Unit)? = null,
     ) {
         val itemData = ItemData(
             deckPreview = deckPreview,
@@ -79,7 +78,5 @@ class DeckViewHolder(
         content.root.setOnClickListener {
             onClickListener?.invoke(itemData)
         }
-
-        onLoadedListener?.invoke(itemData)
     }
 }

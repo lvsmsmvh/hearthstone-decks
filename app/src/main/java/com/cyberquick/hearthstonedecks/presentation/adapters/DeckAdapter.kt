@@ -7,10 +7,7 @@ import com.cyberquick.hearthstonedecks.presentation.adapters.base.BaseRvAdapter
 
 class DeckAdapter(
     private val onClickListener: (DeckViewHolder.ItemData) -> Unit,
-    private val onAnimateItemReady: (DeckViewHolder.ItemData) -> Unit,
 ) : BaseRvAdapter<DeckPreview, DeckViewHolder>() {
-
-    var deckPreviewIdToAnimate: Int? = null
 
     override val layoutRes: Int = R.layout.item_deck_preview
     override fun createViewHolder(view: View): DeckViewHolder {
@@ -18,8 +15,6 @@ class DeckAdapter(
     }
 
     override fun onBind(holder: DeckViewHolder, item: DeckPreview) {
-        holder.bind(item, onClickListener, onLoadedListener = {
-            if (item.id == deckPreviewIdToAnimate) onAnimateItemReady(it)
-        })
+        holder.bind(item, onClickListener)
     }
 }

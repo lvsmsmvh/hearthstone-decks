@@ -20,7 +20,7 @@ import com.cyberquick.hearthstonedecks.domain.common.toCardsCountable
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.presentation.adapters.CardSmallAdapter
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckViewHolder
-import com.cyberquick.hearthstonedecks.presentation.fragments.base.TransitionFinisherFragment
+import com.cyberquick.hearthstonedecks.presentation.fragments.base.BaseFragment
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.DeckViewModel
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.LoadingState
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.SavedState.Saved
@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DeckFragment : TransitionFinisherFragment() {
+class DeckFragment : BaseFragment() {
 
     companion object {
         const val KEY_DECK_PREVIEW = "deck_preview"
@@ -68,18 +68,11 @@ class DeckFragment : TransitionFinisherFragment() {
     private fun initView() {
         toolbarTitleChanger.setText(deckPreview.title)
 
-        DeckViewHolder(DeckViewHolder.Content.fromView(binding.deckPreview)).bind(
-            deckPreview,
-            onLoadedListener = {
-                setAnimItem(binding.deckPreview.root)
-            },
-        )
+        DeckViewHolder(DeckViewHolder.Content.fromView(binding.deckPreview)).bind(deckPreview)
 
         binding.deckPreview.cardView.setOnClickListener {
             requireActivity().onBackPressed()
         }
-
-        startEnterTransition()
     }
 
     private fun initData() {
@@ -130,10 +123,10 @@ class DeckFragment : TransitionFinisherFragment() {
                     viewModel.clickedOnSaveButton(deck, cards)
                 }
 
-                doOnEnterTransitionEnd {
-                    binding.layoutProgressBar.layoutProgressBar.isVisible = false
-                    binding.deckHolder.expand()
-                }
+//                doOnEnterTransitionEnd {
+                binding.layoutProgressBar.layoutProgressBar.isVisible = false
+                binding.deckHolder.expand()
+//            }
             }
         }
 

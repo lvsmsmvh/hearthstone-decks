@@ -1,6 +1,7 @@
 package com.cyberquick.hearthstonedecks.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.view.*
 import androidx.fragment.app.viewModels
@@ -10,7 +11,7 @@ import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
 import com.cyberquick.hearthstonedecks.domain.common.deckPreviewToJson
 import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
-import com.cyberquick.hearthstonedecks.presentation.fragments.base.TransitionBeginnerFragment
+import com.cyberquick.hearthstonedecks.presentation.fragments.base.BaseFragment
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.color
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
@@ -26,7 +27,7 @@ class FavoritePageFragment : PageFragment() {
     override val viewModel: FavoritePageViewModel by viewModels()
 }
 
-abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
+abstract class PageFragment : BaseFragment(), MenuProvider {
 
     private var _binding: FragmentPageBinding? = null
     private val binding get() = _binding!!
@@ -36,7 +37,6 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
 
     private var _menu: Menu? = null
 
-    private var deckIdClicked: Int? = null
     private var wasPreviouslyLoaded = false
 
     protected abstract val viewModel: PageViewModel
@@ -66,20 +66,17 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
 
         binding.recycleViewDecks.layoutManager = LinearLayoutManager(context)
         binding.recycleViewDecks.adapter = DeckAdapter(
-            onAnimateItemReady = { setItemForReturnAnimation(it.content.root) },
             onClickListener = { data ->
-                deckIdClicked = data.deckPreview.id
-
-                val targetView = data.content.root
-                setItemForEnterAnimation(targetView)
-
                 val fragment = DeckFragment()
                 fragment.arguments = Bundle().apply {
                     putString(DeckFragment.KEY_DECK_PREVIEW, deckPreviewToJson(data.deckPreview))
                 }
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .setupForTransition(targetView)
+                    .setCustomAnimations(
+                        R.anim.enter_from_right, R.anim.exit_to_left,
+                        R.anim.enter_from_left, R.anim.exit_to_right
+                    )
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack(fragment.javaClass.name)
                     .commit()
@@ -96,26 +93,27 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
             updateMenuButtons(it)
         }
 
-            viewModel.pageLoading.observe(viewLifecycleOwner) { state ->
+        viewModel.pageLoading.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is LoadingState.Loading -> {
                     updateLayout(state)
                 }
+
                 is LoadingState.Failed -> {
                     updateLayout(state)
                 }
+
                 is LoadingState.Loaded -> {
+                    Log.i("tag_page", "Page ${state.result.number} loaded")
+                    deckAdapter.set(state.result.deckPreviews)
                     updateLayout(state)
                     wasPreviouslyLoaded = true
-                    deckAdapter.deckPreviewIdToAnimate = deckIdClicked
-                    deckAdapter.set(state.result.deckPreviews)
                 }
             }
         }
 
-        doOnExitTransitionEnd {
-            viewModel.updateCurrentPage(evenIfLoaded = this is FavoritePageFragment)
-        }
+        // do on resume maybe
+        viewModel.updateCurrentPage(evenIfLoaded = this is FavoritePageFragment)
     }
 
     private fun updateLayout(loadingState: LoadingState<Any>) {
@@ -134,6 +132,7 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
                     getString(R.string.error_no_saved_decks_found_desc)
                 binding.layoutFailed.btnReloadData.isVisible = false
             }
+
             else -> {
                 binding.layoutFailed.tvErrorLoadingData.text =
                     getString(R.string.error_loading_decks)
@@ -164,8 +163,14 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.menu_button_previous -> viewModel.loadPreviousPage()
-            R.id.menu_button_next -> viewModel.loadNextPage()
+            R.id.menu_button_previous -> {
+                deckAdapter.clear()
+                viewModel.loadPreviousPage()
+            }
+            R.id.menu_button_next -> {
+                deckAdapter.clear()
+                viewModel.loadNextPage()
+            }
         }
         return true
     }
