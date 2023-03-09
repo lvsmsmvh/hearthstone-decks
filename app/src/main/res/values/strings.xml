@@ -1,18 +1,25 @@
 <resources>
-    <string name="app_name">Decks for Hearthstone</string>
-    <string name="app_name_new_line">Decks for\nHearthstone</string>
-    <string name="app_name_short">Decks for HS</string>
+    <string name="app_name" translatable="false">Decks for Hearthstone</string>
+    <string name="app_name_new_line" translatable="false">Decks for\nHearthstone</string>
+    <string name="app_name_short" translatable="false">Decks for HS</string>
+
+    <string name="quote_ph" translatable="false">%s</string>
+    <string name="faq" translatable="false">FAQ</string>
+
+    <string name="all_decks_are_taken_from">All decks are taken from — <a href="https://hearthpwn.com">hearthpwn.com</a></string>
+    <string name="question_suggestions">Questions &amp; Suggestions — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
+    <string name="privacy_policy">Privacy Policy — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a></string>
+
     <string name="app_description">Find community decks and save them for offline viewing.</string>
 
-    <string name="main_image">Main image</string>
-    <string name="dust_icon">Dust icon</string>
+    <string name="class_image_desc">Game Class</string>
+    <string name="dust_icon">Dust</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="loading">Loading…</string>
     <string name="retry">Retry</string>
 
     <string name="artist_ph"><b>Artist:</b> %s</string>
-    <string name="quote_ph">%s</string>
     <string name="copy">Copy</string>
     <string name="save">Save</string>
     <string name="saved">Saved</string>
@@ -28,7 +35,6 @@
     <string name="decks">Decks</string>
     <string name="all_decks">All decks</string>
     <string name="favorite_decks">Favorite decks</string>
-    <string name="faq">FAQ</string>
     <string name="about_app">About app</string>
     <string name="other">Other</string>
     <string name="exit">Exit</string>
@@ -38,15 +44,11 @@
     <string name="save_deck_description">Press the Star icon to save the deck for offline viewing</string>
     <string name="format_standard_description">Standard format</string>
     <string name="format_wild_description">Wild format</string>
-    <string name="all_decks_are_taken_from">All decks are taken from — <a href="https://hearthpwn.com">hearthpwn.com</a></string>
-    <string name="question_suggestions">Questions &amp; Suggestions — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
-    <string name="privacy_policy">Privacy Policy — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a></string>
     <string name="version_ph">Version: %s</string>
     <string name="copied_to_clipboard">Copied to clipboard!</string>
     <string name="share_url">Share URL</string>
 
     <string name="error_no_saved_decks_found_title">Empty</string>
     <string name="error_no_saved_decks_found_desc">There is no saved decks found.</string>
-    <string name="error_loading_decks">Failed loading decks :(</string>
-    <string name="error_loading_cards">Failed loading cards :(</string>
+    <string name="error_loading_decks">Failed loading :(</string>
 </resources>

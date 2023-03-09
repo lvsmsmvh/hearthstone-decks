@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="all_decks_are_taken_from">Все колоды взяты с сайта — <a href="https://hearthpwn.com">hearthpwn.com</a></string>
+    <string name="question_suggestions">Вопросы &amp; Предложения — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
+    <string name="privacy_policy">Политика Конфиденциальности — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a></string>
+
+    <string name="app_description">Находите пользовательские колоды и сохраняйте их для оффлайн просмотра.</string>
+
+    <string name="class_image_desc">Игровой класс</string>
+    <string name="dust_icon">Пыль</string>
+    <string name="next">СЛЕД</string>
+    <string name="previous">ПРЕД</string>
+    <string name="loading">Загрузка…</string>
+    <string name="retry">Повторить</string>
+
+    <string name="artist_ph"><b>Художник:</b> %s</string>
+    <string name="copy">КОПИРОВАТЬ</string>
+    <string name="save">СОХРАНИТЬ</string>
+    <string name="saved">СОХРАНЕНО</string>
+    <string name="saved_decks">Сохранённые</string>
+    <string name="share">Поделиться</string>
+
+    <string name="open_menu_go_back">Меню/Назад</string>
+
+    <string name="quit_app_question">Выйти из приложения?</string>
+    <string name="quit">Выход</string>
+    <string name="cancel">Отмена</string>
+
+    <string name="decks">Колоды</string>
+    <string name="all_decks">Все колоды</string>
+    <string name="favorite_decks">Сохранённые</string>
+    <string name="about_app">О приложении</string>
+    <string name="other">Дополнительно</string>
+    <string name="exit">Выход</string>
+
+    <string name="click_on_a_card">Нажмите на карту, чтобы просмотреть её в полноразмерном формате и прочитать цитату</string>
+    <string name="copy_deck_in_order">Нажмите на звезду, чтобы скопировать код колоды</string>
+    <string name="save_deck_description">Нажмите на иконку, чтобы сохранить колоду для оффлайн просмотра</string>
+    <string name="format_standard_description">Стандартный режим</string>
+    <string name="format_wild_description">Вольный режим</string>
+    <string name="version_ph">Версия: %s</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
+    <string name="share_url">Поделиться URL</string>
+
+    <string name="error_no_saved_decks_found_title">Пусто</string>
+    <string name="error_no_saved_decks_found_desc">Сохранённые колоды не найдены.</string>
+    <string name="error_loading_decks">Не удалось загрузить :(</string>
+</resources>

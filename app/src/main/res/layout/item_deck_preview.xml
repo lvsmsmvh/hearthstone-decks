@@ -26,7 +26,7 @@
             android:layout_marginBottom="8dp"
             android:adjustViewBounds="true"
             android:layout_alignParentTop="true"
-            android:contentDescription="@string/main_image"
+            android:contentDescription="@string/class_image_desc"
             tools:src="@drawable/ic_launcher_background" />
 
         <LinearLayout
