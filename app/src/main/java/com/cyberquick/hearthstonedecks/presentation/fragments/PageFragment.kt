@@ -96,7 +96,7 @@ abstract class PageFragment : TransitionBeginnerFragment(), MenuProvider {
             updateMenuButtons(it)
         }
 
-        viewModel.pageLoading.observe(viewLifecycleOwner) { state ->
+            viewModel.pageLoading.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is LoadingState.Loading -> {
                     updateLayout(state)

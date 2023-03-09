@@ -70,7 +70,7 @@ class DeckViewHolder(
         content.deckTimeCreated.text = deckPreview.timeCreated
         content.views.text = deckPreview.views.toString()
         content.deckClassImg.setImageDrawable(
-            context.drawable(GameClasses.from(deckPreview).imageRes)
+            context.drawable(GameClasses.from(deckPreview)?.imageRes ?: R.drawable.error)
         )
 
         val gameFormatEnum = GameFormat.from(deckPreview)
