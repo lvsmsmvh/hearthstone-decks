@@ -4,23 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import com.cyberquick.hearthstonedecks.domain.usecases.base.GetPageUseCase
-import com.cyberquick.hearthstonedecks.domain.usecases.online.GetOnlinePageUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.GetFavoritePageUseCase
+import com.cyberquick.hearthstonedecks.domain.usecases.online.GetOnlineStandardPageUseCase
+import com.cyberquick.hearthstonedecks.domain.usecases.online.GetOnlineWildPageUseCase
 import com.cyberquick.hearthstonedecks.utils.transform
 import com.cyberquick.hearthstonedecks.utils.transformWithDefault
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import javax.inject.Inject
 
+
 @HiltViewModel
-class OnlinePageViewModel @Inject constructor(
-    getOnlinePageUseCase: GetOnlinePageUseCase,
-) : PageViewModel(getOnlinePageUseCase)
+class OnlineStandardPageViewModel @Inject constructor(
+    getPageUseCase: GetOnlineStandardPageUseCase,
+) : PageViewModel(getPageUseCase)
+
+@HiltViewModel
+class OnlineWildPageViewModel @Inject constructor(
+    getPageUseCase: GetOnlineWildPageUseCase,
+) : PageViewModel(getPageUseCase)
 
 @HiltViewModel
 class FavoritePageViewModel @Inject constructor(
-    getFavoritePageUseCase: GetFavoritePageUseCase,
-) : PageViewModel(getFavoritePageUseCase)
+    getPageUseCase: GetFavoritePageUseCase,
+) : PageViewModel(getPageUseCase)
 
 open class PageViewModel(
     private val getPageUseCase: GetPageUseCase,

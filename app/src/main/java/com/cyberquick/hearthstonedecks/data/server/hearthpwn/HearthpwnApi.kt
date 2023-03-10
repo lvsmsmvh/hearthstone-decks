@@ -3,6 +3,7 @@ package com.cyberquick.hearthstonedecks.data.server.hearthpwn
 import com.cyberquick.hearthstonedecks.data.server.entities.DeckDetails
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
+import com.cyberquick.hearthstonedecks.domain.entities.GameFormat
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -14,8 +15,12 @@ class HearthpwnApi @Inject constructor() {
     companion object {
         private const val MAX_TIMEOUT_LOADING = 10 * 1000   // 10s
         private const val URL_ROOT = "https://www.hearthpwn.com"
-        private const val URL_CONSTRUCTED = URL_ROOT +
+        private const val URL_ALL_DECKS = URL_ROOT +
                 "/decks?filter-deck-tag=2&filter-show-constructed-only=y"
+        private const val URL_STANDARD_DECKS = URL_ROOT +
+                "/decks?filter-show-standard=1&filter-show-constructed-only=y&filter-deck-tag=2"
+        private const val URL_WILD_DECKS = URL_ROOT +
+                "/decks?filter-show-standard=2&filter-show-constructed-only=y&filter-deck-tag=2"
     }
 
     private fun getDocument(url: String): Document {
@@ -26,11 +31,16 @@ class HearthpwnApi @Inject constructor() {
             .get()
     }
 
-    fun getPage(pageNumber: Int): Result<Page> {
+    fun getPage(pageNumber: Int, gameFormatToLoad: GameFormat): Result<Page> {
         val deckPreviews = mutableListOf<DeckPreview>()
 
+        val url = when (gameFormatToLoad) {
+            GameFormat.Standard -> URL_STANDARD_DECKS
+            GameFormat.Wild -> URL_WILD_DECKS
+        }
+
         val document = try {
-            getDocument(url = "$URL_CONSTRUCTED&page=$pageNumber")
+            getDocument(url = "$url&page=$pageNumber")
         } catch (e: IOException) {
             return Result.Error(e)
         }

@@ -10,7 +10,7 @@
     <string name="question_suggestions">Questions &amp; Suggestions — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
     <string name="privacy_policy">Privacy Policy — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a></string>
 
-    <string name="app_description">Find community decks and save them for offline viewing.</string>
+    <string name="app_description">Find fresh community decks and save them for offline viewing.</string>
 
     <string name="class_image_desc">Game Class</string>
     <string name="dust_icon">Dust</string>
@@ -34,6 +34,8 @@
 
     <string name="decks">Decks</string>
     <string name="all_decks">All decks</string>
+    <string name="standard_decks">Standard decks</string>
+    <string name="wild_decks">Wild decks</string>
     <string name="favorite_decks">Favorite decks</string>
     <string name="about_app">About app</string>
     <string name="other">Other</string>

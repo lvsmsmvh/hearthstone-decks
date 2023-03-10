@@ -18,8 +18,13 @@ import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OnlinePageFragment : PageFragment() {
-    override val viewModel: OnlinePageViewModel by viewModels()
+class OnlineStandardPageFragment : PageFragment() {
+    override val viewModel: OnlineStandardPageViewModel by viewModels()
+}
+
+@AndroidEntryPoint
+class OnlineWildPageFragment : PageFragment() {
+    override val viewModel: OnlineWildPageViewModel by viewModels()
 }
 
 @AndroidEntryPoint
@@ -140,7 +145,7 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
                     getString(R.string.error_loading_decks)
                 binding.layoutFailed.tvErrorLoadingDataSmall.text = exception.message
                 binding.layoutFailed.btnReloadData.isVisible = true
-                if (this is OnlinePageFragment) {
+                if (this !is FavoritePageFragment) {
                     binding.layoutFailed.btnOpenFavorite.isVisible = true
                     binding.layoutFailed.btnOpenFavorite.setOnClickListener {
                         requireActivity().simpleNavigate(FavoritePageFragment())

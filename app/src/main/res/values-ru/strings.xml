@@ -4,7 +4,7 @@
     <string name="question_suggestions">Вопросы &amp; Предложения — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
     <string name="privacy_policy">Политика Конфиденциальности — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a></string>
 
-    <string name="app_description">Находите пользовательские колоды и сохраняйте их для оффлайн просмотра.</string>
+    <string name="app_description">Просматривайте самые новые колоды и сохраняйте их для оффлайн просмотра.</string>
 
     <string name="class_image_desc">Игровой класс</string>
     <string name="dust_icon">Пыль</string>
@@ -28,6 +28,8 @@
 
     <string name="decks">Колоды</string>
     <string name="all_decks">Все колоды</string>
+    <string name="standard_decks">Стандартные</string>
+    <string name="wild_decks">Вольные</string>
     <string name="favorite_decks">Сохранённые</string>
     <string name="about_app">О приложении</string>
     <string name="other">Дополнительно</string>

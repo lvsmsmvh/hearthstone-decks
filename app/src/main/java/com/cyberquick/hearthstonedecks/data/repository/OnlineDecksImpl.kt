@@ -12,8 +12,8 @@ class OnlineDecksImpl @Inject constructor(
     private val hearthpwnApi: HearthpwnApi,
 ) : OnlineDecksRepository {
 
-    override suspend fun getPage(pageNumber: Int): Result<Page> {
-        return hearthpwnApi.getPage(pageNumber)
+    override suspend fun getPage(pageNumber: Int, gameFormat: GameFormat): Result<Page> {
+        return hearthpwnApi.getPage(pageNumber, gameFormat)
     }
 
     override suspend fun getDeck(deckPreview: DeckPreview): Result<Deck> {

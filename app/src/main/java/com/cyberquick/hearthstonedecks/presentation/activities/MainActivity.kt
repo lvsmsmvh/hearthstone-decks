@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
         initNavigationDrawer()
         initHomeButtonIcon()
 
-        simpleNavigate(OnlinePageFragment())
+        simpleNavigate(OnlineStandardPageFragment())
 
         handleIntent(intent)
     }
@@ -79,8 +79,11 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
         binding.navigationDrawer.setNavigationItemSelectedListener { menuItem ->
             binding.drawerLayout.closeDrawer(binding.navigationDrawer)
             when (menuItem.itemId) {
-                R.id.drawer_menu_item_all_decks -> {
-                    simpleNavigate(OnlinePageFragment())
+                R.id.drawer_menu_item_standard_decks -> {
+                    simpleNavigate(OnlineStandardPageFragment())
+                }
+                R.id.drawer_menu_item_wild_decks -> {
+                    simpleNavigate(OnlineWildPageFragment())
                 }
                 R.id.drawer_menu_item_my_decks -> {
                     simpleNavigate(FavoritePageFragment())

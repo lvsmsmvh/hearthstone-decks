@@ -1,7 +1,8 @@
 package com.cyberquick.hearthstonedecks.domain.usecases.base
 
-import com.cyberquick.hearthstonedecks.domain.repositories.BaseDecksRepository
+import com.cyberquick.hearthstonedecks.domain.common.Result
+import com.cyberquick.hearthstonedecks.domain.entities.Page
 
-open class GetPageUseCase (private val decksRepository: BaseDecksRepository) {
-    suspend operator fun invoke(pageNumber: Int) = decksRepository.getPage(pageNumber)
+interface GetPageUseCase {
+    suspend operator fun invoke(pageNumber: Int): Result<Page>
 }
