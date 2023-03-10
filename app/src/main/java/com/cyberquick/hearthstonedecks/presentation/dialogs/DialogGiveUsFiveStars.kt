@@ -27,10 +27,10 @@ class DialogGiveUsFiveStars(
             onNoClick()
         }
 
-        binding.tvGiveUsFiveStars.text = activity.getString(R.string.give_us_five_stars)
+        binding.tvGiveUsFiveStars.text = activity.getString(R.string.your_review)
             .formatForEmoji()
 
-        binding.tvYourReview.text = activity.getString(R.string.your_review)
+        binding.tvYourReview.text = activity.getString(R.string.please_rate)
             .formatForEmoji()
 
         binding.btnNo.setOnClickListener {

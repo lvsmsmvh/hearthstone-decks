@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="@string/give_us_five_stars"
+        android:text="@string/your_review"
         android:textColor="@color/text_1"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -41,7 +41,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="30dp"
         android:gravity="center"
-        android:text="@string/your_review"
+        android:text="@string/please_rate"
         android:textColor="@color/text_2"
         android:textSize="14sp" />
 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="all_decks_are_taken_from">Усі колоди були взяті з сайту — <a href="https://hearthpwn.com">hearthpwn.com</a></string>
+    <string name="question_suggestions">Питання &amp; Пропозиції — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
+    <string name="privacy_policy">Політика Конфіденційності — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a></string>
+
+    <string name="app_description">Переглядайте нові колоди і зберігайте їх для офлайн перегляду.</string>
+
+    <string name="class_image_desc">Ігровий клас</string>
+    <string name="dust_icon">Пил</string>
+    <string name="next">СЛІДУЮЧИЙ</string>
+    <string name="previous">ПОПЕРЕДНІЙ</string>
+    <string name="loading">Завантаження…</string>
+    <string name="retry">Повторити</string>
+
+    <string name="artist_ph"><b>Художник:</b> %s</string>
+    <string name="copy">КОПІЮВАТИ</string>
+    <string name="save">ЗБЕРІГТИ</string>
+    <string name="saved">ЗБЕРЕЖЕНО</string>
+    <string name="saved_decks">Збережені</string>
+    <string name="share">Поділитись</string>
+
+    <string name="open_menu_go_back">Меню/Назад</string>
+
+    <string name="quit_app_question">Вийти з програми?</string>
+    <string name="quit">Вихід</string>
+    <string name="cancel">Скасувати</string>
+
+    <string name="decks">Колоди</string>
+    <string name="all_decks">Всі колоди</string>
+    <string name="standard_decks">Стандартні</string>
+    <string name="wild_decks">Вільні</string>
+    <string name="favorite_decks">Збережені</string>
+    <string name="about_app">Про програму</string>
+    <string name="other">Додатково</string>
+    <string name="exit">Вихід</string>
+
+    <string name="click_on_a_card">Натисніть на карту, щоб переглянути її у повнорозмірному форматі та прочитати цитату</string>
+    <string name="copy_deck_in_order">Натисніть іконку, щоб скопіювати код колоди</string>
+    <string name="save_deck_description">Натисніть на зірку, щоб зберегти колоду для офлайн перегляду</string>
+    <string name="format_standard_description">Стандартний режим</string>
+    <string name="format_wild_description">Вільний режим</string>
+    <string name="version_ph">Версія: %s</string>
+    <string name="copied_to_clipboard">Скопійовано в буфер обміну!</string>
+    <string name="share_url">Поділитись URL</string>
+
+    <string name="error_no_saved_decks_found_title">Пусто</string>
+    <string name="error_no_saved_decks_found_desc">Збережені колоди не знайдені.</string>
+    <string name="error_loading_decks">Помилка завантаження :(</string>
+    <string name="no_browser_found">Браузер не знайдено</string>
+
+    <string name="your_review">Ваш відгук має значення! uni-1F634</string>
+    <string name="please_rate">Будь ласка, оцініть програму в Google Play, якщо вона вам сподобалася. uni-1F60A</string>
+</resources>

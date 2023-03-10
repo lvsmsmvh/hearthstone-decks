@@ -55,6 +55,6 @@
     <string name="error_loading_decks">Failed loading :(</string>
     <string name="no_browser_found">No browser found.</string>
 
-    <string name="give_us_five_stars">Will you give us\nfive stars? uni-1F634</string>
-    <string name="your_review">Your review makes a difference! Please rate the app in Google Play if you like it. uni-1F60A</string>
+    <string name="your_review">Your review makes a difference! uni-1F634</string>
+    <string name="please_rate">Please rate the app in Google Play if you like it. uni-1F60A</string>
 </resources>
