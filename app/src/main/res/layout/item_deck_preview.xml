@@ -93,21 +93,58 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:contentDescription="@string/dust_icon"
-                android:src="@drawable/ic_fi_eye"
-                app:tint="@color/text_3" />
-
-            <TextView
-                android:id="@+id/deck_views"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/text_3"
-                android:textSize="13sp"
-                tools:text="2340" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:contentDescription="@string/dust_icon"
+                    android:src="@drawable/ic_fi_eye"
+                    app:tint="@color/text_3" />
+
+                <TextView
+                    android:id="@+id/deck_views"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:textColor="@color/text_2"
+                    android:textSize="13sp"
+                    tools:text="0" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/text_3"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="4dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginStart="3dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:contentDescription="@string/dust_icon"
+                    android:src="@drawable/ic_like"
+                    app:tint="@color/text_3" />
+
+                <TextView
+                    android:id="@+id/deck_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:textColor="@color/text_2"
+                    android:textSize="13sp"
+                    tools:text="0" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -130,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/text_3"
+                android:textColor="@color/text_2"
                 android:textSize="13sp"
                 tools:text="16 min ago" />
         </LinearLayout>

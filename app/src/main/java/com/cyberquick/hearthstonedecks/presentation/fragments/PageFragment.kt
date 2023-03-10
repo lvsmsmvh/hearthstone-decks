@@ -105,6 +105,8 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
 
                 is LoadingState.Loaded -> {
                     Log.i("tag_page", "Page ${state.result.number} loaded")
+                    val ratings = state.result.deckPreviews.map { it.rating }
+                    Log.i("tag_page", "Ratings : ${ratings}")
                     deckAdapter.set(state.result.deckPreviews)
                     updateLayout(state)
                     wasPreviouslyLoaded = true

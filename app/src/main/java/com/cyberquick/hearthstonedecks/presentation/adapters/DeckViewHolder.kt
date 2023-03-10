@@ -3,12 +3,14 @@ package com.cyberquick.hearthstonedecks.presentation.adapters
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.ItemDeckPreviewBinding
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.presentation.common.enums.GameClasses
 import com.cyberquick.hearthstonedecks.presentation.common.enums.GameFormat
+import com.cyberquick.hearthstonedecks.presentation.common.enums.RatingColors
 import com.cyberquick.hearthstonedecks.utils.drawable
 
 class DeckViewHolder(
@@ -28,6 +30,7 @@ class DeckViewHolder(
         val deckFormatImg: ImageView,
         val deckTimeCreated: TextView,
         val views: TextView,
+        val rating: TextView,
     ) {
         companion object {
             fun fromView(view: View) = Content(
@@ -38,6 +41,7 @@ class DeckViewHolder(
                 deckFormatImg = view.findViewById(R.id.deck_format_img),
                 deckTimeCreated = view.findViewById(R.id.deck_time_created),
                 views = view.findViewById(R.id.deck_views),
+                rating = view.findViewById(R.id.deck_rating),
             )
             fun fromView(binding: ItemDeckPreviewBinding) = Content(
                 root = binding.cardView,
@@ -47,6 +51,7 @@ class DeckViewHolder(
                 deckFormatImg = binding.deckFormatImg,
                 deckTimeCreated = binding.deckTimeCreated,
                 views = binding.deckViews,
+                rating = binding.deckRating,
             )
         }
     }
@@ -68,6 +73,11 @@ class DeckViewHolder(
         content.title.text = deckPreview.title
         content.deckTimeCreated.text = deckPreview.timeCreated
         content.views.text = deckPreview.views.toString()
+
+        val ratingColorRes = RatingColors.from(deckPreview.rating).colorRes
+        content.rating.setTextColor(ContextCompat.getColor(context, ratingColorRes))
+        content.rating.text = deckPreview.rating
+
         content.deckClassImg.setImageDrawable(
             context.drawable(GameClasses.from(deckPreview)?.imageRes ?: R.drawable.error)
         )
