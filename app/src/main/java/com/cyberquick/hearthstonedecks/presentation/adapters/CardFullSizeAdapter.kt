@@ -8,6 +8,7 @@ import com.cyberquick.hearthstonedecks.presentation.common.entities.CardFullSize
 class CardFullSizeAdapter(
     private val onPreviousItemClicked: () -> Unit,
     private val onNextItemClicked: () -> Unit,
+    private val onCenterClicked: () -> Unit,
 ): BaseRvAdapter<CardFullSizeData, CardFullSizeViewHolder>() {
 
     override val layoutRes: Int = R.layout.item_card_full_size
@@ -15,6 +16,6 @@ class CardFullSizeAdapter(
     override fun createViewHolder(view: View) = CardFullSizeViewHolder(view)
 
     override fun onBind(holder: CardFullSizeViewHolder, item: CardFullSizeData) {
-        holder.bind(item, onPreviousItemClicked, onNextItemClicked)
+        holder.bind(item, onPreviousItemClicked, onNextItemClicked, onCenterClicked)
     }
 }

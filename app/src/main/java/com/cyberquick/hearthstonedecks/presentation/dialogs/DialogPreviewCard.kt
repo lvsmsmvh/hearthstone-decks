@@ -67,6 +67,7 @@ class DialogPreviewCard(
         binding.viewPager.adapter = CardFullSizeAdapter(
             onPreviousItemClicked = { instantOpenPage(binding.viewPager.currentItem - 1) },
             onNextItemClicked = { instantOpenPage(binding.viewPager.currentItem + 1) },
+            onCenterClicked = { dismiss() },
         ).apply { set(cards) }
 
         val selectedCardIndex = cards.indexOfFirst { it.cardCountable == selectedCard }

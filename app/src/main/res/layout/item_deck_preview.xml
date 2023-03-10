@@ -99,8 +99,8 @@
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
                     android:contentDescription="@string/dust_icon"
                     android:src="@drawable/ic_fi_eye"
                     app:tint="@color/text_3" />

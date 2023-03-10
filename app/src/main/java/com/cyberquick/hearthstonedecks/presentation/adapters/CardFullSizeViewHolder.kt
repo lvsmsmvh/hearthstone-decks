@@ -18,6 +18,7 @@ class CardFullSizeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         cardData: CardFullSizeData,
         onPreviousItemClicked: () -> Unit,
         onNextItemClicked: () -> Unit,
+        onCenterClicked: () -> Unit,
     ) {
         val card = cardData.cardCountable.card
 
@@ -36,6 +37,9 @@ class CardFullSizeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         }
         view.findViewById<LinearLayout>(R.id.right_side).setOnClickListener {
             onNextItemClicked()
+        }
+        view.findViewById<LinearLayout>(R.id.center_side).setOnClickListener {
+            onCenterClicked()
         }
 
         val copies = view.findViewById<TextView>(R.id.copies)
