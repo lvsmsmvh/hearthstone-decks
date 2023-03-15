@@ -21,22 +21,28 @@ class CardSmallViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         onClicked: () -> Unit,
     ) {
         val imageSmall = view.findViewById<ImageView>(R.id.img_card_small)
+        val imageUrl = cardCountable.card.image
 
-        Picasso.get()
-            .load(cardCountable.card.image)
-            .placeholder(R.drawable.card_loading)
-            .error(R.drawable.card_failed)
-            .fit()
-            .centerInside()
-            .into(imageSmall, object : Callback {
-                override fun onSuccess() {
-                    imageSmall.drawable.constantState?.newDrawable()?.let { onImageLoaded(it) }
-                }
+        if (imageUrl.isBlank()) {
+            imageSmall.setImageResource(R.drawable.card_failed)
+        } else {
+            Picasso.get()
+                .load(imageUrl)
+                .placeholder(R.drawable.card_loading)
+                .error(R.drawable.card_failed)
+                .fit()
+                .centerInside()
+                .into(imageSmall, object : Callback {
+                    override fun onSuccess() {
+                        imageSmall.drawable.constantState?.newDrawable()?.let { onImageLoaded(it) }
+                    }
 
-                override fun onError(e: Exception?) {
-                    e?.printStackTrace()
-                }
-            })
+                    override fun onError(e: Exception?) {
+                        e?.printStackTrace()
+                    }
+                })
+        }
+
 
         view.findViewById<TextView>(R.id.tv_amount).text = "x" + cardCountable.amount
 

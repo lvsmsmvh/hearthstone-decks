@@ -20,17 +20,21 @@ class CardFullSizeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         onNextItemClicked: () -> Unit,
         onCenterClicked: () -> Unit,
     ) {
-        val card = cardData.cardCountable.card
-
         val placeholder = cardData.preview ?: view.context.drawable(R.drawable.card_loading)
+        val imageView = view.findViewById<ImageView>(R.id.card_full_size_image)
+        val imageUrl = cardData.cardCountable.card.image
 
-        Picasso.get()
-            .load(card.image)
-            .placeholder(placeholder)
-            .error(R.drawable.card_failed)
-            .fit()
-            .centerInside()
-            .into(view.findViewById<ImageView>(R.id.card_full_size_image))
+        if (imageUrl.isBlank()) {
+            imageView.setImageResource(R.drawable.card_failed)
+        } else {
+            Picasso.get()
+                .load(imageUrl)
+                .placeholder(placeholder)
+                .error(R.drawable.card_failed)
+                .fit()
+                .centerInside()
+                .into(imageView)
+        }
 
         view.findViewById<LinearLayout>(R.id.left_side).setOnClickListener {
             onPreviousItemClicked()
