@@ -30,9 +30,12 @@
     <color name="black_transparent_1">#7F000000</color>
     <color name="black_transparent_2">#AA000000</color>
     <color name="black_transparent_3">#CF000000</color>
+    <color name="transparent_full">#00000000</color>
 
     <color name="purple">#a656c4</color>
     <color name="blue">#4578cb</color>
+    <color name="yellow">#bfbc67</color>
+    <color name="green">#75bba8</color>
 
     <color name="rating_green">#55ab78</color>
     <color name="rating_zero">@color/text_2</color>

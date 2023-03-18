@@ -2,6 +2,7 @@ package com.cyberquick.hearthstonedecks.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.cyberquick.hearthstonedecks.domain.entities.Hero
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import com.cyberquick.hearthstonedecks.domain.usecases.base.GetPageUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.GetFavoritePageUseCase
@@ -33,17 +34,15 @@ open class PageViewModel(
     private val getPageUseCase: GetPageUseCase,
 ) : BaseViewModel() {
 
-    companion object {
-        private const val FIRST_PAGE_INDEX = 1
-    }
-
     data class Position(val current: Int, val total: Int?)
     data class AllowNavigation(val previous: Boolean, val next: Boolean)
 
-    val pageLoading: LiveData<LoadingState<Page>> = MutableLiveData()
+    private var selectedHeroes: MutableSet<Hero> = Hero.values().toMutableSet()
+
+    val pageState: LiveData<LoadingState<Page>> = MutableLiveData()
 
     val position: LiveData<Position> = transformWithDefault(
-        source = pageLoading,
+        source = pageState,
         defaultValue = Position(FIRST_PAGE_INDEX, null)
     ) {
         return@transformWithDefault it.asLoaded()?.result?.let { page ->
@@ -75,12 +74,31 @@ open class PageViewModel(
         if (isPageLoaded(pageNumber) && !evenIfLoaded) return
         position.postValue(Position(pageNumber, position.value!!.total))
         loadingPageJob?.cancel()
-        loadingPageJob = makeLoadingRequest(pageLoading, allowInterrupt = true) {
-            getPageUseCase(pageNumber)
+        loadingPageJob = makeLoadingRequest(pageState, allowInterrupt = true) {
+            getPageUseCase(pageNumber, selectedHeroes)
         }
     }
 
-    private fun isPageLoaded(pageNumber: Int) =
-        pageLoading.value.asLoaded()?.result?.number == pageNumber
+    fun applyNewFilter(selectedHeroes: Set<Hero>) {
+        if (this.selectedHeroes == selectedHeroes) {
+            return
+        }
+
+        this.selectedHeroes.clear()
+        this.selectedHeroes.addAll(selectedHeroes)
+        updateCurrentPage(evenIfLoaded = true)
+    }
+
+    fun getCurrentFilter(): Set<Hero> {
+        return selectedHeroes
+    }
+
+    private fun isPageLoaded(pageNumber: Int) : Boolean {
+        return pageState.value.asLoaded()?.result?.number == pageNumber
+    }
+
+    companion object {
+        private const val FIRST_PAGE_INDEX = 1
+    }
 }
 

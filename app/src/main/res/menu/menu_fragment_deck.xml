@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="AlwaysShowAction">
     <item
+        android:id="@+id/menu_button_filter"
+        android:icon="@drawable/ic_filter"
+        android:title="@string/filter"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/menu_button_previous"
         android:icon="@drawable/ic_left"
         android:title="@string/previous"

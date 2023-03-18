@@ -6,6 +6,18 @@
     <string name="quote_ph" translatable="false">%s</string>
     <string name="faq" translatable="false">FAQ</string>
 
+    <string name="class_demon_hunter">Demon Hunter</string>
+    <string name="class_druid">Druid</string>
+    <string name="class_hunter">Hunter</string>
+    <string name="class_paladin">Paladin</string>
+    <string name="class_priest">Priest</string>
+    <string name="class_shaman">Shaman</string>
+    <string name="class_rogue">Rogue</string>
+    <string name="class_warlock">Warlock</string>
+    <string name="class_warrior">Warrior</string>
+    <string name="class_mage">Mage</string>
+    <string name="class_death_knight">Death Knight</string>
+
     <string name="all_decks_are_taken_from">All decks are taken from — <a href="https://hearthpwn.com">hearthpwn.com</a></string>
     <string name="question_suggestions">Questions &amp; Suggestions — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
     <string name="privacy_policy">Privacy Policy — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a></string>
@@ -36,7 +48,7 @@
     <string name="all_decks">All decks</string>
     <string name="standard_decks">Standard decks</string>
     <string name="wild_decks">Wild decks</string>
-    <string name="favorite_decks">Favorite decks</string>
+    <string name="favorite_decks">Saved decks</string>
     <string name="about_app">About app</string>
     <string name="other">Other</string>
     <string name="exit">Exit</string>
@@ -57,4 +69,7 @@
 
     <string name="your_review">Your review makes a difference! uni-1F634</string>
     <string name="please_rate">Please rate the app in Google Play if you like it. uni-1F60A</string>
+
+    <string name="select_all">Select all</string>
+    <string name="filter">Filter</string>
 </resources>

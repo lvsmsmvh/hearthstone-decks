@@ -11,6 +11,7 @@ import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
 import com.cyberquick.hearthstonedecks.domain.common.deckPreviewToJson
 import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
+import com.cyberquick.hearthstonedecks.presentation.dialogs.DialogHeroFilter
 import com.cyberquick.hearthstonedecks.presentation.fragments.base.BaseFragment
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.color
@@ -95,10 +96,10 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         }
 
         viewModel.allowNavigation.observe(viewLifecycleOwner) {
-            updateMenuButtons(it)
+            _menu?.updateButtons(it)
         }
 
-        viewModel.pageLoading.observe(viewLifecycleOwner) { state ->
+        viewModel.pageState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is LoadingState.Loading -> {
                     updateLayout(state)
@@ -155,12 +156,6 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         }
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.menu_fragment_deck, menu)
-        this._menu = menu
-        updateMenuButtons(viewModel.allowNavigation.value!!)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _deckAdapter = null
@@ -168,12 +163,30 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         _menu = null
     }
 
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_fragment_deck, menu)
+        menu.updateButtons(viewModel.allowNavigation.value!!)
+        menu.findItem(R.id.menu_button_filter).icon?.setTint(color(R.color.text_1))
+        this._menu = menu
+    }
+
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
+            R.id.menu_button_filter -> {
+                DialogHeroFilter(
+                    context = requireContext(),
+                    previouslySelected = viewModel.getCurrentFilter(),
+                    onNewSelected = {
+                        viewModel.applyNewFilter(it)
+                    }
+                ).show()
+            }
+
             R.id.menu_button_previous -> {
                 deckAdapter.clear()
                 viewModel.loadPreviousPage()
             }
+
             R.id.menu_button_next -> {
                 deckAdapter.clear()
                 viewModel.loadNextPage()
@@ -182,18 +195,14 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         return true
     }
 
-    private fun updateMenuButtons(allowNavigation: PageViewModel.AllowNavigation) {
-        _menu?.let { menu ->
-            menu.previousButton().update(allowNavigation.previous)
-            menu.nextButton().update(allowNavigation.next)
-            onPrepareMenu(menu)
-        }
+    private fun Menu.updateButtons(allowNavigation: PageViewModel.AllowNavigation) {
+        findItem(R.id.menu_button_previous).update(allowNavigation.previous)
+        findItem(R.id.menu_button_next).update(allowNavigation.next)
+        onPrepareMenu(this)
     }
 
-    private fun Menu.previousButton() = findItem(R.id.menu_button_previous)
-    private fun Menu.nextButton() = findItem(R.id.menu_button_next)
     private fun MenuItem.update(isActive: Boolean) {
-        icon?.setTint(color(if (isActive) R.color.palette_100 else R.color.palette_700))
+        icon?.setTint(color(if (isActive) R.color.text_1 else R.color.text_3))
         isEnabled = isActive
     }
 }

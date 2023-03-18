@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="class_demon_hunter">Мисливець на демонів</string>
+    <string name="class_druid">Друїд</string>
+    <string name="class_hunter">Мисливець</string>
+    <string name="class_paladin">Паладин</string>
+    <string name="class_priest">Жрець</string>
+    <string name="class_shaman">Шаман</string>
+    <string name="class_rogue">Шахрай</string>
+    <string name="class_warlock">Чорнокнижник</string>
+    <string name="class_warrior">Воїн</string>
+    <string name="class_mage">Маг</string>
+    <string name="class_death_knight">Лицар смерті</string>
+
     <string name="all_decks_are_taken_from">Усі колоди були взяті з сайту — <a href="https://hearthpwn.com">hearthpwn.com</a></string>
     <string name="question_suggestions">Питання &amp; Пропозиції — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
     <string name="privacy_policy">Політика Конфіденційності — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a></string>
@@ -51,4 +63,6 @@
 
     <string name="your_review">Ваш відгук має значення! uni-1F634</string>
     <string name="please_rate">Будь ласка, оцініть програму в Google Play, якщо вона вам сподобалася. uni-1F60A</string>
+    <string name="select_all">Вибрати все</string>
+    <string name="filter">Фільтр</string>
 </resources>

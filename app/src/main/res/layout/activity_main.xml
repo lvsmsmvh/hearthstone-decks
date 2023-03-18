@@ -40,7 +40,6 @@
         android:layout_gravity="start"
         android:theme="@style/NavDrawer"
         app:headerLayout="@layout/header_navigation_drawer"
-        app:itemIconTint="@color/text_1"
         app:itemRippleColor="?android:attr/colorControlNormal"
         app:itemTextAppearance="@style/TextAppearance.AppCompat.Body1"
         app:itemTextColor="@color/text_1"

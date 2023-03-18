@@ -10,16 +10,14 @@
                 <item
                     android:id="@+id/drawer_menu_item_standard_decks"
                     android:icon="@drawable/ic_standard"
-                    android:iconTint="@color/palette_00"
                     android:title="@string/standard_decks" />
                 <item
                     android:id="@+id/drawer_menu_item_wild_decks"
                     android:icon="@drawable/ic_wild"
-                    android:iconTint="@color/palette_00"
                     android:title="@string/wild_decks" />
                 <item
                     android:id="@+id/drawer_menu_item_my_decks"
-                    android:icon="@drawable/ic_star_filled"
+                    android:icon="@drawable/ic_star_colorful"
                     android:title="@string/favorite_decks" />
             </menu>
         </item>
@@ -33,6 +31,7 @@
             <menu>
                 <item
                     android:id="@+id/drawer_menu_item_about"
+                    android:iconTint="@color/text_1"
                     android:icon="@drawable/ic_baseline_info_24"
                     android:title="@string/about_app" />
             </menu>
@@ -48,6 +47,7 @@
                 <item
                     android:id="@+id/drawer_menu_item_exit"
                     android:icon="@drawable/ic_logout"
+                    android:iconTint="@color/text_1"
                     android:title="@string/exit" />
             </menu>
         </item>

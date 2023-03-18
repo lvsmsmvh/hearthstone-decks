@@ -22,8 +22,8 @@ class FavoriteDecksImpl @Inject constructor(
         return Result.Success(Unit)
     }
 
-    override suspend fun getPage(pageNumber: Int): Result<Page> {
-        val page = roomDBApi.getPage(pageNumber)
+    override suspend fun getPage(pageNumber: Int, heroes: Set<Hero>): Result<Page> {
+        val page = roomDBApi.getPage(pageNumber, heroes)
         return when (page.deckPreviews.isEmpty()) {
             true -> Result.Error(NoSavedDecksFoundException())
             false -> Result.Success(page)

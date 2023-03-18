@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
 
     @SuppressLint("SetTextI18n")
     private fun initNavigationDrawer() {
+        binding.navigationDrawer.itemIconTintList = null
         binding.navigationDrawer.setNavigationItemSelectedListener { menuItem ->
             binding.drawerLayout.closeDrawer(binding.navigationDrawer)
             when (menuItem.itemId) {

@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.ItemDeckPreviewBinding
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
-import com.cyberquick.hearthstonedecks.presentation.common.enums.GameClasses
-import com.cyberquick.hearthstonedecks.presentation.common.enums.GameFormat
-import com.cyberquick.hearthstonedecks.presentation.common.enums.RatingColors
+import com.cyberquick.hearthstonedecks.domain.entities.Hero
+import com.cyberquick.hearthstonedecks.domain.entities.GameFormat
+import com.cyberquick.hearthstonedecks.domain.entities.RatingColors
 import com.cyberquick.hearthstonedecks.utils.drawable
 
 class DeckViewHolder(
@@ -79,7 +79,7 @@ class DeckViewHolder(
         content.rating.text = deckPreview.rating
 
         content.deckClassImg.setImageDrawable(
-            context.drawable(GameClasses.from(deckPreview)?.imageRes ?: R.drawable.error)
+            context.drawable(Hero.from(deckPreview)?.iconRes ?: R.drawable.error)
         )
 
         val gameFormatEnum = GameFormat.from(deckPreview)
