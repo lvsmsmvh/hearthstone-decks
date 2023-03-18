@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
@@ -30,7 +29,6 @@ class DialogHeroFilter(
         val adapter = HeroAdapter(
             previouslySelected = previouslySelected,
             isAllSelectedListener = { isAllSelected ->
-                Log.i("tag_hero", "isAllSelectedListener, check = $isAllSelected")
                 binding.checkboxSelectAll.isChecked = isAllSelected
                 isAllItemsSelected = isAllSelected
             }
@@ -47,7 +45,6 @@ class DialogHeroFilter(
         binding.checkboxSelectAll.setOnClickListener {
             val isCheckedOld = isAllItemsSelected
             val isCheckedNew = isCheckedOld.not()
-            Log.i("tag_hero", "Select all click, old = $isCheckedOld, new = $isCheckedNew")
             binding.checkboxSelectAll.isChecked = isCheckedNew
             when (isCheckedNew) {
                 true -> adapter.selectAll()
@@ -55,16 +52,16 @@ class DialogHeroFilter(
             }
             isAllItemsSelected = isCheckedNew
         }
-        binding.checkboxSelectAll.setOnCheckedChangeListener { buttonView, isChecked ->
-            Log.i("tag_hero", "OnCheckedChangeListener, new = $isChecked")
-        }
 
         binding.btnNo.setOnClickListener {
             dismiss()
         }
 
         binding.btnYes.setOnClickListener {
-            onNewSelected(adapter.getSelected())
+            val new = adapter.getSelected()
+            if (new != previouslySelected) {
+                onNewSelected(adapter.getSelected())
+            }
             dismiss()
         }
     }

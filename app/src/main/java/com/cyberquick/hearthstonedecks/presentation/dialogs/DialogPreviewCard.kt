@@ -13,6 +13,8 @@ import com.cyberquick.hearthstonedecks.databinding.DialogCardFullSizeBinding
 import com.cyberquick.hearthstonedecks.domain.entities.CardCountable
 import com.cyberquick.hearthstonedecks.presentation.adapters.CardFullSizeAdapter
 import com.cyberquick.hearthstonedecks.presentation.common.entities.CardFullSizeData
+import com.cyberquick.hearthstonedecks.utils.Event
+import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import jp.wasabeef.blurry.Blurry
 
@@ -31,6 +33,8 @@ class DialogPreviewCard(
         super.onCreate(savedInstanceState)
         binding = DialogCardFullSizeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        logFirebaseEvent(context, Event.CARDS_START_VIEWING)
 
         val screenshot = screenShot(sourceScreen.rootView)
         Blurry.with(context)
@@ -54,6 +58,7 @@ class DialogPreviewCard(
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                logFirebaseEvent(context, Event.CARD_VIEW)
                 val card = cards[position].cardCountable.card
                 binding.artist.text = context.getString(R.string.artist_ph, card.artistName)
                 binding.quote.text = context.getString(R.string.quote_ph, card.flavorText)

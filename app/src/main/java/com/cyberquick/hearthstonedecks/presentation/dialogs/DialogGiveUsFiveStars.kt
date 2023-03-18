@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.DialogRateAppBinding
+import com.cyberquick.hearthstonedecks.utils.Event
+import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
 
 class DialogGiveUsFiveStars(
     private val activity: Activity,
@@ -14,6 +16,8 @@ class DialogGiveUsFiveStars(
 ) {
 
     fun show() {
+        logFirebaseEvent(activity, Event.DIALOG_RATE_SHOW)
+
         val binding = DialogRateAppBinding.inflate(activity.layoutInflater)
 
         val dialog = AlertDialog.Builder(activity, R.style.RateAppDialog)
@@ -24,6 +28,7 @@ class DialogGiveUsFiveStars(
         dialog.show()
 
         dialog.setOnDismissListener {
+            logFirebaseEvent(activity, Event.DIALOG_RATE_NO_BY_DISMISS)
             onNoClick()
         }
 
@@ -34,18 +39,21 @@ class DialogGiveUsFiveStars(
             .formatForEmoji()
 
         binding.btnNo.setOnClickListener {
+            logFirebaseEvent(activity, Event.DIALOG_RATE_NO_BY_BUTTON)
             dialog.setOnDismissListener { }
             dialog.dismiss()
             onNoClick()
         }
 
         binding.btnYes.setOnClickListener {
+            logFirebaseEvent(activity, Event.DIALOG_RATE_YES_BY_BUTTON)
             dialog.setOnDismissListener { }
             dialog.dismiss()
             onYesClick()
         }
 
         binding.lottieAnim.setOnClickListener {
+            logFirebaseEvent(activity, Event.DIALOG_RATE_YES_BY_LOTTIE)
             dialog.setOnDismissListener { }
             dialog.dismiss()
             onYesClick()

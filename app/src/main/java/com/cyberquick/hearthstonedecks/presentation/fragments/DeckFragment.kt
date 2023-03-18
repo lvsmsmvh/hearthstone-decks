@@ -24,8 +24,10 @@ import com.cyberquick.hearthstonedecks.presentation.fragments.base.BaseFragment
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.DeckViewModel
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.LoadingState
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.SavedState.Saved
+import com.cyberquick.hearthstonedecks.utils.Event
 import com.cyberquick.hearthstonedecks.utils.drawable
 import com.cyberquick.hearthstonedecks.utils.expand
+import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
 import com.cyberquick.hearthstonedecks.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -98,10 +100,12 @@ class DeckFragment : BaseFragment() {
                 val deck = state.result
 
                 binding.btnCopyDeck.setOnClickListener {
+                    logFirebaseEvent(context, Event.DECK_COPY_CODE)
                     binding.btnCopyDeckIcon.setImageDrawable(drawable(R.drawable.ic_copy_filled))
                     copyToClipboard(deck.code)
                 }
                 binding.btnShare.setOnClickListener {
+                    logFirebaseEvent(context, Event.DECK_SHARE)
                     shareLink(deck.deckPreview.deckUrl)
                 }
 
@@ -120,6 +124,7 @@ class DeckFragment : BaseFragment() {
                     .enableTransitionType(LayoutTransition.CHANGING)
 
                 binding.btnFavorite.setOnClickListener {
+                    logFirebaseEvent(context, Event.DECK_CLICK_SAVE_BUTTON)
                     viewModel.clickedOnSaveButton(deck, cards)
                 }
 

@@ -1,7 +1,6 @@
 package com.cyberquick.hearthstonedecks.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.view.*
 import androidx.fragment.app.viewModels
@@ -9,12 +8,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
 import com.cyberquick.hearthstonedecks.domain.common.deckPreviewToJson
+import com.cyberquick.hearthstonedecks.domain.entities.GameFormat
+import com.cyberquick.hearthstonedecks.domain.entities.Hero
 import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
 import com.cyberquick.hearthstonedecks.presentation.dialogs.DialogHeroFilter
 import com.cyberquick.hearthstonedecks.presentation.fragments.base.BaseFragment
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
+import com.cyberquick.hearthstonedecks.utils.Event
 import com.cyberquick.hearthstonedecks.utils.color
+import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -73,6 +76,9 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         binding.recycleViewDecks.layoutManager = LinearLayoutManager(context)
         binding.recycleViewDecks.adapter = DeckAdapter(
             onClickListener = { data ->
+                logFirebaseEvent(context, Event.DECK_VIEW, data.deckPreview.gameFormat)
+                Hero.from(data.deckPreview)
+                data.deckPreview.gameClass
                 val fragment = DeckFragment()
                 fragment.arguments = Bundle().apply {
                     putString(DeckFragment.KEY_DECK_PREVIEW, deckPreviewToJson(data.deckPreview))
@@ -110,9 +116,6 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
                 }
 
                 is LoadingState.Loaded -> {
-                    Log.i("tag_page", "Page ${state.result.number} loaded")
-                    val ratings = state.result.deckPreviews.map { it.rating }
-                    Log.i("tag_page", "Ratings : ${ratings}")
                     deckAdapter.set(state.result.deckPreviews)
                     updateLayout(state)
                     wasPreviouslyLoaded = true
@@ -173,21 +176,25 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.menu_button_filter -> {
+                logFirebaseEvent(context, Event.TOOLBAR_CLICK_FILTERS)
                 DialogHeroFilter(
                     context = requireContext(),
                     previouslySelected = viewModel.getCurrentFilter(),
                     onNewSelected = {
+                        logFirebaseEvent(context, Event.APPLY_FILTER)
                         viewModel.applyNewFilter(it)
                     }
                 ).show()
             }
 
             R.id.menu_button_previous -> {
+                logFirebaseEvent(context, Event.TOOLBAR_CLICK_PREVIOUS_PAGE)
                 deckAdapter.clear()
                 viewModel.loadPreviousPage()
             }
 
             R.id.menu_button_next -> {
+                logFirebaseEvent(context, Event.TOOLBAR_CLICK_NEXT_PAGE)
                 deckAdapter.clear()
                 viewModel.loadNextPage()
             }

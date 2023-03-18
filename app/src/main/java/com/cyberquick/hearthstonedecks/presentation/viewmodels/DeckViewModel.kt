@@ -11,6 +11,8 @@ import com.cyberquick.hearthstonedecks.domain.usecases.common.GetDeckUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.AddDeckToFavoriteUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.IsDeckInFavoriteUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.RemoveDeckFromFavoriteUseCase
+import com.cyberquick.hearthstonedecks.utils.Event
+import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

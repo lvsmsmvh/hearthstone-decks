@@ -19,7 +19,9 @@ import com.cyberquick.hearthstonedecks.databinding.ActivityMainBinding
 import com.cyberquick.hearthstonedecks.presentation.common.ToolbarTitleChanger
 import com.cyberquick.hearthstonedecks.presentation.fragments.*
 import com.cyberquick.hearthstonedecks.utils.CustomAppReviewer
+import com.cyberquick.hearthstonedecks.utils.Event
 import com.cyberquick.hearthstonedecks.utils.Preferences
+import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,8 +70,15 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
 
         binding.toolbar.setNavigationOnClickListener {
             when (homeButton) {
-                HomeButton.Menu -> binding.drawerLayout.openDrawer(binding.navigationDrawer)
-                HomeButton.Back -> onBackPressed()
+                HomeButton.Menu -> {
+                    logFirebaseEvent(this, Event.TOOLBAR_CLICK_MENU)
+                    binding.drawerLayout.openDrawer(binding.navigationDrawer)
+                }
+
+                HomeButton.Back -> {
+                    logFirebaseEvent(this, Event.TOOLBAR_CLICK_BACK)
+                    onBackPressed()
+                }
             }
         }
     }
@@ -82,18 +91,27 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
             when (menuItem.itemId) {
                 R.id.drawer_menu_item_standard_decks -> {
                     simpleNavigate(OnlineStandardPageFragment())
+                    logFirebaseEvent(this, Event.DRAWER_CLICK_DECKS_STANDARD)
                 }
+
                 R.id.drawer_menu_item_wild_decks -> {
                     simpleNavigate(OnlineWildPageFragment())
+                    logFirebaseEvent(this, Event.DRAWER_CLICK_DECKS_WILD)
                 }
+
                 R.id.drawer_menu_item_my_decks -> {
                     simpleNavigate(FavoritePageFragment())
+                    logFirebaseEvent(this, Event.DRAWER_CLICK_DECKS_SAVED)
                 }
+
                 R.id.drawer_menu_item_about -> {
                     simpleNavigate(AboutAppFragment())
+                    logFirebaseEvent(this, Event.DRAWER_CLICK_ABOUT_APP)
                 }
+
                 R.id.drawer_menu_item_exit -> {
                     showExitWindow()
+                    logFirebaseEvent(this, Event.DRAWER_CLICK_EXIT)
                 }
             }
             return@setNavigationItemSelectedListener true
@@ -136,13 +154,16 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
     }
 
     private fun showExitWindow() {
+        logFirebaseEvent(this, Event.DIALOG_EXIT_SHOW)
         MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
             .setTitle(R.string.quit_app_question)
             .setPositiveButton(R.string.quit) { dialog, _ ->
+                logFirebaseEvent(this, Event.DIALOG_EXIT_YES)
                 dialog.dismiss()
                 finish()
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
+                logFirebaseEvent(this, Event.DIALOG_EXIT_NO)
                 dialog.dismiss()
             }
             .show()
@@ -154,10 +175,9 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
     }
 
     private fun handleIntent(intent: Intent) {
-        Log.d("tag_rate_us", intent.action.toString())
-
         when (intent.action) {
             Intent.ACTION_MAIN -> {
+                logFirebaseEvent(this, Event.OPEN_APP)
                 Preferences.getInstance(this).increaseAmountOfTimesAppLaunch()
 
                 if (CustomAppReviewer.shouldShow(this)) {
