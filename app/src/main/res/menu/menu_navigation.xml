@@ -31,7 +31,6 @@
             <menu>
                 <item
                     android:id="@+id/drawer_menu_item_about"
-                    android:iconTint="@color/text_1"
                     android:icon="@drawable/ic_baseline_info_24"
                     android:title="@string/about_app" />
             </menu>
@@ -47,7 +46,6 @@
                 <item
                     android:id="@+id/drawer_menu_item_exit"
                     android:icon="@drawable/ic_logout"
-                    android:iconTint="@color/text_1"
                     android:title="@string/exit" />
             </menu>
         </item>

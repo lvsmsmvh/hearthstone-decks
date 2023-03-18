@@ -36,6 +36,7 @@
     <color name="blue">#4578cb</color>
     <color name="yellow">#bfbc67</color>
     <color name="green">#75bba8</color>
+    <color name="red">#b58b78</color>
 
     <color name="rating_green">#55ab78</color>
     <color name="rating_zero">@color/text_2</color>
