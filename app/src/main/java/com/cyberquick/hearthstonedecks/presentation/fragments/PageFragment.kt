@@ -177,14 +177,23 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         when (menuItem.itemId) {
             R.id.menu_button_filter -> {
                 logFirebaseEvent(context, Event.TOOLBAR_CLICK_FILTERS)
-                DialogHeroFilter(
+                DialogHeroFilter.show(
                     context = requireContext(),
                     previouslySelected = viewModel.getCurrentFilter(),
                     onNewSelected = {
                         logFirebaseEvent(context, Event.APPLY_FILTER)
                         viewModel.applyNewFilter(it)
                     }
-                ).show()
+                )
+
+//                DialogHeroFilter(
+//                    context = requireContext(),
+//                    previouslySelected = viewModel.getCurrentFilter(),
+//                    onNewSelected = {
+//                        logFirebaseEvent(context, Event.APPLY_FILTER)
+//                        viewModel.applyNewFilter(it)
+//                    }
+//                ).show()
             }
 
             R.id.menu_button_previous -> {
