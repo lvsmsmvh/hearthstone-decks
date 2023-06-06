@@ -18,6 +18,7 @@ import com.cyberquick.hearthstonedecks.databinding.FragmentDeckBinding
 import com.cyberquick.hearthstonedecks.domain.common.deckPreviewFromJson
 import com.cyberquick.hearthstonedecks.domain.common.toCardsCountable
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
+import com.cyberquick.hearthstonedecks.domain.repositories.SetsRepository
 import com.cyberquick.hearthstonedecks.presentation.adapters.CardSmallAdapter
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckViewHolder
 import com.cyberquick.hearthstonedecks.presentation.fragments.base.BaseFragment
@@ -30,6 +31,7 @@ import com.cyberquick.hearthstonedecks.utils.expand
 import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
 import com.cyberquick.hearthstonedecks.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -38,6 +40,9 @@ class DeckFragment : BaseFragment() {
     companion object {
         const val KEY_DECK_PREVIEW = "deck_preview"
     }
+
+    @Inject
+    lateinit var setsRepository: SetsRepository
 
     private val viewModel: DeckViewModel by viewModels()
 
@@ -116,7 +121,9 @@ class DeckFragment : BaseFragment() {
                         context, CardSmallAdapter.TOTAL_ITEMS_HORIZONTAL,
                         LinearLayoutManager.VERTICAL, false
                     )
-                    adapter = CardSmallAdapter().apply { set(cards.toCardsCountable()) }
+                    adapter = CardSmallAdapter(setsRepository).apply {
+                        set(cards.toCardsCountable())
+                    }
                     isNestedScrollingEnabled = false
                 }
 

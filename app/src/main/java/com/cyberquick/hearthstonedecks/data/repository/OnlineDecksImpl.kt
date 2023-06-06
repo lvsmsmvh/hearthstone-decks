@@ -1,6 +1,6 @@
 package com.cyberquick.hearthstonedecks.data.repository
 
-import com.cyberquick.hearthstonedecks.data.server.battlenet.BattleNetApi
+import com.cyberquick.hearthstonedecks.data.server.battlenet.BattleNetRepository
 import com.cyberquick.hearthstonedecks.data.server.hearthpwn.HearthpwnApi
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.*
@@ -8,7 +8,7 @@ import com.cyberquick.hearthstonedecks.domain.repositories.OnlineDecksRepository
 import javax.inject.Inject
 
 class OnlineDecksImpl @Inject constructor(
-    private val battleNetApi: BattleNetApi,
+    private val battleNetApi: BattleNetRepository,
     private val hearthpwnApi: HearthpwnApi,
 ) : OnlineDecksRepository {
 

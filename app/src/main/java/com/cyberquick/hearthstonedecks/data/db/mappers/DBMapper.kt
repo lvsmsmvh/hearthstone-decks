@@ -51,6 +51,7 @@ class DBMapper @Inject constructor() {
         manaCost = cardEntity.manaCost,
         image = cardEntity.image,
         flavorText = cardEntity.flavorText,
+        cardSetId = cardEntity.cardSetId
     )
 
     fun toCardEntity(card: Card) = CardEntity(
@@ -59,5 +60,6 @@ class DBMapper @Inject constructor() {
         manaCost = card.manaCost,
         image = card.image,
         flavorText = card.flavorText,
+        cardSetId = card.cardSetId
     )
 }

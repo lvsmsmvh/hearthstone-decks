@@ -6,4 +6,5 @@ data class Card(
     val manaCost: Int,
     val image: String,
     val flavorText: String,
+    val cardSetId: Int,
 )

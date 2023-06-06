@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.text.Html
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
@@ -141,3 +142,7 @@ fun Context.openGooglePlayStorePage() {
         openUrlCatching("https://play.google.com/store/apps/details?id=$packageName")
     }
 }
+
+fun String.italic() = "<i>$this</i>"
+fun String.bold() = "<b>$this</b>"
+fun String.fromHtml() = Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)

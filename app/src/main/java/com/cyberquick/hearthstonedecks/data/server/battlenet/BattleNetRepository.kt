@@ -1,15 +1,17 @@
 package com.cyberquick.hearthstonedecks.data.server.battlenet
 
-import com.cyberquick.hearthstonedecks.data.server.battlenet.hearthstone.DeckApi
+import com.cyberquick.hearthstonedecks.data.server.battlenet.hearthstone.BattleNetApi
 import com.cyberquick.hearthstonedecks.data.server.battlenet.oauth.OAuthApi
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.Card
+import com.cyberquick.hearthstonedecks.domain.entities.Set
+import com.cyberquick.hearthstonedecks.domain.entities.SetGroup
 import java.lang.Exception
 import javax.inject.Inject
 
-class BattleNetApi @Inject constructor(
-    private val deckApi: DeckApi,
+class BattleNetRepository @Inject constructor(
     private val oAuthApi: OAuthApi,
+    private val battleNetApi: BattleNetApi,
 ) {
 
     private var currentToken: String? = null
@@ -24,13 +26,32 @@ class BattleNetApi @Inject constructor(
     }
 
     suspend fun retrieveCards(code: String): Result<List<Card>> {
-        suspend fun getCards(token: String): Result<List<Card>> {
+        val result = retrieveData { token ->
+            return@retrieveData battleNetApi.getDeck(token = "Bearer $token", code = code)
+        }
+        result.asSuccess()?.let { deckResponse ->
+            return Result.Success(deckResponse.data.cards.sortedBy { it.manaCost })
+        }
+        return Result.Error(result.asError()!!.exception)
+    }
+
+    suspend fun retrieveSets(): Result<List<Set>> {
+        return retrieveData { token ->
+            return@retrieveData battleNetApi.getSets(token = "Bearer $token")
+        }
+    }
+
+    suspend fun retrieveSetGroups(): Result<List<SetGroup>> {
+        return retrieveData { token ->
+            return@retrieveData battleNetApi.getSetGroups(token = "Bearer $token")
+        }
+    }
+
+    suspend fun <T> retrieveData(doCallWithToken: suspend (token: String) -> T): Result<T> {
+        suspend fun withToken(token: String): Result<T> {
             return try {
-                val deckResponse = deckApi.getDeck(
-                    token = "Bearer $token",
-                    code = code
-                )
-                Result.Success(deckResponse.cards.sortedBy { it.manaCost })
+                val result = doCallWithToken(token)
+                Result.Success(result)
             } catch (e: Exception) {
                 Result.Error(e)
             }
@@ -43,14 +64,15 @@ class BattleNetApi @Inject constructor(
             }
         }
 
-        return when (val result = getCards(currentToken!!)) {
+        return when (val result = withToken(currentToken!!)) {
             is Result.Success -> result
             else -> {
                 when (val tokenResult = getToken()) {
                     is Result.Success -> {
                         currentToken = tokenResult.data
-                        getCards(tokenResult.data)
+                        withToken(tokenResult.data)
                     }
+
                     is Result.Error -> Result.Error(tokenResult.exception)
                 }
             }

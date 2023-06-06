@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager
 import com.cyberquick.hearthstonedecks.BuildConfig
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.ActivityMainBinding
+import com.cyberquick.hearthstonedecks.domain.repositories.SetsRepository
 import com.cyberquick.hearthstonedecks.presentation.common.ToolbarTitleChanger
 import com.cyberquick.hearthstonedecks.presentation.fragments.*
 import com.cyberquick.hearthstonedecks.utils.CustomAppReviewer
@@ -25,10 +26,14 @@ import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
 import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
+
+    @Inject
+    lateinit var setsRepository: SetsRepository
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerToggle: ActionBarDrawerToggle
@@ -45,6 +50,7 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
         initToolbar()
         initNavigationDrawer()
         initHomeButtonIcon()
+        doOtherStuff()
 
         simpleNavigate(OnlineStandardPageFragment())
 
@@ -185,6 +191,10 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
                 }
             }
         }
+    }
+
+    private fun doOtherStuff() {
+        setsRepository.refreshSets()
     }
 
     override fun onBackPressed() {

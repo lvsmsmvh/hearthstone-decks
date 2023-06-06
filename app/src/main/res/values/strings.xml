@@ -72,4 +72,9 @@
 
     <string name="select_all">Select all</string>
     <string name="filter">Filter</string>
+
+    <string name="expansion">Expansion</string>
+    <string name="year">Year</string>
+    <string name="flavor">Flavor</string>
+    <string name="artist">Artist</string>
 </resources>

@@ -7,13 +7,15 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.DialogCardFullSizeBinding
-import com.cyberquick.hearthstonedecks.domain.entities.CardCountable
 import com.cyberquick.hearthstonedecks.presentation.adapters.CardFullSizeAdapter
 import com.cyberquick.hearthstonedecks.presentation.common.entities.CardFullSizeData
 import com.cyberquick.hearthstonedecks.utils.Event
+import com.cyberquick.hearthstonedecks.utils.bold
+import com.cyberquick.hearthstonedecks.utils.fromHtml
 import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import jp.wasabeef.blurry.Blurry
@@ -22,7 +24,7 @@ class DialogPreviewCard(
     context: Context,
     private val sourceScreen: View,
     private val cards: List<CardFullSizeData>,
-    private val selectedCard: CardCountable,
+    private val selectedCardIndex: Int,
     private val onClosed: () -> Unit,
 ) : Dialog(context, R.style.ImagePreviewerTheme) {
 
@@ -58,15 +60,10 @@ class DialogPreviewCard(
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                updateTexts(selectedId = position)
                 logFirebaseEvent(context, Event.CARD_VIEW)
-                val card = cards[position].cardCountable.card
-                binding.artist.text = context.getString(R.string.artist_ph, card.artistName)
-                binding.quote.text = context.getString(R.string.quote_ph, card.flavorText)
             }
         })
-
-        binding.artist.text = context.getString(R.string.artist_ph, selectedCard.card.artistName)
-        binding.quote.text = context.getString(R.string.quote_ph, selectedCard.card.flavorText)
 
         binding.viewPager.offscreenPageLimit = cards.size
         binding.viewPager.adapter = CardFullSizeAdapter(
@@ -75,8 +72,33 @@ class DialogPreviewCard(
             onCenterClicked = { dismiss() },
         ).apply { set(cards) }
 
-        val selectedCardIndex = cards.indexOfFirst { it.cardCountable == selectedCard }
         instantOpenPage(selectedCardIndex)
+        updateTexts(selectedId = selectedCardIndex)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateTexts(selectedId: Int) {
+        val card = cards[selectedId].cardCountable.card
+        val dataAboutSet = cards[selectedId].dataAboutSet
+
+        val expansion = dataAboutSet.setName
+        val year = dataAboutSet.year
+        val flavor = card.flavorText
+        val artist = card.artistName
+
+        binding.expansion.text = (context.getString(R.string.expansion).bold() + ": " + expansion)
+            .fromHtml()
+
+        binding.year.isVisible = year != null
+        year?.let { nonNullYear ->
+            binding.year.text = (context.getString(R.string.year).bold() + ": " + nonNullYear)
+                .fromHtml()
+        }
+
+        binding.flavor.text = (context.getString(R.string.flavor).bold() + ": " + flavor)
+            .fromHtml()
+        binding.artist.text = (context.getString(R.string.artist).bold() + ": " + artist)
+            .fromHtml()
     }
 
     override fun onDetachedFromWindow() {

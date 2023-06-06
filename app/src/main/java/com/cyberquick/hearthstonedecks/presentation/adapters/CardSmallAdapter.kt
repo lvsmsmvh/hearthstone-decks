@@ -4,12 +4,15 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.domain.entities.CardCountable
+import com.cyberquick.hearthstonedecks.domain.repositories.SetsRepository
 import com.cyberquick.hearthstonedecks.presentation.adapters.base.BaseRvAdapter
 import com.cyberquick.hearthstonedecks.presentation.common.entities.CardFullSizeData
 import com.cyberquick.hearthstonedecks.presentation.dialogs.DialogPreviewCard
 import java.util.concurrent.atomic.AtomicBoolean
 
-class CardSmallAdapter : BaseRvAdapter<CardCountable, CardSmallViewHolder>() {
+class CardSmallAdapter(
+    private val setsRepository: SetsRepository,
+) : BaseRvAdapter<CardCountable, CardSmallViewHolder>() {
 
     companion object {
         const val TOTAL_ITEMS_HORIZONTAL = 4
@@ -37,9 +40,11 @@ class CardSmallAdapter : BaseRvAdapter<CardCountable, CardSmallViewHolder>() {
                     holder.view.context,
                     sourceScreen = holder.view,
                     cards = items.map {
-                        CardFullSizeData(it, images[it])
+                        CardFullSizeData(
+                            it, images[it], setsRepository.getDataAboutSet(it.card.cardSetId)
+                        )
                     },
-                    selectedCard = item,
+                    selectedCardIndex = items.indexOf(item),
                     onClosed = {
                         clicksBlocked.set(false)
                     },
