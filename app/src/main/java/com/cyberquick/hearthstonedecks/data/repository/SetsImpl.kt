@@ -5,8 +5,8 @@ import android.util.Log
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.data.server.battlenet.BattleNetRepository
 import com.cyberquick.hearthstonedecks.domain.entities.DataAboutSet
-import com.cyberquick.hearthstonedecks.domain.entities.Set
-import com.cyberquick.hearthstonedecks.domain.entities.SetGroup
+import com.cyberquick.hearthstonedecks.domain.entities.Expansion
+import com.cyberquick.hearthstonedecks.domain.entities.ExpansionYear
 import com.cyberquick.hearthstonedecks.domain.repositories.SetsRepository
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -21,11 +21,11 @@ class SetsImpl @Inject constructor(
     private val battleNetApi: BattleNetRepository,
 ) : SetsRepository {
 
-    private var setsFromLocal: List<Set> = emptyList()
-    private var setsFromOnline: List<Set> = emptyList()
+    private var setsFromLocal: List<Expansion> = emptyList()
+    private var setsFromOnline: List<Expansion> = emptyList()
 
-    private var setGroupsFromLocal: List<SetGroup> = emptyList()
-    private var setGroupsFromOnline: List<SetGroup> = emptyList()
+    private var setGroupsFromLocal: List<ExpansionYear> = emptyList()
+    private var setGroupsFromOnline: List<ExpansionYear> = emptyList()
 
     override fun refreshSets() {
         CoroutineScope(Dispatchers.IO).launch {

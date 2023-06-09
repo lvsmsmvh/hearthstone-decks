@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
 import com.cyberquick.hearthstonedecks.domain.common.deckPreviewToJson
-import com.cyberquick.hearthstonedecks.domain.entities.GameFormat
 import com.cyberquick.hearthstonedecks.domain.entities.Hero
 import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
-import com.cyberquick.hearthstonedecks.presentation.dialogs.DialogHeroFilter
+import com.cyberquick.hearthstonedecks.presentation.dialogs.DialogFilter
 import com.cyberquick.hearthstonedecks.presentation.fragments.base.BaseFragment
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.Event
@@ -177,23 +176,14 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         when (menuItem.itemId) {
             R.id.menu_button_filter -> {
                 logFirebaseEvent(context, Event.TOOLBAR_CLICK_FILTERS)
-                DialogHeroFilter.show(
+                DialogFilter.show(
                     context = requireContext(),
-                    previouslySelected = viewModel.getCurrentFilter(),
-                    onNewSelected = {
+                    previousFilter = viewModel.getCurrentFilter(),
+                    onNewSelected = { newFilter ->
+                        viewModel.applyNewFilter(newFilter)
                         logFirebaseEvent(context, Event.APPLY_FILTER)
-                        viewModel.applyNewFilter(it)
                     }
                 )
-
-//                DialogHeroFilter(
-//                    context = requireContext(),
-//                    previouslySelected = viewModel.getCurrentFilter(),
-//                    onNewSelected = {
-//                        logFirebaseEvent(context, Event.APPLY_FILTER)
-//                        viewModel.applyNewFilter(it)
-//                    }
-//                ).show()
             }
 
             R.id.menu_button_previous -> {

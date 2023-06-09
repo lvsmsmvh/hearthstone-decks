@@ -1,7 +1,7 @@
 package com.cyberquick.hearthstonedecks.data.server.battlenet.hearthstone
 
-import com.cyberquick.hearthstonedecks.domain.entities.Set
-import com.cyberquick.hearthstonedecks.domain.entities.SetGroup
+import com.cyberquick.hearthstonedecks.domain.entities.Expansion
+import com.cyberquick.hearthstonedecks.domain.entities.ExpansionYear
 import retrofit2.http.*
 
 interface BattleNetApi {
@@ -18,12 +18,12 @@ interface BattleNetApi {
         @Header("Authorization") token: String,
         @Query(":region") region: String = "eu",
         @Query("locale") locale: String = "en_EU",
-    ): List<Set>
+    ): List<Expansion>
 
     @GET("/hearthstone/metadata/setGroups")
     suspend fun getSetGroups(
         @Header("Authorization") token: String,
         @Query(":region") region: String = "eu",
         @Query("locale") locale: String = "en_EU",
-    ): List<SetGroup>
+    ): List<ExpansionYear>
 }

@@ -4,6 +4,7 @@ import com.cyberquick.hearthstonedecks.data.server.entities.DeckDetails
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.domain.entities.GameFormat
+import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Hero
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import org.jsoup.Jsoup
@@ -30,15 +31,20 @@ class HearthpwnApi @Inject constructor() {
             .get()
     }
 
-    fun getPage(pageNumber: Int, gameFormatToLoad: GameFormat, heroes: Set<Hero>): Result<Page> {
+    fun getPage(
+        pageNumber: Int,
+        gameFormatToLoad: GameFormat,
+        filter: GetPageFilter
+    ): Result<Page> {
         val deckPreviews = mutableListOf<DeckPreview>()
 
-        val heroesFilterIndex = heroes.sumOf { it.filterIndex }
+        val heroesFilterIndex = filter.heroes.sumOf { it.filterIndex }
 
         val url = when (gameFormatToLoad) {
             GameFormat.Standard -> URL_STANDARD_DECKS
             GameFormat.Wild -> URL_WILD_DECKS
-        } + "&page=$pageNumber" + "&filter-class=$heroesFilterIndex"
+        } + "&page=$pageNumber" + "&filter-class=$heroesFilterIndex" +
+                "&filter-search=${filter.prompt}"
 
 
         val document = try {

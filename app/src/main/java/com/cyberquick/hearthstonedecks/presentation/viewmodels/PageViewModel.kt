@@ -2,6 +2,7 @@ package com.cyberquick.hearthstonedecks.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Hero
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import com.cyberquick.hearthstonedecks.domain.usecases.base.GetPageUseCase
@@ -37,7 +38,7 @@ open class PageViewModel(
     data class Position(val current: Int, val total: Int?)
     data class AllowNavigation(val previous: Boolean, val next: Boolean)
 
-    private var selectedHeroes: MutableSet<Hero> = Hero.values().toMutableSet()
+    private var filter: GetPageFilter = GetPageFilter.default
 
     val pageState: LiveData<LoadingState<Page>> = MutableLiveData()
 
@@ -75,22 +76,21 @@ open class PageViewModel(
         position.postValue(Position(pageNumber, position.value!!.total))
         loadingPageJob?.cancel()
         loadingPageJob = makeLoadingRequest(pageState, allowInterrupt = true) {
-            getPageUseCase(pageNumber, selectedHeroes)
+            getPageUseCase(pageNumber, filter)
         }
     }
 
-    fun applyNewFilter(selectedHeroes: Set<Hero>) {
-        if (this.selectedHeroes == selectedHeroes) {
+    fun applyNewFilter(filter: GetPageFilter) {
+        if (this.filter == filter) {
             return
         }
 
-        this.selectedHeroes.clear()
-        this.selectedHeroes.addAll(selectedHeroes)
+        this.filter = filter
         updateCurrentPage(evenIfLoaded = true)
     }
 
-    fun getCurrentFilter(): Set<Hero> {
-        return selectedHeroes
+    fun getCurrentFilter(): GetPageFilter {
+        return filter
     }
 
     private fun isPageLoaded(pageNumber: Int) : Boolean {

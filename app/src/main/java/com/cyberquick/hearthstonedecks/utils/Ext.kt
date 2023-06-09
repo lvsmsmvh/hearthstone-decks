@@ -146,3 +146,7 @@ fun Context.openGooglePlayStorePage() {
 fun String.italic() = "<i>$this</i>"
 fun String.bold() = "<b>$this</b>"
 fun String.fromHtml() = Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+
+val Int.hours get() = 60 * minutes
+val Int.minutes get() = 60 * seconds
+val Int.seconds get() = this * 1000L

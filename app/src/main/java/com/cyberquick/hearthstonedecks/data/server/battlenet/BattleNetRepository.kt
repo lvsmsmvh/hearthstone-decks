@@ -4,8 +4,8 @@ import com.cyberquick.hearthstonedecks.data.server.battlenet.hearthstone.BattleN
 import com.cyberquick.hearthstonedecks.data.server.battlenet.oauth.OAuthApi
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.Card
-import com.cyberquick.hearthstonedecks.domain.entities.Set
-import com.cyberquick.hearthstonedecks.domain.entities.SetGroup
+import com.cyberquick.hearthstonedecks.domain.entities.Expansion
+import com.cyberquick.hearthstonedecks.domain.entities.ExpansionYear
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -35,13 +35,13 @@ class BattleNetRepository @Inject constructor(
         return Result.Error(result.asError()!!.exception)
     }
 
-    suspend fun retrieveSets(): Result<List<Set>> {
+    suspend fun retrieveSets(): Result<List<Expansion>> {
         return retrieveData { token ->
             return@retrieveData battleNetApi.getSets(token = "Bearer $token")
         }
     }
 
-    suspend fun retrieveSetGroups(): Result<List<SetGroup>> {
+    suspend fun retrieveSetGroups(): Result<List<ExpansionYear>> {
         return retrieveData { token ->
             return@retrieveData battleNetApi.getSetGroups(token = "Bearer $token")
         }

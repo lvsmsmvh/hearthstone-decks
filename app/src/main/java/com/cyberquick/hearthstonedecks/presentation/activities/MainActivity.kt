@@ -4,10 +4,10 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +19,7 @@ import com.cyberquick.hearthstonedecks.databinding.ActivityMainBinding
 import com.cyberquick.hearthstonedecks.domain.repositories.SetsRepository
 import com.cyberquick.hearthstonedecks.presentation.common.ToolbarTitleChanger
 import com.cyberquick.hearthstonedecks.presentation.fragments.*
+import com.cyberquick.hearthstonedecks.utils.BACK_PRESS_INTERVAL
 import com.cyberquick.hearthstonedecks.utils.CustomAppReviewer
 import com.cyberquick.hearthstonedecks.utils.Event
 import com.cyberquick.hearthstonedecks.utils.Preferences
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
     private enum class HomeButton { Menu, Back; }
 
     private var homeButton = HomeButton.Menu
+    private var backPressedTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -198,10 +200,20 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1)
+        if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
-        else
-            showExitWindow()
+            return
+        }
+
+        if (backPressedTime + BACK_PRESS_INTERVAL > System.currentTimeMillis()) {
+            finish()
+        } else {
+            Toast.makeText(
+                this, getString(R.string.tap_again_to_exit), Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        backPressedTime = System.currentTimeMillis()
     }
 
     override fun setText(text: String) {
