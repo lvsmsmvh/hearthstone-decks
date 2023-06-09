@@ -1,7 +1,6 @@
 package com.cyberquick.hearthstonedecks.data.db
 
 import com.cyberquick.hearthstonedecks.data.db.dao.DeckDao
-import com.cyberquick.hearthstonedecks.data.db.entities.DeckToCardEntity
 import com.cyberquick.hearthstonedecks.data.db.mappers.DBMapper
 import com.cyberquick.hearthstonedecks.domain.common.toCardsCountable
 import com.cyberquick.hearthstonedecks.domain.entities.Card
@@ -21,23 +20,12 @@ class RoomDBApi @Inject constructor(
         private const val ITEMS_ON_A_PAGE = 25
     }
 
-    fun insert(deck: Deck, cards: List<Card>) {
-        val cardsCountable = cards.toCardsCountable()
-
-        deckDao.insert(dbMapper.toDeckEntity(deck))
-        cardsCountable.forEach {
-            deckDao.insert(dbMapper.toCardEntity(it.card))
-            deckDao.insert(
-                DeckToCardEntity(
-                    deckId = deck.deckPreview.id, cardId = it.card.id, copies = it.amount
-                )
-            )
-        }
+    fun insert(deckPreview: DeckPreview) {
+        deckDao.insert(dbMapper.toDeckEntity(deckPreview))
     }
 
     fun remove(deckPreview: DeckPreview) {
         deckDao.delete(deckDao.getDeckEntity(deckPreview.id))
-        deckDao.deleteCardsThatDoesNotHaveDeck()
     }
 
     fun isSaved(deckPreview: DeckPreview): Boolean {
@@ -69,16 +57,16 @@ class RoomDBApi @Inject constructor(
         return Page(totalPages, pageNumberToLoad, deckPreviews)
     }
 
-    fun getDeck(deckPreview: DeckPreview): Deck? {
-        val deckEntity = deckDao.getDeckEntity(deckPreview.id) ?: return null
-
-        val cardIds = mutableListOf<Int>()
-        deckDao.getCardsForDeckId(deckPreview.id).forEach { deckToCardEntity ->
-            repeat(deckToCardEntity.copies) { cardIds.add(deckToCardEntity.card_id) }
-        }
-        val cardSet = deckDao.getCards(cardIds).map { dbMapper.toCard(it) }
-        val cardsWithDuplicates = cardIds.map { id -> cardSet.first { card -> card.id == id } }
-            .sortedBy { it.manaCost }
-        return dbMapper.toDeck(deckEntity, cardsWithDuplicates)
-    }
+//    fun getDeck(deckPreview: DeckPreview): Deck? {
+//        val deckEntity = deckDao.getDeckEntity(deckPreview.id) ?: return null
+//
+//        val cardIds = mutableListOf<Int>()
+//        deckDao.getCardsForDeckId(deckPreview.id).forEach { deckToCardEntity ->
+//            repeat(deckToCardEntity.copies) { cardIds.add(deckToCardEntity.card_id) }
+//        }
+//        val cardSet = deckDao.getCards(cardIds).map { dbMapper.toCard(it) }
+//        val cardsWithDuplicates = cardIds.map { id -> cardSet.first { card -> card.id == id } }
+//            .sortedBy { it.manaCost }
+//        return dbMapper.toDeck(deckEntity, cardsWithDuplicates)
+//    }
 }

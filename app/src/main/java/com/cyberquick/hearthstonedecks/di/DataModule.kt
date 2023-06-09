@@ -34,7 +34,7 @@ class DataModule {
     @Singleton
     fun provideAppDatabase(application: Application) = Room
         .databaseBuilder(application, RoomDB::class.java, DATABASE_NAME)
-        .fallbackToDestructiveMigration()
+//        .fallbackToDestructiveMigration()
         .build()
 
 

@@ -5,15 +5,14 @@ import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundExcept
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.*
 import com.cyberquick.hearthstonedecks.domain.repositories.FavoriteDecksRepository
-import java.lang.NullPointerException
 import javax.inject.Inject
 
 class FavoriteDecksImpl @Inject constructor(
     private val roomDBApi: RoomDBApi,
 ) : FavoriteDecksRepository {
 
-    override suspend fun save(deck: Deck, cards: List<Card>): Result<Unit> {
-        roomDBApi.insert(deck, cards)
+    override suspend fun save(deckPreview: DeckPreview): Result<Unit> {
+        roomDBApi.insert(deckPreview)
         return Result.Success(Unit)
     }
 
@@ -28,11 +27,6 @@ class FavoriteDecksImpl @Inject constructor(
             true -> Result.Error(NoSavedDecksFoundException())
             false -> Result.Success(page)
         }
-    }
-
-    override suspend fun getDeck(deckPreview: DeckPreview): Result<Deck> {
-        val deck = roomDBApi.getDeck(deckPreview)
-        return deck?.let { Result.Success(it) } ?: Result.Error(NullPointerException())
     }
 
     override suspend fun isSaved(deckPreview: DeckPreview): Result<Boolean> {

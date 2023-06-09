@@ -1,6 +1,5 @@
 package com.cyberquick.hearthstonedecks.data.db.mappers
 
-import com.cyberquick.hearthstonedecks.data.db.entities.CardEntity
 import com.cyberquick.hearthstonedecks.data.db.entities.DeckEntity
 import com.cyberquick.hearthstonedecks.domain.entities.Card
 import com.cyberquick.hearthstonedecks.domain.entities.Deck
@@ -8,12 +7,7 @@ import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import javax.inject.Inject
 
 class DBMapper @Inject constructor() {
-    fun toDeck(deckEntity: DeckEntity, cards: List<Card>) = Deck(
-        deckPreview = toDeckPreview(deckEntity),
-        description = deckEntity.description,
-        code = deckEntity.code,
-        cards = cards,
-    )
+
 
     fun toDeckPreview(deckEntity: DeckEntity) = DeckPreview(
         id = deckEntity.id,
@@ -28,6 +22,25 @@ class DBMapper @Inject constructor() {
         rating = deckEntity.rating,
         deckType = deckEntity.deckType,
     )
+
+    fun toDeckEntity(deckPreview: DeckPreview) = DeckEntity(
+        id = deckPreview.id,
+        title = deckPreview.title,
+        gameClass = deckPreview.gameClass,
+        dust = deckPreview.dust,
+        timeCreated = deckPreview.timeCreated,
+        deckUrl = deckPreview.deckUrl,
+        gameFormat = deckPreview.gameFormat,
+        views = deckPreview.views,
+        author = deckPreview.author,
+        rating = deckPreview.rating,
+        deckType = deckPreview.deckType,
+        description = "",
+        code = "",
+    )
+
+
+    // not used:
 
     fun toDeckEntity(deck: Deck) = DeckEntity(
         id = deck.deckPreview.id,
@@ -45,21 +58,10 @@ class DBMapper @Inject constructor() {
         code = deck.code,
     )
 
-    fun toCard(cardEntity: CardEntity) = Card(
-        id = cardEntity.id,
-        artistName = cardEntity.artistName,
-        manaCost = cardEntity.manaCost,
-        image = cardEntity.image,
-        flavorText = cardEntity.flavorText,
-        cardSetId = cardEntity.cardSetId
-    )
-
-    fun toCardEntity(card: Card) = CardEntity(
-        id = card.id,
-        artistName = card.artistName,
-        manaCost = card.manaCost,
-        image = card.image,
-        flavorText = card.flavorText,
-        cardSetId = card.cardSetId
+    fun toDeck(deckEntity: DeckEntity, cards: List<Card>) = Deck(
+        deckPreview = toDeckPreview(deckEntity),
+        description = deckEntity.description,
+        code = deckEntity.code,
+        cards = cards,
     )
 }

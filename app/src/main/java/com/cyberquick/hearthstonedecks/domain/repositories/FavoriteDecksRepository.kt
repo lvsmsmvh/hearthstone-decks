@@ -11,7 +11,7 @@ import com.cyberquick.hearthstonedecks.domain.entities.Page
 interface FavoriteDecksRepository: BaseDecksRepository {
     suspend fun getPage(pageNumber: Int, filter: GetPageFilter): Result<Page>
 
-    suspend fun save(deck: Deck, cards: List<Card>): Result<Unit>
+    suspend fun save(deckPreview: DeckPreview): Result<Unit>
     suspend fun remove(deckPreview: DeckPreview): Result<Unit>
     suspend fun isSaved(deckPreview: DeckPreview): Result<Boolean>
 }

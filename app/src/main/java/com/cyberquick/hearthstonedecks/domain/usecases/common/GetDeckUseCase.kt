@@ -9,10 +9,8 @@ import javax.inject.Inject
 
 class GetDeckUseCase @Inject constructor(
     private val onlineDecksRepository: OnlineDecksRepository,
-    private val favoriteDecksRepository: FavoriteDecksRepository,
 ) {
     suspend operator fun invoke(deckPreview: DeckPreview): Result<Deck> {
-        return (favoriteDecksRepository.getDeck(deckPreview) as? Result.Success)
-            ?: onlineDecksRepository.getDeck(deckPreview)
+        return onlineDecksRepository.getDeck(deckPreview)
     }
 }

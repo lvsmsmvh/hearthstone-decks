@@ -45,7 +45,7 @@ class DeckViewModel @Inject constructor(
                 SavedState.Loading -> return@launch
                 SavedState.NotSaved -> {
                     stateDeckSaved.postValue(SavedState.Loading)
-                    addDeckToFavoriteUseCase(deck, cards)
+                    addDeckToFavoriteUseCase(deck.deckPreview)
                 }
                 SavedState.Saved -> {
                     stateDeckSaved.postValue(SavedState.Loading)
