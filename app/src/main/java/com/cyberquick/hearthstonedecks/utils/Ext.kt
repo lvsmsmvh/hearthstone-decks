@@ -1,5 +1,6 @@
 package com.cyberquick.hearthstonedecks.utils
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -150,3 +152,8 @@ fun String.fromHtml() = Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
 val Int.hours get() = 60 * minutes
 val Int.minutes get() = 60 * seconds
 val Int.seconds get() = this * 1000L
+
+fun Activity.hideKeyboard() {
+    (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+}

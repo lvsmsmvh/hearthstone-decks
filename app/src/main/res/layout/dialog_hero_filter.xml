@@ -14,18 +14,21 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|end"
         android:orientation="horizontal">
+
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_prompt"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:imeOptions="actionDone"
             android:layout_marginEnd="10dp"
+            android:inputType="text"
             android:orientation="vertical"
             android:layout_height="wrap_content"
             android:hint="@string/enter_deck_name_here"
             android:textColorHint="@color/text_3"
             android:textSize="14sp"
             android:textColor="@color/text_1"
-            android:maxLines="2" />
+            android:maxLines="1" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/checkbox_select_all"

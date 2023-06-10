@@ -2,10 +2,16 @@ package com.cyberquick.hearthstonedecks.presentation.activities
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -219,4 +225,30 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
     override fun setText(text: String) {
         binding.toolbar.title = text
     }
+
+    /**
+     * Hide keyboard on outside-of-edit-text touch.
+     */
+//    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+//        Log.i("tag_edit", "dispatchTouchEvent")
+//        if (event.action == MotionEvent.ACTION_DOWN) {
+//            Log.i("tag_edit", "dispatchTouchEvent ACTION_DOWN")
+//
+//            val v: View? = currentFocus
+//            if (v is EditText) {
+//                Log.i("tag_edit", "dispatchTouchEvent v is EditText")
+//
+//                val outRect = Rect()
+//                v.getGlobalVisibleRect(outRect)
+//                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+//                    Log.i("tag_edit", "dispatchTouchEvent - hide")
+//
+//                    v.clearFocus()
+//                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+//                    imm?.hideSoftInputFromWindow(v.getWindowToken(), 0)
+//                }
+//            }
+//        }
+//        return super.dispatchTouchEvent(event)
+//    }
 }

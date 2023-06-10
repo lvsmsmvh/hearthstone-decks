@@ -10,6 +10,7 @@ import com.cyberquick.hearthstonedecks.domain.entities.Page
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
+import java.lang.Exception
 import javax.inject.Inject
 
 class HearthpwnApi @Inject constructor() {
@@ -62,6 +63,9 @@ class HearthpwnApi @Inject constructor() {
             .select("ul[class=b-pagination-list paging-list j-tablesorter-pager j-listing-pagination]")
             .select("li[class=b-pagination-item]")
             .let { numbers ->
+                if (numbers.size == 0) {
+                    return Result.Error(Exception("No decks found."))
+                }
                 val lastNumber = numbers.eq(numbers.size - 1)
                 var result = lastNumber.select("a").text()
                 if (result.isBlank()) result = lastNumber.select("span").text()
