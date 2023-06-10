@@ -7,10 +7,13 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.View.OnFocusChangeListener
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.doOnAttach
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
@@ -19,6 +22,7 @@ import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Hero
 import com.cyberquick.hearthstonedecks.presentation.adapters.HeroAdapter
 import com.cyberquick.hearthstonedecks.utils.setupFullHeight
+import com.cyberquick.hearthstonedecks.utils.showKeyboard
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
@@ -29,29 +33,28 @@ class DialogFilter(context: Context) : BottomSheetDialog(context, R.style.Dialog
      * Hide keyboard on outside-of-edit-text touch.
      */
 
-//    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-//        Log.i("tag_edit", "dispatchTouchEvent ACTION ${event.action}")
-//
-//        if (event.action == MotionEvent.ACTION_DOWN) {
-//
-//            val v: View? = currentFocus
-//            if (v is EditText) {
-//                Log.i("tag_edit", "dispatchTouchEvent v is EditText")
-//
-//                val outRect = Rect()
-//                v.getGlobalVisibleRect(outRect)
-//                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-//                    Log.i("tag_edit", "dispatchTouchEvent - hide")
-//
-//                    v.clearFocus()
-//                    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-//                    imm?.hideSoftInputFromWindow(v.getWindowToken(), 0)
-//                }
-//            }
-//        }
-//        return super.dispatchTouchEvent(event)
-//    }
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        Log.i("tag_edit", "dispatchTouchEvent ACTION ${event.action}")
 
+        if (event.action == MotionEvent.ACTION_DOWN) {
+
+            val v: View? = currentFocus
+            if (v is EditText) {
+                Log.i("tag_edit", "dispatchTouchEvent v is EditText")
+
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    Log.i("tag_edit", "dispatchTouchEvent - hide")
+
+                    v.clearFocus()
+                    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                    imm?.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
+    }
 
     companion object {
         fun show(
@@ -72,13 +75,14 @@ class DialogFilter(context: Context) : BottomSheetDialog(context, R.style.Dialog
                 previouslySelected = previousFilter.heroes,
                 isAllSelectedListener = { isAllSelected ->
                     binding.checkboxSelectAll.isChecked = isAllSelected
+                    binding.checkboxSelectAll.jumpDrawablesToCurrentState()
                     isAllItemsSelected = isAllSelected
                 }
             )
 
             binding.recycleViewHero.adapter = adapter
             binding.recycleViewHero.layoutManager = GridLayoutManager(
-                context, 2, RecyclerView.VERTICAL, false
+                context, 3, RecyclerView.VERTICAL, false
             )
 
             isAllItemsSelected = previousFilter.heroes.size == Hero.values().size
@@ -152,6 +156,15 @@ class DialogFilter(context: Context) : BottomSheetDialog(context, R.style.Dialog
             }
 
             dialog.show()
+            context.showKeyboard()
+
+//            binding.etPrompt.doOnAttach {
+//                if (dialog.ownerActivity?.window == null) {
+//                    Toast.makeText(context, "dialog.window == null", Toast.LENGTH_SHORT).show()
+//                }
+//                dialog.ownerActivity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+//            }
+//            dialog.ownerActivity?.showKeyboard()
         }
     }
 }

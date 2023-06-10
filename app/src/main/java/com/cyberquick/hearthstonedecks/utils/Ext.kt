@@ -24,6 +24,7 @@ import com.cyberquick.hearthstonedecks.R
 import kotlinx.coroutines.delay
 import kotlin.math.min
 
+
 fun Context.toast(message: String?) {
     if (message == null) return
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -157,6 +158,11 @@ val Int.seconds get() = this * 1000L
 fun Activity.hideKeyboard() {
     (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
         .hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+}
+
+fun Context.showKeyboard() {
+    (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 }
 
 fun View.setupFullHeight() {

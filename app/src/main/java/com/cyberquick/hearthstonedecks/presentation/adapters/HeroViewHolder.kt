@@ -27,6 +27,7 @@ class HeroViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val checkBox = view.findViewById<AppCompatCheckBox>(R.id.item_hero_checkbox)
         checkBox.apply {
             isChecked = isSelected
+            jumpDrawablesToCurrentState()
             setOnCheckedChangeListener { _, isChecked ->
                 onSelectedListener(isChecked)
             }

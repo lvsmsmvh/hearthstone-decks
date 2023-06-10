@@ -5,7 +5,7 @@
     tools:ignore="AlwaysShowAction">
     <item
         android:id="@+id/menu_button_filter"
-        android:icon="@drawable/ic_filter"
+        android:icon="@drawable/ic_search"
         android:title="@string/filter"
         app:showAsAction="always" />
     <item
