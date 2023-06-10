@@ -18,7 +18,7 @@ const val DATABASE_NAME = "room_local_db"
     ],
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = RoomDB.MyAutoMigrationFrom1To2::class)
-    ]
+    ],
 )
 
 abstract class RoomDB : RoomDatabase() {
