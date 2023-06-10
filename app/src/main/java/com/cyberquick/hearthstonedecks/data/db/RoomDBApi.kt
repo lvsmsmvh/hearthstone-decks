@@ -2,9 +2,6 @@ package com.cyberquick.hearthstonedecks.data.db
 
 import com.cyberquick.hearthstonedecks.data.db.dao.DeckDao
 import com.cyberquick.hearthstonedecks.data.db.mappers.DBMapper
-import com.cyberquick.hearthstonedecks.domain.common.toCardsCountable
-import com.cyberquick.hearthstonedecks.domain.entities.Card
-import com.cyberquick.hearthstonedecks.domain.entities.Deck
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Page
@@ -56,17 +53,4 @@ class RoomDBApi @Inject constructor(
 
         return Page(totalPages, pageNumberToLoad, deckPreviews)
     }
-
-//    fun getDeck(deckPreview: DeckPreview): Deck? {
-//        val deckEntity = deckDao.getDeckEntity(deckPreview.id) ?: return null
-//
-//        val cardIds = mutableListOf<Int>()
-//        deckDao.getCardsForDeckId(deckPreview.id).forEach { deckToCardEntity ->
-//            repeat(deckToCardEntity.copies) { cardIds.add(deckToCardEntity.card_id) }
-//        }
-//        val cardSet = deckDao.getCards(cardIds).map { dbMapper.toCard(it) }
-//        val cardsWithDuplicates = cardIds.map { id -> cardSet.first { card -> card.id == id } }
-//            .sortedBy { it.manaCost }
-//        return dbMapper.toDeck(deckEntity, cardsWithDuplicates)
-//    }
 }

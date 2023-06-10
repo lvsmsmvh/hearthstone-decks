@@ -16,6 +16,4 @@ data class DeckEntity(
     val author: String,
     val rating: String,
     val deckType: String,
-    val description: String,
-    val code: String,
 )
