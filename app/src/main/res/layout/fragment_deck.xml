@@ -31,7 +31,7 @@
             android:id="@+id/deck_holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bck_for_deck_holder"
+            android:background="@drawable/bg_corners_2"
             android:orientation="vertical"
             android:padding="10dp"
             android:visibility="gone">

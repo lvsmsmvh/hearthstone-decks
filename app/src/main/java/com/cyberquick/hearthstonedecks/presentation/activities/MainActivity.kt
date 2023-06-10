@@ -17,13 +17,14 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.cyberquick.hearthstonedecks.BuildConfig
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.ActivityMainBinding
 import com.cyberquick.hearthstonedecks.domain.repositories.SetsRepository
-import com.cyberquick.hearthstonedecks.presentation.common.ToolbarTitleChanger
+import com.cyberquick.hearthstonedecks.presentation.common.ToolbarHolder
 import com.cyberquick.hearthstonedecks.presentation.fragments.*
 import com.cyberquick.hearthstonedecks.utils.BACK_PRESS_INTERVAL
 import com.cyberquick.hearthstonedecks.utils.CustomAppReviewer
@@ -37,7 +38,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
+class MainActivity : AppCompatActivity(), ToolbarHolder {
 
     @Inject
     lateinit var setsRepository: SetsRepository
@@ -205,6 +206,49 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
         setsRepository.refreshSets()
     }
 
+    private fun setHomeButtonAs(newButton: HomeButton) {
+//        val newHomeButton = when (fragment) {
+//            is DeckFragment, is AboutAppFragment -> HomeButton.Back
+//            else -> HomeButton.Menu
+//        }
+        if (newButton == homeButton) return
+        homeButton = newButton
+        val anim = when (newButton) {
+            HomeButton.Back -> ValueAnimator.ofFloat(0f, 1f)
+            HomeButton.Menu -> ValueAnimator.ofFloat(1f, 0f)
+        }
+
+        anim.addUpdateListener { valueAnimator ->
+            val slideOffset = valueAnimator.animatedValue as Float
+            drawerToggle.onDrawerSlide(binding.drawerLayout, slideOffset)
+        }
+        anim.interpolator = DecelerateInterpolator()
+        anim.duration = 200     // 400
+        anim.start()
+    }
+
+
+    override fun showToolbar() {
+        binding.toolbar.isVisible = true
+    }
+
+    override fun hideToolbar() {
+        binding.toolbar.isVisible = false
+    }
+
+    override fun showHomeButtonAsMenu() {
+        setHomeButtonAs(HomeButton.Menu)
+    }
+
+    override fun showHomeButtonAsBack() {
+        setHomeButtonAs(HomeButton.Back)
+    }
+
+    override fun setText(text: String) {
+        binding.toolbar.title = text
+    }
+
+
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
@@ -222,33 +266,29 @@ class MainActivity : AppCompatActivity(), ToolbarTitleChanger {
         backPressedTime = System.currentTimeMillis()
     }
 
-    override fun setText(text: String) {
-        binding.toolbar.title = text
-    }
-
     /**
      * Hide keyboard on outside-of-edit-text touch.
      */
-//    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-//        Log.i("tag_edit", "dispatchTouchEvent")
-//        if (event.action == MotionEvent.ACTION_DOWN) {
-//            Log.i("tag_edit", "dispatchTouchEvent ACTION_DOWN")
-//
-//            val v: View? = currentFocus
-//            if (v is EditText) {
-//                Log.i("tag_edit", "dispatchTouchEvent v is EditText")
-//
-//                val outRect = Rect()
-//                v.getGlobalVisibleRect(outRect)
-//                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-//                    Log.i("tag_edit", "dispatchTouchEvent - hide")
-//
-//                    v.clearFocus()
-//                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-//                    imm?.hideSoftInputFromWindow(v.getWindowToken(), 0)
-//                }
-//            }
-//        }
-//        return super.dispatchTouchEvent(event)
-//    }
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        Log.i("tag_edit", "dispatchTouchEvent")
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            Log.i("tag_edit", "dispatchTouchEvent ACTION_DOWN")
+
+            val v: View? = currentFocus
+            if (v is EditText) {
+                Log.i("tag_edit", "dispatchTouchEvent v is EditText")
+
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    Log.i("tag_edit", "dispatchTouchEvent - hide")
+
+                    v.clearFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                    imm?.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
+    }
 }

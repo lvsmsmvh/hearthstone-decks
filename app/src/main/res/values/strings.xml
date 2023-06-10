@@ -79,5 +79,7 @@
     <string name="artist">Artist</string>
     <string name="tap_again_to_exit">Tap again to exit</string>
     <string name="enter_deck_name_here">Enter deck name here</string>
+    <string name="choose_heroes">Choose heroes:</string>
+    <string name="search">Search</string>
 
 </resources>

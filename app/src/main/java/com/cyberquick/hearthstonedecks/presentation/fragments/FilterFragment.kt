@@ -7,27 +7,28 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberquick.hearthstonedecks.R
+import com.cyberquick.hearthstonedecks.databinding.DialogFilterBinding
 import com.cyberquick.hearthstonedecks.databinding.FragmentAboutAppBinding
 import com.cyberquick.hearthstonedecks.presentation.adapters.AboutAppAdapter
 import com.cyberquick.hearthstonedecks.presentation.fragments.base.BaseFragment
 import com.cyberquick.hearthstonedecks.presentation.viewmodels.AboutAppViewModel
 
-class AboutAppFragment : BaseFragment() {
+/**
+ * not used
+ */
+class FilterFragment : BaseFragment() {
 
     private val viewModel: AboutAppViewModel by viewModels()
 
-    private var _binding: FragmentAboutAppBinding? = null
+    private var _binding: DialogFilterBinding? = null
     private val binding get() = _binding!!
-
-    private var _aboutAppAdapter: AboutAppAdapter? = null
-    private val aboutAppAdapter get() = _aboutAppAdapter!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAboutAppBinding.inflate(layoutInflater)
+        _binding = DialogFilterBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -39,17 +40,11 @@ class AboutAppFragment : BaseFragment() {
     }
 
     private fun initViews() {
-        toolbarHolder.showToolbar()
-        toolbarHolder.showHomeButtonAsBack()
-        toolbarHolder.setText(getString(R.string.about_app))
+        toolbarHolder.hideToolbar()
 
-        binding.recycleViewAboutApp.layoutManager = LinearLayoutManager(requireContext())
-        binding.recycleViewAboutApp.adapter = AboutAppAdapter().also { _aboutAppAdapter = it }
     }
 
     private fun initViewModel() {
-        viewModel.items.observe(viewLifecycleOwner) {
-            aboutAppAdapter.set(it)
-        }
+
     }
 }

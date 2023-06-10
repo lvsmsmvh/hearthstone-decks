@@ -23,6 +23,7 @@
     <color name="text_2">@color/palette_400</color>
     <color name="text_3">@color/palette_600</color>
     <color name="text_4">@color/palette_850</color>
+    <color name="text_5">#4578cb</color>
 
     <color name="ripple_light">#22ffffff</color>
     <color name="ripple_dark">#22000000</color>

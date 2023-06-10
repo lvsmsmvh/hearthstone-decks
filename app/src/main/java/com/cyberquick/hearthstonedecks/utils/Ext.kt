@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.text.Html
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.Transformation
@@ -156,4 +157,10 @@ val Int.seconds get() = this * 1000L
 fun Activity.hideKeyboard() {
     (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
         .hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+}
+
+fun View.setupFullHeight() {
+    val previousLayoutParams = layoutParams
+    previousLayoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
+    layoutParams = previousLayoutParams
 }

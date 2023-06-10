@@ -63,6 +63,7 @@ class DeckFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         restoreExtras()
         initView()
         initData()
@@ -73,7 +74,9 @@ class DeckFragment : BaseFragment() {
     }
 
     private fun initView() {
-        toolbarTitleChanger.setText(deckPreview.title)
+        toolbarHolder.showToolbar()
+        toolbarHolder.showHomeButtonAsBack()
+        toolbarHolder.setText(deckPreview.title)
 
         DeckViewHolder(DeckViewHolder.Content.fromView(binding.deckPreview)).bind(deckPreview)
 

@@ -66,6 +66,9 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
     }
 
     private fun initView() {
+        toolbarHolder.showToolbar()
+        toolbarHolder.showHomeButtonAsMenu()
+
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
 
         binding.layoutFailed.btnReloadData.setOnClickListener {
@@ -97,7 +100,7 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
 
     private fun initData() {
         viewModel.position.observe(viewLifecycleOwner) {
-            toolbarTitleChanger.setText("${it.current}/${it.total ?: "..."}")
+            toolbarHolder.setText("${it.current}/${it.total ?: "..."}")
         }
 
         viewModel.allowNavigation.observe(viewLifecycleOwner) {

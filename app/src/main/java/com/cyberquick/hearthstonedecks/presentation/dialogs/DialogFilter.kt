@@ -14,10 +14,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
-import com.cyberquick.hearthstonedecks.databinding.DialogHeroFilterBinding
+import com.cyberquick.hearthstonedecks.databinding.DialogFilterBinding
 import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Hero
 import com.cyberquick.hearthstonedecks.presentation.adapters.HeroAdapter
+import com.cyberquick.hearthstonedecks.utils.setupFullHeight
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
@@ -61,7 +62,7 @@ class DialogFilter(context: Context) : BottomSheetDialog(context, R.style.Dialog
             var isAllItemsSelected: Boolean
 
             val dialog = DialogFilter(context)
-            val binding = DialogHeroFilterBinding.inflate(dialog.layoutInflater)
+            val binding = DialogFilterBinding.inflate(dialog.layoutInflater)
             dialog.setContentView(binding.root)
 
             dialog.setOnDismissListener {
@@ -97,11 +98,23 @@ class DialogFilter(context: Context) : BottomSheetDialog(context, R.style.Dialog
             binding.checkboxSelectAll.setOnClickListener(selectAllListener)
             binding.textSelectAll.setOnClickListener(selectAllListener)
 
-            binding.btnNo.setOnClickListener {
+//            binding.btnNo.setOnClickListener {
+//                dialog.dismiss()
+//            }
+//
+//            binding.btnYes.setOnClickListener {
+//                val text = binding.etPrompt.text.toString()
+//                val heroes = adapter.getSelected()
+//                val filter = GetPageFilter(text, heroes)
+//                onNewSelected(filter)
+//                dialog.dismiss()
+//            }
+
+            binding.btnClose.setOnClickListener {
                 dialog.dismiss()
             }
 
-            binding.btnYes.setOnClickListener {
+            binding.btnSearch.setOnClickListener {
                 val text = binding.etPrompt.text.toString()
                 val heroes = adapter.getSelected()
                 val filter = GetPageFilter(text, heroes)
@@ -110,6 +123,8 @@ class DialogFilter(context: Context) : BottomSheetDialog(context, R.style.Dialog
             }
 
             binding.etPrompt.setText(previousFilter.prompt, TextView.BufferType.EDITABLE)
+            binding.etPrompt.requestFocus()
+
 //        binding.etPrompt.setOnFocusChangeListener { v, hasFocus ->
 //            if (hasFocus) {
 //                //got focus
@@ -131,8 +146,9 @@ class DialogFilter(context: Context) : BottomSheetDialog(context, R.style.Dialog
                     com.google.android.material.R.id.design_bottom_sheet
                 ) as? FrameLayout ?: return@setOnShowListener
 
-                // Right here!
-                BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
+                val behavior = BottomSheetBehavior.from(bottomSheet)
+                bottomSheet.setupFullHeight()
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
 
             dialog.show()
