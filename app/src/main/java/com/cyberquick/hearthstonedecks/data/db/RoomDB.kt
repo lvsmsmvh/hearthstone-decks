@@ -27,7 +27,7 @@ abstract class RoomDB : RoomDatabase() {
 
     @DeleteTable(tableName = "deck_ids_to_card_ids")
     @DeleteTable(tableName = "cards")
-    @DeleteColumn(tableName = "cards", columnName = "description")
-    @DeleteColumn(tableName = "cards", columnName = "code")
+    @DeleteColumn(tableName = "decks", columnName = "description")
+    @DeleteColumn(tableName = "decks", columnName = "code")
     class MyAutoMigrationFrom1To2 : AutoMigrationSpec
 }
