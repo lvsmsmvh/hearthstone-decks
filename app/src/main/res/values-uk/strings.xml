@@ -56,8 +56,9 @@
     <string name="copied_to_clipboard">Скопійовано в буфер обміну!</string>
     <string name="share_url">Поділитись URL</string>
 
-    <string name="error_no_saved_decks_found_title">Пусто</string>
+    <string name="error_empty">Пусто</string>
     <string name="error_no_saved_decks_found_desc">Збережені колоди не знайдені.</string>
+    <string name="error_no_online_decks_found_desc">Колоди не знайдені. Спробуйте змінити фільтр.</string>
     <string name="error_loading_decks">Помилка завантаження :(</string>
     <string name="no_browser_found">Браузер не знайдено</string>
 

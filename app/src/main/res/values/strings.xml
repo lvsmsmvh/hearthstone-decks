@@ -62,8 +62,9 @@
     <string name="copied_to_clipboard">Copied to clipboard!</string>
     <string name="share_url">Share URL</string>
 
-    <string name="error_no_saved_decks_found_title">Empty</string>
-    <string name="error_no_saved_decks_found_desc">There is no saved decks found.</string>
+    <string name="error_empty">Empty</string>
+    <string name="error_no_saved_decks_found_desc">No saved decks found.</string>
+    <string name="error_no_online_decks_found_desc">No decks found. Try edit filters.</string>
     <string name="error_loading_decks">Failed loading :(</string>
     <string name="no_browser_found">No browser found.</string>
 
@@ -81,5 +82,6 @@
     <string name="enter_deck_name_here">Enter deck name here</string>
     <string name="choose_heroes">Choose heroes:</string>
     <string name="search">Search</string>
+    <string name="change_filters">Edit</string>
 
 </resources>

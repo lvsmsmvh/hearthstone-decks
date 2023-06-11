@@ -9,6 +9,7 @@ import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.FragmentPageBinding
 import com.cyberquick.hearthstonedecks.domain.common.deckPreviewToJson
 import com.cyberquick.hearthstonedecks.domain.entities.Hero
+import com.cyberquick.hearthstonedecks.domain.exceptions.NoOnlineDecksFoundException
 import com.cyberquick.hearthstonedecks.domain.exceptions.NoSavedDecksFoundException
 import com.cyberquick.hearthstonedecks.presentation.adapters.DeckAdapter
 import com.cyberquick.hearthstonedecks.presentation.dialogs.DialogFilter
@@ -17,7 +18,6 @@ import com.cyberquick.hearthstonedecks.presentation.viewmodels.*
 import com.cyberquick.hearthstonedecks.utils.Event
 import com.cyberquick.hearthstonedecks.utils.color
 import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
-import com.cyberquick.hearthstonedecks.utils.simpleNavigate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -73,6 +73,10 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
 
         binding.layoutFailed.btnReloadData.setOnClickListener {
             viewModel.updateCurrentPage(evenIfLoaded = true)
+        }
+
+        binding.layoutFailed.btnChangeFilters.setOnClickListener {
+            showFiltersDialog()
         }
 
         binding.recycleViewDecks.layoutManager = LinearLayoutManager(context)
@@ -140,10 +144,24 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         when (val exception = (loadingState as? LoadingState.Failed)?.exception ?: return) {
             is NoSavedDecksFoundException -> {
                 binding.layoutFailed.tvErrorLoadingData.text =
-                    getString(R.string.error_no_saved_decks_found_title)
+                    getString(R.string.error_empty)
                 binding.layoutFailed.tvErrorLoadingDataSmall.text =
                     getString(R.string.error_no_saved_decks_found_desc)
                 binding.layoutFailed.btnReloadData.isVisible = false
+                binding.layoutFailed.btnChangeFilters.isVisible = true
+                binding.layoutFailed.errorFailedAnim.isVisible = false
+                binding.layoutFailed.errorEmptyAnim.isVisible = true
+            }
+
+            is NoOnlineDecksFoundException -> {
+                binding.layoutFailed.tvErrorLoadingData.text =
+                    getString(R.string.error_empty)
+                binding.layoutFailed.tvErrorLoadingDataSmall.text =
+                    getString(R.string.error_no_online_decks_found_desc)
+                binding.layoutFailed.btnReloadData.isVisible = false
+                binding.layoutFailed.btnChangeFilters.isVisible = true
+                binding.layoutFailed.errorFailedAnim.isVisible = false
+                binding.layoutFailed.errorEmptyAnim.isVisible = true
             }
 
             else -> {
@@ -151,14 +169,22 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
                     getString(R.string.error_loading_decks)
                 binding.layoutFailed.tvErrorLoadingDataSmall.text = exception.message
                 binding.layoutFailed.btnReloadData.isVisible = true
-                if (this !is FavoritePageFragment) {
-                    binding.layoutFailed.btnOpenFavorite.isVisible = true
-                    binding.layoutFailed.btnOpenFavorite.setOnClickListener {
-                        requireActivity().simpleNavigate(FavoritePageFragment())
-                    }
-                }
+                binding.layoutFailed.btnChangeFilters.isVisible = false
+                binding.layoutFailed.errorFailedAnim.isVisible = true
+                binding.layoutFailed.errorEmptyAnim.isVisible = false
             }
         }
+    }
+
+    private fun showFiltersDialog() {
+        DialogFilter.show(
+            activity = requireActivity(),
+            previousFilter = viewModel.getCurrentFilter(),
+            onNewSelected = { newFilter ->
+                viewModel.applyNewFilter(newFilter)
+                logFirebaseEvent(context, Event.APPLY_FILTER)
+            }
+        )
     }
 
     override fun onDestroyView() {
@@ -179,14 +205,7 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
         when (menuItem.itemId) {
             R.id.menu_button_filter -> {
                 logFirebaseEvent(context, Event.TOOLBAR_CLICK_FILTERS)
-                DialogFilter.show(
-                    activity = requireActivity(),
-                    previousFilter = viewModel.getCurrentFilter(),
-                    onNewSelected = { newFilter ->
-                        viewModel.applyNewFilter(newFilter)
-                        logFirebaseEvent(context, Event.APPLY_FILTER)
-                    }
-                )
+                showFiltersDialog()
             }
 
             R.id.menu_button_previous -> {

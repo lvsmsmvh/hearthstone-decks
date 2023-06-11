@@ -7,6 +7,8 @@ import com.cyberquick.hearthstonedecks.domain.entities.GameFormat
 import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Hero
 import com.cyberquick.hearthstonedecks.domain.entities.Page
+import com.cyberquick.hearthstonedecks.domain.exceptions.LoadFailedException
+import com.cyberquick.hearthstonedecks.domain.exceptions.NoOnlineDecksFoundException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
@@ -51,7 +53,7 @@ class HearthpwnApi @Inject constructor() {
         val document = try {
             getDocument(url = url)
         } catch (e: IOException) {
-            return Result.Error(e)
+            return Result.Error(LoadFailedException(message = e.message.toString()))
         }
 
         val element = document
@@ -59,18 +61,23 @@ class HearthpwnApi @Inject constructor() {
             .select("tbody")
             .select("tr")
 
+        if (element.size == 0) {
+            return Result.Error(NoOnlineDecksFoundException())
+        }
+
         val totalPages = document
             .select("ul[class=b-pagination-list paging-list j-tablesorter-pager j-listing-pagination]")
             .select("li[class=b-pagination-item]")
-            .let { numbers ->
-                if (numbers.size == 0) {
-                    return Result.Error(Exception("No decks found."))
+            .let { paginationNumbers ->
+                if (paginationNumbers.size == 0) {
+                    return@let 1
                 }
-                val lastNumber = numbers.eq(numbers.size - 1)
+                val lastNumber = paginationNumbers.eq(paginationNumbers.size - 1)
                 var result = lastNumber.select("a").text()
                 if (result.isBlank()) result = lastNumber.select("span").text()
                 return@let result.toInt()
             }
+
 
         for (i in 0 until element.size) {
             val currentElement = element.eq(i)
