@@ -47,7 +47,7 @@ class DialogFilter(
         viewClicked.getGlobalVisibleRect(outRect)
 
         val pointX = event.rawX.toInt()
-        val pointY = event.rawY.toInt() + context.statusBarHeightPixels()
+        val pointY = event.rawY.toInt() - context.statusBarHeightPixels()
         val isEditTextClicked = outRect.contains(pointX, pointY)
         if (isEditTextClicked) {
             return super.dispatchTouchEvent(event)
