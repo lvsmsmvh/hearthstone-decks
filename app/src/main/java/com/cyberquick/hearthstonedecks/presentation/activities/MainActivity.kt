@@ -265,30 +265,4 @@ class MainActivity : AppCompatActivity(), ToolbarHolder {
 
         backPressedTime = System.currentTimeMillis()
     }
-
-    /**
-     * Hide keyboard on outside-of-edit-text touch.
-     */
-    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        Log.i("tag_edit", "dispatchTouchEvent")
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            Log.i("tag_edit", "dispatchTouchEvent ACTION_DOWN")
-
-            val v: View? = currentFocus
-            if (v is EditText) {
-                Log.i("tag_edit", "dispatchTouchEvent v is EditText")
-
-                val outRect = Rect()
-                v.getGlobalVisibleRect(outRect)
-                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-                    Log.i("tag_edit", "dispatchTouchEvent - hide")
-
-                    v.clearFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-                    imm?.hideSoftInputFromWindow(v.getWindowToken(), 0)
-                }
-            }
-        }
-        return super.dispatchTouchEvent(event)
-    }
 }

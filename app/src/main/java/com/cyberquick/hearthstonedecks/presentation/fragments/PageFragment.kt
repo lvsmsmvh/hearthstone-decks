@@ -180,7 +180,7 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
             R.id.menu_button_filter -> {
                 logFirebaseEvent(context, Event.TOOLBAR_CLICK_FILTERS)
                 DialogFilter.show(
-                    context = requireContext(),
+                    activity = requireActivity(),
                     previousFilter = viewModel.getCurrentFilter(),
                     onNewSelected = { newFilter ->
                         viewModel.applyNewFilter(newFilter)

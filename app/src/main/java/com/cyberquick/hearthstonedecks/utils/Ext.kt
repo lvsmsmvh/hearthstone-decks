@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.text.Html
+import android.text.Spanned
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
@@ -149,7 +150,7 @@ fun Context.openGooglePlayStorePage() {
 
 fun String.italic() = "<i>$this</i>"
 fun String.bold() = "<b>$this</b>"
-fun String.fromHtml() = Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+fun String.fromHtml(): Spanned = Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
 
 val Int.hours get() = 60 * minutes
 val Int.minutes get() = 60 * seconds
@@ -158,6 +159,11 @@ val Int.seconds get() = this * 1000L
 fun Activity.hideKeyboard() {
     (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
         .hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+}
+
+fun View.hideKeyboard() {
+    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .hideSoftInputFromWindow(windowToken, 0)
 }
 
 fun Context.showKeyboard() {
@@ -169,4 +175,27 @@ fun View.setupFullHeight() {
     val previousLayoutParams = layoutParams
     previousLayoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
     layoutParams = previousLayoutParams
+}
+
+//fun Window.statusBarHeight(): Int {
+//    val rectangle = Rect()
+//    decorView.getWindowVisibleDisplayFrame(rectangle)
+//    val statusBarHeight = rectangle.top
+//    val contentViewTop = findViewById<View>(Window.ID_ANDROID_CONTENT).top
+//    return contentViewTop - statusBarHeight
+//}
+
+private fun Context.pixelsOfIdentifier(name: String, defaultDp: Int): Int {
+    val resourceId = resources.getIdentifier(name, "dimen", "android")
+    return if (resourceId > 0) resources.getDimensionPixelSize(resourceId)
+    else (defaultDp * resources.displayMetrics.density).toInt()
+}
+
+
+fun Context.statusBarHeightPixels(): Int {
+    return pixelsOfIdentifier("status_bar_height", 24)
+}
+
+fun Context.navBarHeightPixels(): Int {
+    return pixelsOfIdentifier("navigation_bar_height", 48)
 }

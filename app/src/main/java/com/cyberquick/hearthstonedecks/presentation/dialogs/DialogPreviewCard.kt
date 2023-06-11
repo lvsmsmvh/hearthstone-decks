@@ -17,6 +17,8 @@ import com.cyberquick.hearthstonedecks.utils.Event
 import com.cyberquick.hearthstonedecks.utils.bold
 import com.cyberquick.hearthstonedecks.utils.fromHtml
 import com.cyberquick.hearthstonedecks.utils.logFirebaseEvent
+import com.cyberquick.hearthstonedecks.utils.navBarHeightPixels
+import com.cyberquick.hearthstonedecks.utils.statusBarHeightPixels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import jp.wasabeef.blurry.Blurry
 
@@ -111,13 +113,6 @@ class DialogPreviewCard(
     }
 
     private fun screenShot(view: View): Bitmap? {
-        fun pixelsOfIdentifier(name: String, defaultDp: Int): Int {
-            val resources = context.resources
-            val resourceId = resources.getIdentifier(name, "dimen", "android")
-            return if (resourceId > 0) resources.getDimensionPixelSize(resourceId)
-            else (defaultDp * resources.displayMetrics.density).toInt()
-        }
-
         val width = view.width
         val height = view.height
 
@@ -125,8 +120,8 @@ class DialogPreviewCard(
         val canvas = Canvas(bitmap)
         view.draw(canvas)
 
-        val cutTop = pixelsOfIdentifier("status_bar_height", 24)
-        val cutBottom = pixelsOfIdentifier("navigation_bar_height", 48)
+        val cutTop = context.statusBarHeightPixels()
+        val cutBottom = context.navBarHeightPixels()
         val totalHeight = height - cutTop - cutBottom
         val cutBitmap = Bitmap.createBitmap(bitmap, 0, cutTop, width, totalHeight)
 

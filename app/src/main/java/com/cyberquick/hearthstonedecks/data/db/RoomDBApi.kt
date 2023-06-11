@@ -48,6 +48,7 @@ class RoomDBApi @Inject constructor(
 
         val deckPreviews = entities
             .filter { heroesNames.contains(it.gameClass) }
+            .filter { it.title.lowercase().contains(filter.prompt.lowercase()) }
             .map { dbMapper.toDeckPreview(it) }
             .reversed()
 
