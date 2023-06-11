@@ -128,7 +128,7 @@ class HearthpwnApi @Inject constructor() {
             val views = currentElement
                 .select("td.col-views")
                 .text()
-                .toInt()
+                .toIntOrNull() ?: 0
 
             val author = currentElement
                 .select("td.col-name")
