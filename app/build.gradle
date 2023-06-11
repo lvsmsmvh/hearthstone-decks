@@ -14,8 +14,8 @@ android {
         applicationId "com.cyberquick.hearthstonedecks"
         minSdkVersion 26
         targetSdk 33
-        versionCode 8
-        versionName "1.08"
+        versionCode 9
+        versionName "1.09"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
