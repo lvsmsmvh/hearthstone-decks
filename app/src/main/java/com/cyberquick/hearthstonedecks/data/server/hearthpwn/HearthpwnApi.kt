@@ -1,5 +1,6 @@
 package com.cyberquick.hearthstonedecks.data.server.hearthpwn
 
+import android.util.Log
 import com.cyberquick.hearthstonedecks.data.server.entities.DeckDetails
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
@@ -46,8 +47,11 @@ class HearthpwnApi @Inject constructor() {
         val url = when (gameFormatToLoad) {
             GameFormat.Standard -> URL_STANDARD_DECKS
             GameFormat.Wild -> URL_WILD_DECKS
-        } + "&page=$pageNumber" + "&filter-class=$heroesFilterIndex" +
-                "&filter-search=${filter.prompt}"
+        } +
+                "&page=$pageNumber" +
+                "&filter-class=$heroesFilterIndex" +
+                "&filter-search=${filter.prompt}" +
+                "&filter-deck-tag=2" // "new" filter
 
 
         val document = try {
@@ -101,6 +105,13 @@ class HearthpwnApi @Inject constructor() {
                 .select("abbr")
                 .attr("title")
                 .let { return@let formatToCorrectDate(it) }
+
+            val timeEpoch = currentElement
+                .select("td.col-updated")
+                .select("abbr")
+                .attr("data-epoch")
+
+            Log.d("tag_api", "timeEpoch $timeEpoch")
 
             val detailsUrl = URL_ROOT + currentElement
                 .select("td.col-name")
