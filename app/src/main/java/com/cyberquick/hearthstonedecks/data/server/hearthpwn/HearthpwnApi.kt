@@ -35,6 +35,11 @@ class HearthpwnApi @Inject constructor() {
             .get()
     }
 
+    /**
+     * Example url:
+     * https://www.hearthpwn.com/decks?filter-search=pirate&filter-show-standard=1&filter-show-constructed-only=y&filter-deck-tag=2&filter-class=128
+     */
+
     fun getPage(
         pageNumber: Int,
         gameFormatToLoad: GameFormat,
@@ -66,6 +71,10 @@ class HearthpwnApi @Inject constructor() {
             .select("tr")
 
         if (element.size == 0) {
+            return Result.Error(NoOnlineDecksFoundException())
+        }
+
+        if (element.size == 1 && element[0].select("td").attr("class") == "alert no-results") {
             return Result.Error(NoOnlineDecksFoundException())
         }
 
@@ -147,6 +156,7 @@ class HearthpwnApi @Inject constructor() {
                 .select("span")
                 .text()
 
+            Log.i("tag_fix_crash", "Details url $i: $detailsUrl")
             val id = detailsUrl.substringAfterLast("/").substringBefore("-").toInt()
 
             deckPreviews.add(
