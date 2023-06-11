@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name" translatable="false">Decks for Hearthstone</string>
+
+    <string name="app_name_new_line" translatable="false">Decks for\nHearthstone</string>
+
+    <string name="app_name_short" translatable="false">Decks for HS</string>
+
+    <string name="quote_ph" translatable="false">%s</string>
+
+    <string name="faq" translatable="false">FAQ</string>
+
+    <string name="class_demon_hunter">Caçador de Demônios</string>
+
+    <string name="class_druid">druida</string>
+
+    <string name="class_hunter">Caçador</string>
+
+    <string name="class_paladin">Paladino</string>
+
+    <string name="class_priest">Padre</string>
+
+    <string name="class_shaman">Xamã</string>
+
+    <string name="class_rogue">Por conta própria</string>
+
+    <string name="class_warlock">Bruxo</string>
+
+    <string name="class_warrior">Guerreiro</string>
+
+    <string name="class_mage">Mago</string>
+
+    <string name="class_death_knight">Cavaleiro da morte</string>
+
+    <string name="all_decks_are_taken_from">
+    Todos os decks foram retirados de —
+    <a href="https://hearthpwn.com">hearthpwn.com</a>
+  </string>
+
+    <string name="question_suggestions">
+    Perguntas e perguntas Sugestões —
+    <a href="mailto:iamajavagod@gmail.com">iamajavagod\@gmail.com</a>
+  </string>
+
+    <string name="privacy_policy">
+    Política de Privacidade —
+    <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a>
+  </string>
+
+    <string name="app_description">Encontre novos baralhos da comunidade e salve-os para visualização offline.</string>
+
+    <string name="class_image_desc">classe de jogo</string>
+
+    <string name="dust_icon">Pó</string>
+
+    <string name="next">Próximo</string>
+
+    <string name="previous">Anterior</string>
+
+    <string name="loading">Carregando…</string>
+
+    <string name="retry">Tentar novamente</string>
+
+    <string name="artist_ph">
+    <b>Artista:</b>
+     %s
+  </string>
+
+    <string name="copy">cópia de</string>
+
+    <string name="save">Salvar</string>
+
+    <string name="saved">Salvou</string>
+
+    <string name="saved_decks">Baralhos salvos</string>
+
+    <string name="share">Compartilhar</string>
+
+    <string name="open_menu_go_back">Menu/Voltar</string>
+
+    <string name="quit_app_question">Sair do aplicativo?</string>
+
+    <string name="quit">Desistir</string>
+
+    <string name="cancel">Cancelar</string>
+
+    <string name="decks">baralhos</string>
+
+    <string name="all_decks">Todos os baralhos</string>
+
+    <string name="standard_decks">Decks padrão</string>
+
+    <string name="wild_decks">baralhos selvagens</string>
+
+    <string name="favorite_decks">Baralhos salvos</string>
+
+    <string name="about_app">Sobre o aplicativo</string>
+
+    <string name="other">Outro</string>
+
+    <string name="exit">Saída</string>
+
+    <string name="click_on_a_card">Clique em um cartão para ver sua imagem em tamanho real e sua citação pessoal</string>
+
+    <string name="copy_deck_in_order">Copie o código do deck para depois colar no Hearthstone</string>
+
+    <string name="save_deck_description">Pressione o ícone de estrela para salvar o baralho para visualização offline</string>
+
+    <string name="format_standard_description">Formato padrão</string>
+
+    <string name="format_wild_description">Formato selvagem</string>
+
+    <string name="version_ph">Versão: %s</string>
+
+    <string name="copied_to_clipboard">Copiado para a área de transferência!</string>
+
+    <string name="share_url">Compartilhar URL</string>
+
+    <string name="error_empty">Vazio</string>
+
+    <string name="error_no_saved_decks_found_desc">Nenhum baralho salvo encontrado.</string>
+
+    <string name="error_no_online_decks_found_desc">Nenhum baralho encontrado. Tente editar filtros.</string>
+
+    <string name="error_loading_decks">Falha ao carregar :(</string>
+
+    <string name="no_browser_found">Nenhum navegador encontrado.</string>
+
+    <string name="your_review">Sua avaliação faz a diferença! uni-1F634</string>
+
+    <string name="please_rate">Por favor, avalie o aplicativo no Google Play se você gostar. uni-1F60A</string>
+
+    <string name="select_all">Selecionar tudo</string>
+
+    <string name="filter">Filtro</string>
+
+    <string name="tap_again_to_exit">Toque novamente para sair</string>
+
+    <string name="enter_deck_name_here">Digite o nome do deck (não necessariamente)</string>
+
+    <string name="choose_heroes">Escolha os heróis:</string>
+
+    <string name="search">Procurar</string>
+
+    <string name="change_filters">Editar</string>
+
+</resources>

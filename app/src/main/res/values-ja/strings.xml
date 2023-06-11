@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name" translatable="false">Decks for Hearthstone</string>
+
+    <string name="app_name_new_line" translatable="false">Decks for\nHearthstone</string>
+
+    <string name="app_name_short" translatable="false">Decks for HS</string>
+
+    <string name="quote_ph" translatable="false">%s</string>
+
+    <string name="faq" translatable="false">FAQ</string>
+
+    <string name="class_demon_hunter">悪魔ハンター</string>
+
+    <string name="class_druid">ドルイド僧</string>
+
+    <string name="class_hunter">猟師</string>
+
+    <string name="class_paladin">パラディン</string>
+
+    <string name="class_priest">祭司</string>
+
+    <string name="class_shaman">シャーマン</string>
+
+    <string name="class_rogue">ローグ</string>
+
+    <string name="class_warlock">ウォーロック</string>
+
+    <string name="class_warrior">戦士</string>
+
+    <string name="class_mage">メイジ</string>
+
+    <string name="class_death_knight">デスナイト</string>
+
+    <string name="all_decks_are_taken_from">
+    すべてのデッキは
+    <a href="https://hearthpwn.com">hearthpwn.com</a>
+     から引用しています。
+  </string>
+
+    <string name="question_suggestions">
+    質問と回答提案 —
+    <a href="mailto:iamajavagod@gmail.com">iamajavagod\@gmail.com</a>
+  </string>
+
+    <string name="privacy_policy">
+    プライバシー ポリシー -
+    <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a>
+  </string>
+
+    <string name="app_description">新しいコミュニティデッキを見つけて、オフラインで閲覧できるように保存します。</string>
+
+    <string name="class_image_desc">ゲームクラス</string>
+
+    <string name="dust_icon">ほこり</string>
+
+    <string name="next">次</string>
+
+    <string name="previous">前</string>
+
+    <string name="loading">読み込み中…</string>
+
+    <string name="retry">リトライ</string>
+
+    <string name="artist_ph">
+    <b>アーティスト:</b>
+     %s
+  </string>
+
+    <string name="copy">コピー</string>
+
+    <string name="save">保存</string>
+
+    <string name="saved">保存されました</string>
+
+    <string name="saved_decks">保存したデッキ</string>
+
+    <string name="share">共有</string>
+
+    <string name="open_menu_go_back">メニュー/戻る</string>
+
+    <string name="quit_app_question">アプリを終了しますか?</string>
+
+    <string name="quit">やめる</string>
+
+    <string name="cancel">キャンセル</string>
+
+    <string name="decks">デッキ</string>
+
+    <string name="all_decks">すべてのデッキ</string>
+
+    <string name="standard_decks">スタンダードデッキ</string>
+
+    <string name="wild_decks">ワイルドデッキ</string>
+
+    <string name="favorite_decks">保存したデッキ</string>
+
+    <string name="about_app">アプリについて</string>
+
+    <string name="other">他の</string>
+
+    <string name="exit">出口</string>
+
+    <string name="click_on_a_card">カードをクリックすると、フルサイズの画像とその個人的な引用が表示されます</string>
+
+    <string name="copy_deck_in_order">デッキコードをコピーして、後でハースストーンに貼り付けます</string>
+
+    <string name="save_deck_description">星のアイコンを押してデッキを保存し、オフラインで表示できるようにします</string>
+
+    <string name="format_standard_description">標準フォーマット</string>
+
+    <string name="format_wild_description">ワイルドフォーマット</string>
+
+    <string name="version_ph">バージョン: %s</string>
+
+    <string name="copied_to_clipboard">クリップボードにコピーされました!</string>
+
+    <string name="share_url">URL を共有する</string>
+
+    <string name="error_empty">空</string>
+
+    <string name="error_no_saved_decks_found_desc">保存されたデッキが見つかりません。</string>
+
+    <string name="error_no_online_decks_found_desc">デッキが見つかりませんでした。フィルターを編集してみてください。</string>
+
+    <string name="error_loading_decks">ロードに失敗しました :(</string>
+
+    <string name="no_browser_found">ブラウザが見つかりませんでした。</string>
+
+    <string name="your_review">あなたのレビューが違いを生みます！ユニ-1F634</string>
+
+    <string name="please_rate">気に入ったら、Google Play でアプリを評価してください。ユニ-1F60A</string>
+
+    <string name="select_all">すべて選択</string>
+
+    <string name="filter">フィルター</string>
+
+    <string name="tap_again_to_exit">もう一度タップして終了します</string>
+
+    <string name="enter_deck_name_here">デッキ名を入力してください（必須ではありません）</string>
+
+    <string name="choose_heroes">ヒーローを選択してください:</string>
+
+    <string name="search">検索</string>
+
+    <string name="change_filters">編集</string>
+
+</resources>

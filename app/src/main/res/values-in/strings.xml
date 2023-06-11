@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name" translatable="false">Decks for Hearthstone</string>
+
+    <string name="app_name_new_line" translatable="false">Decks for\nHearthstone</string>
+
+    <string name="app_name_short" translatable="false">Decks for HS</string>
+
+    <string name="quote_ph" translatable="false">%s</string>
+
+    <string name="faq" translatable="false">FAQ</string>
+
+    <string name="class_demon_hunter">Pemburu setan</string>
+
+    <string name="class_druid">Druid</string>
+
+    <string name="class_hunter">Pemburu</string>
+
+    <string name="class_paladin">Paladin</string>
+
+    <string name="class_priest">Pendeta</string>
+
+    <string name="class_shaman">Dukun</string>
+
+    <string name="class_rogue">Penipu</string>
+
+    <string name="class_warlock">Ahli sihir</string>
+
+    <string name="class_warrior">pejuang</string>
+
+    <string name="class_mage">Penyihir</string>
+
+    <string name="class_death_knight">Kematian ksatria</string>
+
+    <string name="all_decks_are_taken_from">
+    Semua dek diambil dari —
+    <a href="https://hearthpwn.com">hearthpwn.com</a>
+  </string>
+
+    <string name="question_suggestions">
+    Pertanyaan &amp; Saran —
+    <a href="mailto:iamajavagod@gmail.com">iamajavagod\@gmail.com</a>
+  </string>
+
+    <string name="privacy_policy">
+    Kebijakan Privasi —
+    <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a>
+  </string>
+
+    <string name="app_description">Temukan deck komunitas baru dan simpan untuk dilihat secara offline.</string>
+
+    <string name="class_image_desc">Kelas Permainan</string>
+
+    <string name="dust_icon">Debu</string>
+
+    <string name="next">Berikutnya</string>
+
+    <string name="previous">Sebelumnya</string>
+
+    <string name="loading">Memuat…</string>
+
+    <string name="retry">Mencoba kembali</string>
+
+    <string name="artist_ph">
+    <b>Artis:</b>
+     %s
+  </string>
+
+    <string name="copy">Menyalin</string>
+
+    <string name="save">Menyimpan</string>
+
+    <string name="saved">Diselamatkan</string>
+
+    <string name="saved_decks">Dek yang disimpan</string>
+
+    <string name="share">Membagikan</string>
+
+    <string name="open_menu_go_back">Menu/Kembali</string>
+
+    <string name="quit_app_question">Keluar dari aplikasi?</string>
+
+    <string name="quit">Berhenti</string>
+
+    <string name="cancel">Membatalkan</string>
+
+    <string name="decks">Dek</string>
+
+    <string name="all_decks">Semua dek</string>
+
+    <string name="standard_decks">Dek standar</string>
+
+    <string name="wild_decks">Dek liar</string>
+
+    <string name="favorite_decks">Dek yang disimpan</string>
+
+    <string name="about_app">Tentang aplikasi</string>
+
+    <string name="other">Lainnya</string>
+
+    <string name="exit">KELUAR</string>
+
+    <string name="click_on_a_card">Klik kartu untuk melihat gambar ukuran penuh dan kutipan pribadinya</string>
+
+    <string name="copy_deck_in_order">Salin kode dek untuk nanti ditempelkan ke Hearthstone</string>
+
+    <string name="save_deck_description">Tekan ikon Bintang untuk menyimpan dek untuk dilihat secara offline</string>
+
+    <string name="format_standard_description">Format standar</string>
+
+    <string name="format_wild_description">Formasi liar</string>
+
+    <string name="version_ph">Versi: %s</string>
+
+    <string name="copied_to_clipboard">Disalin ke papan klip!</string>
+
+    <string name="share_url">Bagikan URL</string>
+
+    <string name="error_empty">Kosong</string>
+
+    <string name="error_no_saved_decks_found_desc">Tidak ada dek tersimpan yang ditemukan.</string>
+
+    <string name="error_no_online_decks_found_desc">Tidak ada dek yang ditemukan. Coba edit filter.</string>
+
+    <string name="error_loading_decks">Gagal memuat :(</string>
+
+    <string name="no_browser_found">Tidak ditemukan peramban.</string>
+
+    <string name="your_review">Ulasan Anda membuat perbedaan! uni-1F634</string>
+
+    <string name="please_rate">Beri peringkat aplikasi di Google Play jika Anda menyukainya. uni-1F60A</string>
+
+    <string name="select_all">Pilih Semua</string>
+
+    <string name="filter">Saring</string>
+
+    <string name="tap_again_to_exit">Ketuk lagi untuk keluar</string>
+
+    <string name="enter_deck_name_here">Masukkan nama dek (tidak harus)</string>
+
+    <string name="choose_heroes">Pilih pahlawan:</string>
+
+    <string name="search">Mencari</string>
+
+    <string name="change_filters">Sunting</string>
+
+</resources>

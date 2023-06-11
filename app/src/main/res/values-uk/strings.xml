@@ -66,4 +66,10 @@
     <string name="please_rate">Будь ласка, оцініть програму в Google Play, якщо вона вам сподобалася. uni-1F60A</string>
     <string name="select_all">Вибрати все</string>
     <string name="filter">Фільтр</string>
+
+    <string name="tap_again_to_exit">Торкніться знову, щоб вийти</string>
+    <string name="enter_deck_name_here">Введіть назву колоди (необов’язково)</string>
+    <string name="choose_heroes">Виберіть героїв:</string>
+    <string name="search">Пошук</string>
+    <string name="change_filters">Редагувати</string>
 </resources>

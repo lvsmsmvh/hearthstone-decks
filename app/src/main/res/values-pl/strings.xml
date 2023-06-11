@@ -1,0 +1,80 @@
+<resources>
+
+    <string name="quote_ph" translatable="false">%s</string>
+    <string name="faq" translatable="false">Najczęściej zadawane pytania</string>
+
+    <string name="class_demon_hunter">Łowca demonów</string>
+    <string name="class_druid">Druid</string>
+    <string name="class_hunter">Łowca</string>
+    <string name="class_paladin">Paladyn</string>
+    <string name="class_priest">Kapłan</string>
+    <string name="class_shaman">Szaman</string>
+    <string name="class_rogue">Złodziej</string>
+    <string name="class_warlock">Czarnoksiężnik</string>
+    <string name="class_warrior">Wojownik</string>
+    <string name="class_mage">Mag</string>
+    <string name="class_death_knight">Rycerz Śmierci</string>
+
+    <string name="all_decks_are_taken_from">Wszystkie talie pochodzą z — <a href="https://hearthpwn.com">hearthpwn.com</a></string>
+    <string name="question_suggestions">Pytania &amp; Sugestie — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
+    <string name="privacy_policy">Polityka prywatności — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view /decks-for-hearthstone-policy/home</a></string>
+
+    <string name="app_description">Znajdź nowe talie społeczności i zapisz je do przeglądania offline.</string>
+
+    <string name="class_image_desc">Klasa gry</string>
+    <string name="dust_icon">Pył</string>
+    <string name="next">Dalej</string>
+    <string name="previous">Poprzedni</string>
+    <string name="loading">Ładowanie…</string>
+    <string name="retry">Spróbuj ponownie</string>
+
+    <string name="artist_ph"><b>Wykonawca:</b> %s</string>
+    <string name="copy">Kopiuj</string>
+    <string name="save">Zapisz</string>
+    <string name="saved">Zapisano</string>
+    <string name="saved_decks">Zapisane talie</string>
+    <string name="share">Udostępnij</string>
+
+    <string name="open_menu_go_back">Menu/Wróć</string>
+
+    <string name="quit_app_question">Opuścić aplikację?</string>
+    <string name="quit">Wyjdź</string>
+    <string name="cancel">Anuluj</string>
+
+    <string name="decks">Talie</string>
+    <string name="all_decks">Wszystkie talie</string>
+    <string name="standard_decks">Standardowe talie</string>
+    <string name="wild_decks">Dzikie talie</string>
+    <string name="favorite_decks">Zapisane talie</string>
+    <string name="about_app">Informacje o aplikacji</string>
+    <string name="other">Inne</string>
+    <string name="exit">Wyjdź</string>
+
+    <string name="click_on_a_card">Kliknij kartę, aby wyświetlić jej obraz w pełnym rozmiarze i osobistą wycenę</string>
+    <string name="copy_deck_in_order">Skopiuj kod talii, aby później wkleić go do Hearthstone</string>
+    <string name="save_deck_description">Naciśnij ikonę gwiazdki, aby zapisać talię do przeglądania offline</string>
+    <string name="format_standard_description">Format standardowy</string>
+    <string name="format_wild_description">Dziki format</string>
+    <string name="version_ph">Wersja: %s</string>
+    <string name="copied_to_clipboard">Skopiowano do schowka!</string>
+    <string name="share_url">Udostępnij adres URL</string>
+
+    <string name="error_empty">Puste</string>
+    <string name="error_no_saved_decks_found_desc">Nie znaleziono zapisanych talii.</string>
+    <string name="error_no_online_decks_found_desc">Nie znaleziono talii. Spróbuj edytować filtry.</string>
+    <string name="error_loading_decks">Nieudane ładowanie :(</string>
+    <string name="no_browser_found">Nie znaleziono przeglądarki.</string>
+
+    <string name="your_review">Twoja recenzja robi różnicę! uni-1F634</string>
+    <string name="please_rate">Oceń aplikację w Google Play, jeśli Ci się podoba. uni-1F60A</string>
+
+    <string name="select_all">Zaznacz wszystko</string>
+    <string name="filter">Filtruj</string>
+
+    <string name="tap_again_to_exit">Dotknij ponownie, aby wyjść</string>
+    <string name="enter_deck_name_here">Wprowadź nazwę talii (niekoniecznie)</string>
+    <string name="choose_heroes">Wybierz bohaterów:</string>
+    <string name="search">Szukaj</string>
+    <string name="change_filters">Edytuj</string>
+
+</resources>

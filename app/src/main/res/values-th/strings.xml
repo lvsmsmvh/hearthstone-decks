@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name" translatable="false">Decks for Hearthstone</string>
+
+    <string name="app_name_new_line" translatable="false">Decks for\nHearthstone</string>
+
+    <string name="app_name_short" translatable="false">Decks for HS</string>
+
+    <string name="quote_ph" translatable="false">%s</string>
+
+    <string name="faq" translatable="false">FAQ</string>
+
+    <string name="class_demon_hunter">นักล่าปีศาจ</string>
+
+    <string name="class_druid">ดรูอิด</string>
+
+    <string name="class_hunter">ฮันเตอร์</string>
+
+    <string name="class_paladin">พาลาดิน</string>
+
+    <string name="class_priest">นักบวช</string>
+
+    <string name="class_shaman">หมอผี</string>
+
+    <string name="class_rogue">โกง</string>
+
+    <string name="class_warlock">เวท</string>
+
+    <string name="class_warrior">นักรบ</string>
+
+    <string name="class_mage">นักเวทย์</string>
+
+    <string name="class_death_knight">เดธไนท์</string>
+
+    <string name="all_decks_are_taken_from">
+    ทุกเด็คนำมาจาก —
+    <a href="https://hearthpwn.com">hearthpwn.com</a>
+  </string>
+
+    <string name="question_suggestions">
+    คำถาม &amp; ข้อเสนอแนะ —
+    <a href="mailto:iamajavagod@gmail.com">iamajavagod\@gmail.com</a>
+  </string>
+
+    <string name="privacy_policy">
+    นโยบายส่วนบุคคล —
+    <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a>
+  </string>
+
+    <string name="app_description">ค้นหาสำรับชุมชนใหม่และบันทึกไว้เพื่อดูแบบออฟไลน์</string>
+
+    <string name="class_image_desc">คลาสเกม</string>
+
+    <string name="dust_icon">ฝุ่น</string>
+
+    <string name="next">ต่อไป</string>
+
+    <string name="previous">ก่อนหน้า</string>
+
+    <string name="loading">กำลังโหลด…</string>
+
+    <string name="retry">ลองอีกครั้ง</string>
+
+    <string name="artist_ph">
+    <b>ศิลปิน:</b>
+     %s
+  </string>
+
+    <string name="copy">สำเนา</string>
+
+    <string name="save">บันทึก</string>
+
+    <string name="saved">บันทึกไว้</string>
+
+    <string name="saved_decks">ชั้นที่บันทึกไว้</string>
+
+    <string name="share">แบ่งปัน</string>
+
+    <string name="open_menu_go_back">เมนู/ย้อนกลับ</string>
+
+    <string name="quit_app_question">ออกจากแอปไหม</string>
+
+    <string name="quit">ล้มเลิก</string>
+
+    <string name="cancel">ยกเลิก</string>
+
+    <string name="decks">ดาดฟ้า</string>
+
+    <string name="all_decks">ชั้นทั้งหมด</string>
+
+    <string name="standard_decks">ชั้นมาตรฐาน</string>
+
+    <string name="wild_decks">ดาดฟ้าป่า</string>
+
+    <string name="favorite_decks">ชั้นที่บันทึกไว้</string>
+
+    <string name="about_app">เกี่ยวกับแอพ</string>
+
+    <string name="other">อื่น</string>
+
+    <string name="exit">ทางออก</string>
+
+    <string name="click_on_a_card">คลิกที่การ์ดเพื่อดูภาพขนาดเต็มและคำพูดส่วนตัว</string>
+
+    <string name="copy_deck_in_order">คัดลอกรหัสเด็คเพื่อวางลงใน Hearthstone ในภายหลัง</string>
+
+    <string name="save_deck_description">กดไอคอนรูปดาวเพื่อบันทึกสำรับสำหรับการดูแบบออฟไลน์</string>
+
+    <string name="format_standard_description">รูปแบบมาตรฐาน</string>
+
+    <string name="format_wild_description">รูปแบบไวด์</string>
+
+    <string name="version_ph">เวอร์ชัน: %s</string>
+
+    <string name="copied_to_clipboard">คัดลอกไปยังคลิปบอร์ดแล้ว!</string>
+
+    <string name="share_url">แบ่งปัน URL</string>
+
+    <string name="error_empty">ว่างเปล่า</string>
+
+    <string name="error_no_saved_decks_found_desc">ไม่พบเด็คที่บันทึกไว้</string>
+
+    <string name="error_no_online_decks_found_desc">ไม่พบเด็ค ลองแก้ไขตัวกรอง</string>
+
+    <string name="error_loading_decks">โหลดไม่สำเร็จ :(</string>
+
+    <string name="no_browser_found">ไม่พบเบราว์เซอร์</string>
+
+    <string name="your_review">รีวิวของคุณสร้างความแตกต่าง! ยูนิ-1F634</string>
+
+    <string name="please_rate">โปรดให้คะแนนแอปใน Google Play หากคุณชอบ ยูนิ-1F60A</string>
+
+    <string name="select_all">เลือกทั้งหมด</string>
+
+    <string name="filter">กรอง</string>
+
+    <string name="tap_again_to_exit">แตะอีกครั้งเพื่อออก</string>
+
+    <string name="enter_deck_name_here">ใส่ชื่อสำรับ (ไม่จำเป็น)</string>
+
+    <string name="choose_heroes">เลือกฮีโร่:</string>
+
+    <string name="search">ค้นหา</string>
+
+    <string name="change_filters">แก้ไข</string>
+
+</resources>

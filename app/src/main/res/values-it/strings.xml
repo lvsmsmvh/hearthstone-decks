@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name" translatable="false">Decks for Hearthstone</string>
+
+    <string name="app_name_new_line" translatable="false">Decks for\nHearthstone</string>
+
+    <string name="app_name_short" translatable="false">Decks for HS</string>
+
+    <string name="quote_ph" translatable="false">%s</string>
+
+    <string name="faq" translatable="false">FAQ</string>
+
+    <string name="class_demon_hunter">Cacciatore di demoni</string>
+
+    <string name="class_druid">druido</string>
+
+    <string name="class_hunter">Cacciatore</string>
+
+    <string name="class_paladin">Paladino</string>
+
+    <string name="class_priest">Sacerdote</string>
+
+    <string name="class_shaman">Sciamano</string>
+
+    <string name="class_rogue">Briccone</string>
+
+    <string name="class_warlock">Stregone</string>
+
+    <string name="class_warrior">Guerriero</string>
+
+    <string name="class_mage">Mago</string>
+
+    <string name="class_death_knight">Cavaliere della Morte</string>
+
+    <string name="all_decks_are_taken_from">
+    Tutti i mazzi sono tratti da:
+    <a href="https://hearthpwn.com">hearthpwn.com</a>
+  </string>
+
+    <string name="question_suggestions">
+    Domande e risposte Suggerimenti:
+    <a href="mailto:iamajavagod@gmail.com">iamajavagod\@gmail.com</a>
+  </string>
+
+    <string name="privacy_policy">
+    Norme sulla privacy:
+    <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view/decks-for-hearthstone-policy/home</a>
+  </string>
+
+    <string name="app_description">Trova nuovi mazzi della community e salvali per la visualizzazione offline.</string>
+
+    <string name="class_image_desc">Classe di gioco</string>
+
+    <string name="dust_icon">Polvere</string>
+
+    <string name="next">Prossimo</string>
+
+    <string name="previous">Precedente</string>
+
+    <string name="loading">Caricamento…</string>
+
+    <string name="retry">Riprova</string>
+
+    <string name="artist_ph">
+    <b>Artista:</b>
+     %s
+  </string>
+
+    <string name="copy">copia</string>
+
+    <string name="save">Salva</string>
+
+    <string name="saved">Salvato</string>
+
+    <string name="saved_decks">Mazzi salvati</string>
+
+    <string name="share">Condividere</string>
+
+    <string name="open_menu_go_back">Menù/Torna indietro</string>
+
+    <string name="quit_app_question">Uscire dall\'app?</string>
+
+    <string name="quit">Esentato</string>
+
+    <string name="cancel">Annulla</string>
+
+    <string name="decks">Mazzi</string>
+
+    <string name="all_decks">Tutti i mazzi</string>
+
+    <string name="standard_decks">Mazzi standard</string>
+
+    <string name="wild_decks">Mazzi selvaggi</string>
+
+    <string name="favorite_decks">Mazzi salvati</string>
+
+    <string name="about_app">Informazioni sull\'app</string>
+
+    <string name="other">Altro</string>
+
+    <string name="exit">Uscita</string>
+
+    <string name="click_on_a_card">Fare clic su una scheda per visualizzarne l\'immagine a grandezza naturale e la sua citazione personale</string>
+
+    <string name="copy_deck_in_order">Copia il codice del mazzo per incollarlo successivamente in Hearthstone</string>
+
+    <string name="save_deck_description">Premi l\'icona Stella per salvare il mazzo per la visualizzazione offline</string>
+
+    <string name="format_standard_description">Formato standard</string>
+
+    <string name="format_wild_description">Formato selvaggio</string>
+
+    <string name="version_ph">Versione: %s</string>
+
+    <string name="copied_to_clipboard">Copiato negli appunti!</string>
+
+    <string name="share_url">Condividi l\'URL</string>
+
+    <string name="error_empty">Vuoto</string>
+
+    <string name="error_no_saved_decks_found_desc">Nessun mazzo salvato trovato.</string>
+
+    <string name="error_no_online_decks_found_desc">Nessun mazzo trovato. Prova a modificare i filtri.</string>
+
+    <string name="error_loading_decks">Caricamento non riuscito :(</string>
+
+    <string name="no_browser_found">Nessun browser trovato.</string>
+
+    <string name="your_review">La tua recensione fa la differenza! uni-1F634</string>
+
+    <string name="please_rate">Valuta l\'app in Google Play se ti piace. uni-1F60A</string>
+
+    <string name="select_all">Seleziona tutto</string>
+
+    <string name="filter">Filtro</string>
+
+
+    <string name="tap_again_to_exit">Tocca di nuovo per uscire</string>
+
+    <string name="enter_deck_name_here">Inserisci il nome del mazzo (non necessariamente)</string>
+
+    <string name="choose_heroes">Scegli gli eroi:</string>
+
+    <string name="search">Ricerca</string>
+
+    <string name="change_filters">Modificare</string>
+
+</resources>

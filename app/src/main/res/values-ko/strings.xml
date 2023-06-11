@@ -1,0 +1,80 @@
+<resources>
+
+    <string name="quote_ph" translatable="false">%s</string>
+    <string name="faq" translatable="false">FAQ</string>
+
+    <string name="class_demon_hunter">악마사냥꾼</string>
+    <string name="class_druid">드루이드</string>
+    <string name="class_hunter">헌터</string>
+    <string name="class_paladin">팔라딘</string>
+    <string name="class_priest">사제</string>
+    <string name="class_shaman">주술사</string>
+    <string name="class_rogue">도적</string>
+    <string name="class_warlock">워록</string>
+    <string name="class_warrior">전사</string>
+    <string name="class_mage">마법사</string>
+    <string name="class_death_knight">죽음의 기사</string>
+
+    <string name="all_decks_are_taken_from">모든 데크는 <a href="https://hearthpwn.com">hearthpwn.com</a></string>에서 가져왔습니다.
+    <string name="question_suggestions">질문 &amp; 제안 — <a href="mailto:iamajavagod@gmail.com">iamajavagod@gmail.com</a></string>
+    <string name="privacy_policy">개인정보 보호정책 — <a href="https://sites.google.com/view/decks-for-hearthstone-policy/home">https://sites.google.com/view /decks-for-hearthstone-policy/home</a></string>
+
+    <string name="app_description">새로운 커뮤니티 덱을 찾아 오프라인에서 볼 수 있도록 저장하세요.</string>
+
+    <string name="class_image_desc">게임 클래스</string>
+    <string name="dust_icon">먼지</string>
+    <string name="next">다음</string>
+    <string name="previous">이전</string>
+    <string name="loading">로드 중…</string>
+    <string name="retry">재시도</string>
+
+    <string name="artist_ph"><b>아티스트:</b> %s</string>
+    <string name="copy">복사</string>
+    <string name="save">저장</string>
+    <string name="saved">저장됨</string>
+    <string name="saved_decks">저장된 덱</string>
+    <string name="share">공유</string>
+
+    <string name="open_menu_go_back">메뉴/뒤로</string>
+
+    <string name="quit_app_question">앱을 종료하시겠습니까?</string>
+    <string name="quit">종료</string>
+    <string name="cancel">취소</string>
+
+    <string name="decks">덱</string>
+    <string name="all_decks">모든 덱</string>
+    <string name="standard_decks">표준 덱</string>
+    <string name="wild_decks">와일드 덱</string>
+    <string name="favorite_decks">저장된 덱</string>
+    <string name="about_app">앱 정보</string>
+    <string name="other">기타</string>
+    <string name="exit">종료</string>
+
+    <string name="click_on_a_card">카드를 클릭하시면 전체 크기 이미지와 인용문을 보실 수 있습니다</string>
+    <string name="copy_deck_in_order">나중에 Hearthstone에 붙여넣기 위해 데크 코드 복사</string>
+    <string name="save_deck_description">오프라인 보기를 위해 덱을 저장하려면 별 아이콘을 누르세요</string>
+    <string name="format_standard_description">표준 형식</string>
+    <string name="format_wild_description">와일드 형식</string>
+    <string name="version_ph">버전: %s</string>
+    <string name="copied_to_clipboard">클립보드에 복사되었습니다!</string>
+    <string name="share_url">URL 공유</string>
+
+    <string name="error_empty">비어 있음</string>
+    <string name="error_no_saved_decks_found_desc">저장된 덱이 없습니다.</string>
+    <string name="error_no_online_decks_found_desc">덱을 찾을 수 없습니다. 필터 편집을 시도하십시오.</string>
+    <string name="error_loading_decks">불러오기 실패 :(</string>
+    <string name="no_browser_found">브라우저를 찾을 수 없습니다.</string>
+
+    <string name="your_review">귀하의 리뷰가 차이를 만듭니다! 유니-1F634</string>
+    <string name="please_rate">Google Play에서 앱이 마음에 드시면 평가해 주세요. 유니-1F60A</string>
+
+    <string name="select_all">모두 선택</string>
+    <string name="filter">필터</string>
+
+    <string name="tap_again_to_exit">종료하려면 다시 탭하세요</string>
+    <string name="enter_deck_name_here">데크 이름 입력(반드시 필요하지 않음)</string>
+    <string name="choose_heroes">영웅 선택:</string>
+    <string name="search">검색</string>
+    <string name="change_filters">수정</string>
+
+</resources>
