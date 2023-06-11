@@ -170,8 +170,8 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
                 binding.layoutFailed.tvErrorLoadingDataSmall.text = exception.message
                 binding.layoutFailed.btnReloadData.isVisible = true
                 binding.layoutFailed.btnChangeFilters.isVisible = false
-                binding.layoutFailed.errorFailedAnim.isVisible = true
-                binding.layoutFailed.errorEmptyAnim.isVisible = false
+                binding.layoutFailed.errorFailedAnim.isVisible = false
+                binding.layoutFailed.errorEmptyAnim.isVisible = true
             }
         }
     }

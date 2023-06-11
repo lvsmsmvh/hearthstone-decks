@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_vertical"
     android:orientation="vertical"
     tools:ignore="UseCompoundDrawables">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_hero_background"
+        app:layout_constraintDimensionRatio="1:1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
         android:gravity="center_vertical"
         android:layout_margin="2dp"
         android:background="@drawable/bg_corners_2"
@@ -19,8 +25,14 @@
 
         <ImageView
             android:id="@+id/item_hero_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintHeight_percent="0.5"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginVertical="5dp"
             android:layout_marginHorizontal="5dp"
             android:adjustViewBounds="true"
@@ -32,10 +44,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_weight="1"
             android:layout_marginVertical="5dp"
             android:ellipsize="end"
             android:gravity="center_vertical"
+            android:visibility="gone"
             android:lines="3"
             android:maxLines="3"
             android:textColor="@color/text_2"
@@ -47,18 +62,11 @@
             android:id="@+id/item_hero_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:buttonTint="@color/text_2" />
 
-    </LinearLayout>
-
-    <View
-        android:id="@+id/about_app_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:visibility="gone"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="3dp"
-        android:background="@color/bg" />
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.cyberquick.hearthstonedecks.presentation.dialogs
 import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
+import android.text.InputFilter
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -11,6 +12,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
@@ -18,6 +21,7 @@ import com.cyberquick.hearthstonedecks.databinding.DialogFilterBinding
 import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Hero
 import com.cyberquick.hearthstonedecks.presentation.adapters.HeroAdapter
+import com.cyberquick.hearthstonedecks.utils.doOnLengthChange
 import com.cyberquick.hearthstonedecks.utils.hideKeyboard
 import com.cyberquick.hearthstonedecks.utils.setupFullHeight
 import com.cyberquick.hearthstonedecks.utils.showKeyboard
@@ -85,7 +89,7 @@ class DialogFilter(
 
             binding.recycleViewHero.adapter = adapter
             binding.recycleViewHero.layoutManager = GridLayoutManager(
-                activity, 3, RecyclerView.VERTICAL, false
+                activity, 5, RecyclerView.VERTICAL, false
             )
 
             isAllItemsSelected = previousFilter.heroes.size == Hero.values().size
@@ -129,6 +133,10 @@ class DialogFilter(
                 dialog.dismiss()
             }
 
+            binding.btnClearText.setOnClickListener { binding.etPrompt.setText("") }
+
+            binding.etPrompt.filters += InputFilter.LengthFilter(100)
+            binding.etPrompt.doOnLengthChange { binding.btnClearText.isVisible = it != 0 }
             binding.etPrompt.setText(previousFilter.prompt, TextView.BufferType.EDITABLE)
             binding.etPrompt.requestFocus()
 

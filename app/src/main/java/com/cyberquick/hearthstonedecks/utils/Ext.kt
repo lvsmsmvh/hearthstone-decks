@@ -15,9 +15,11 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -198,4 +200,8 @@ fun Context.statusBarHeightPixels(): Int {
 
 fun Context.navBarHeightPixels(): Int {
     return pixelsOfIdentifier("navigation_bar_height", 48)
+}
+
+fun TextView.doOnLengthChange(onNewLength: (Int) -> Unit) {
+    addTextChangedListener { editable -> editable?.toString()?.let { onNewLength(it.length) } }
 }

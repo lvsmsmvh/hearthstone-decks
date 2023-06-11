@@ -20,18 +20,21 @@ class HeroViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         onSelectedListener: (Boolean) -> Unit,
     ) {
         Log.i("tag_hero", "Bind ${item.nameInApi}, is checked = $isSelected")
-        val image = view.context.drawable(item.iconRes)
-        view.findViewById<ImageView>(R.id.item_hero_icon).setImageDrawable(image)
         view.findViewById<TextView>(R.id.item_hero_name).setText(item.nameRes)
+        val imageView = view.findViewById<ImageView>(R.id.item_hero_icon)
+        imageView.setImageDrawable(view.context.drawable(item.iconRes))
+        imageView.alpha = if (isSelected) 1f else 0.3f
 
         val checkBox = view.findViewById<AppCompatCheckBox>(R.id.item_hero_checkbox)
         checkBox.apply {
             isChecked = isSelected
             jumpDrawablesToCurrentState()
             setOnCheckedChangeListener { _, isChecked ->
+                imageView.alpha = if (isChecked) 1f else 0.3f
                 onSelectedListener(isChecked)
             }
         }
+
         view.findViewById<View>(R.id.item_hero_background).setOnClickListener {
             checkBox.performClick()
         }
