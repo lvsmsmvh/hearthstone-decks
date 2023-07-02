@@ -89,7 +89,7 @@ class DialogFilter(
 
             binding.recycleViewHero.adapter = adapter
             binding.recycleViewHero.layoutManager = GridLayoutManager(
-                activity, 5, RecyclerView.VERTICAL, false
+                activity, 6, RecyclerView.VERTICAL, false
             )
 
             isAllItemsSelected = previousFilter.heroes.size == Hero.values().size
@@ -109,18 +109,6 @@ class DialogFilter(
             binding.checkboxSelectAll.setOnClickListener(selectAllListener)
             binding.textSelectAll.setOnClickListener(selectAllListener)
 
-//            binding.btnNo.setOnClickListener {
-//                dialog.dismiss()
-//            }
-//
-//            binding.btnYes.setOnClickListener {
-//                val text = binding.etPrompt.text.toString()
-//                val heroes = adapter.getSelected()
-//                val filter = GetPageFilter(text, heroes)
-//                onNewSelected(filter)
-//                dialog.dismiss()
-//            }
-
             binding.btnClose.setOnClickListener {
                 dialog.dismiss()
             }
@@ -134,29 +122,12 @@ class DialogFilter(
             }
 
             binding.btnClearText.setOnClickListener { binding.etPrompt.setText("") }
-
             binding.etPrompt.filters += InputFilter.LengthFilter(100)
             binding.etPrompt.doOnLengthChange { binding.btnClearText.isVisible = it != 0 }
             binding.etPrompt.setText(previousFilter.prompt, TextView.BufferType.EDITABLE)
             binding.etPrompt.requestFocus()
 
-//        binding.etPrompt.setOnFocusChangeListener { v, hasFocus ->
-//            if (hasFocus) {
-//                //got focus
-//                dialog.setCanceledOnTouchOutside(false)
-//            } else {
-//                //lost focus
-//                dialog.setCanceledOnTouchOutside(true)
-//            }
-//        }
-
-            // This listener's onShow is fired when the dialog is shown
-            // This listener's onShow is fired when the dialog is shown
-            dialog.setOnShowListener { _ -> // In a previous life I used this method to get handles to the positive and negative buttons
-                // of a dialog in order to change their Typeface. Good ol' days.
-
-                // This is gotten directly from the source of BottomSheetDialog
-                // in the wrapInBottomSheet() method
+            dialog.setOnShowListener {
                 val bottomSheet = dialog.findViewById<View>(
                     com.google.android.material.R.id.design_bottom_sheet
                 ) as? FrameLayout ?: return@setOnShowListener
@@ -168,14 +139,6 @@ class DialogFilter(
 
             dialog.show()
             activity.showKeyboard()
-
-//            binding.etPrompt.doOnAttach {
-//                if (dialog.ownerActivity?.window == null) {
-//                    Toast.makeText(context, "dialog.window == null", Toast.LENGTH_SHORT).show()
-//                }
-//                dialog.ownerActivity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
-//            }
-//            dialog.ownerActivity?.showKeyboard()
         }
     }
 }
