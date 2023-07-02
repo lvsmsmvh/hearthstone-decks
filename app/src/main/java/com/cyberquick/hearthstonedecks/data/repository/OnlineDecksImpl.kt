@@ -15,7 +15,7 @@ class OnlineDecksImpl @Inject constructor(
     override suspend fun getPage(
         pageNumber: Int,
         gameFormat: GameFormat,
-        filter: GetPageFilter
+        filter: DecksFilter
     ): Result<Page> {
         return hearthpwnApi.getPage(pageNumber, gameFormat, filter)
     }

@@ -3,7 +3,7 @@ package com.cyberquick.hearthstonedecks.data.db
 import com.cyberquick.hearthstonedecks.data.db.dao.DeckDao
 import com.cyberquick.hearthstonedecks.data.db.mappers.DBMapper
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
-import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
+import com.cyberquick.hearthstonedecks.domain.entities.DecksFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import javax.inject.Inject
 import kotlin.math.ceil
@@ -29,7 +29,7 @@ class RoomDBApi @Inject constructor(
         return deckDao.getDeckEntity(deckPreview.id) != null
     }
 
-    fun getPage(pageNumber: Int, filter: GetPageFilter): Page {
+    fun getPage(pageNumber: Int, filter: DecksFilter): Page {
         var totalPages = ceil(deckDao.amountDecks() / ITEMS_ON_A_PAGE.toFloat()).toInt()
         if (totalPages <1) totalPages = 1
 

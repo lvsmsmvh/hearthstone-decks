@@ -5,15 +5,13 @@ import com.cyberquick.hearthstonedecks.data.server.entities.DeckDetails
 import com.cyberquick.hearthstonedecks.domain.common.Result
 import com.cyberquick.hearthstonedecks.domain.entities.DeckPreview
 import com.cyberquick.hearthstonedecks.domain.entities.GameFormat
-import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
-import com.cyberquick.hearthstonedecks.domain.entities.Hero
+import com.cyberquick.hearthstonedecks.domain.entities.DecksFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import com.cyberquick.hearthstonedecks.domain.exceptions.LoadFailedException
 import com.cyberquick.hearthstonedecks.domain.exceptions.NoOnlineDecksFoundException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
-import java.lang.Exception
 import javax.inject.Inject
 
 class HearthpwnApi @Inject constructor() {
@@ -43,7 +41,7 @@ class HearthpwnApi @Inject constructor() {
     fun getPage(
         pageNumber: Int,
         gameFormatToLoad: GameFormat,
-        filter: GetPageFilter
+        filter: DecksFilter
     ): Result<Page> {
         val deckPreviews = mutableListOf<DeckPreview>()
 

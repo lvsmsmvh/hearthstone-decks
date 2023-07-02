@@ -2,8 +2,7 @@ package com.cyberquick.hearthstonedecks.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
-import com.cyberquick.hearthstonedecks.domain.entities.Hero
+import com.cyberquick.hearthstonedecks.domain.entities.DecksFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Page
 import com.cyberquick.hearthstonedecks.domain.usecases.base.GetPageUseCase
 import com.cyberquick.hearthstonedecks.domain.usecases.favorite.GetFavoritePageUseCase
@@ -38,7 +37,7 @@ open class PageViewModel(
     data class Position(val current: Int, val total: Int?)
     data class AllowNavigation(val previous: Boolean, val next: Boolean)
 
-    private var filter: GetPageFilter = GetPageFilter.default
+    private var filter: DecksFilter = DecksFilter.default
 
     val pageState: LiveData<LoadingState<Page>> = MutableLiveData()
 
@@ -80,7 +79,7 @@ open class PageViewModel(
         }
     }
 
-    fun applyNewFilter(filter: GetPageFilter) {
+    fun applyNewFilter(filter: DecksFilter) {
         if (this.filter == filter) {
             return
         }
@@ -89,7 +88,7 @@ open class PageViewModel(
         updateCurrentPage(evenIfLoaded = true)
     }
 
-    fun getCurrentFilter(): GetPageFilter {
+    fun getCurrentFilter(): DecksFilter {
         return filter
     }
 

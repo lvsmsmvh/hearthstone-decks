@@ -1,24 +1,20 @@
 package com.cyberquick.hearthstonedecks.presentation.dialogs
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Rect
 import android.text.InputFilter
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberquick.hearthstonedecks.R
 import com.cyberquick.hearthstonedecks.databinding.DialogFilterBinding
-import com.cyberquick.hearthstonedecks.domain.entities.GetPageFilter
+import com.cyberquick.hearthstonedecks.domain.entities.DecksFilter
 import com.cyberquick.hearthstonedecks.domain.entities.Hero
 import com.cyberquick.hearthstonedecks.presentation.adapters.HeroAdapter
 import com.cyberquick.hearthstonedecks.utils.doOnLengthChange
@@ -66,8 +62,8 @@ class DialogFilter(
     companion object {
         fun show(
             activity: Activity,
-            previousFilter: GetPageFilter,
-            onNewSelected: (GetPageFilter) -> Unit,
+            previousFilter: DecksFilter,
+            onNewSelected: (DecksFilter) -> Unit,
         ) {
             var isAllItemsSelected: Boolean
 
@@ -116,7 +112,7 @@ class DialogFilter(
             binding.btnSearch.setOnClickListener {
                 val text = binding.etPrompt.text.toString()
                 val heroes = adapter.getSelected()
-                val filter = GetPageFilter(text, heroes)
+                val filter = DecksFilter(text, heroes)
                 onNewSelected(filter)
                 dialog.dismiss()
             }

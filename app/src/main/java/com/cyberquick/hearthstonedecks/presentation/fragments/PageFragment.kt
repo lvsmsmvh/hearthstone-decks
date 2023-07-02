@@ -148,7 +148,8 @@ abstract class PageFragment : BaseFragment(), MenuProvider {
                 binding.layoutFailed.tvErrorLoadingDataSmall.text =
                     getString(R.string.error_no_saved_decks_found_desc)
                 binding.layoutFailed.btnReloadData.isVisible = false
-                binding.layoutFailed.btnChangeFilters.isVisible = true
+                binding.layoutFailed.btnChangeFilters.isVisible =
+                    viewModel.getCurrentFilter().isCustom()
                 binding.layoutFailed.errorFailedAnim.isVisible = false
                 binding.layoutFailed.errorEmptyAnim.isVisible = true
             }
