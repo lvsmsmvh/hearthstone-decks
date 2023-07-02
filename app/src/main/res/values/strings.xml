@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name" translatable="false">Decks for Hearthstone</string>
-    <string name="app_name_new_line" translatable="false">Decks for\nHearthstone</string>
+    <string name="app_name" translatable="false">Decks for HS</string>
+    <string name="app_name_new_line" translatable="false">Decks for\HS</string>
     <string name="app_name_short" translatable="false">Decks for HS</string>
 
     <string name="quote_ph" translatable="false">%s</string>

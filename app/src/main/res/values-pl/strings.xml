@@ -1,8 +1,5 @@
 <resources>
 
-    <string name="quote_ph" translatable="false">%s</string>
-    <string name="faq" translatable="false">Najczęściej zadawane pytania</string>
-
     <string name="class_demon_hunter">Łowca demonów</string>
     <string name="class_druid">Druid</string>
     <string name="class_hunter">Łowca</string>

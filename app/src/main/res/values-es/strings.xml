@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
 
-    <string name="app_name" translatable="false">Decks for Hearthstone</string>
-
-    <string name="app_name_new_line" translatable="false">Decks for\nHearthstone</string>
-
-    <string name="app_name_short" translatable="false">Decks for HS</string>
-
-    <string name="quote_ph" translatable="false">%s</string>
-
-    <string name="faq" translatable="false">FAQ</string>
-
     <string name="class_demon_hunter">Cazador de demonios</string>
 
     <string name="class_druid">druida</string>
