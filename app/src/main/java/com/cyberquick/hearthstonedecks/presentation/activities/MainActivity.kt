@@ -2,18 +2,11 @@ package com.cyberquick.hearthstonedecks.presentation.activities
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +19,6 @@ import com.cyberquick.hearthstonedecks.databinding.ActivityMainBinding
 import com.cyberquick.hearthstonedecks.domain.repositories.SetsRepository
 import com.cyberquick.hearthstonedecks.presentation.common.ToolbarHolder
 import com.cyberquick.hearthstonedecks.presentation.fragments.*
-import com.cyberquick.hearthstonedecks.utils.BACK_PRESS_INTERVAL
 import com.cyberquick.hearthstonedecks.utils.CustomAppReviewer
 import com.cyberquick.hearthstonedecks.utils.Event
 import com.cyberquick.hearthstonedecks.utils.Preferences
@@ -49,7 +41,6 @@ class MainActivity : AppCompatActivity(), ToolbarHolder {
     private enum class HomeButton { Menu, Back; }
 
     private var homeButton = HomeButton.Menu
-    private var backPressedTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,11 +113,6 @@ class MainActivity : AppCompatActivity(), ToolbarHolder {
                 R.id.drawer_menu_item_about -> {
                     simpleNavigate(AboutAppFragment())
                     logFirebaseEvent(this, Event.DRAWER_CLICK_ABOUT_APP)
-                }
-
-                R.id.drawer_menu_item_exit -> {
-                    showExitWindow()
-                    logFirebaseEvent(this, Event.DRAWER_CLICK_EXIT)
                 }
             }
             return@setNavigationItemSelectedListener true
@@ -207,10 +193,6 @@ class MainActivity : AppCompatActivity(), ToolbarHolder {
     }
 
     private fun setHomeButtonAs(newButton: HomeButton) {
-//        val newHomeButton = when (fragment) {
-//            is DeckFragment, is AboutAppFragment -> HomeButton.Back
-//            else -> HomeButton.Menu
-//        }
         if (newButton == homeButton) return
         homeButton = newButton
         val anim = when (newButton) {
@@ -252,17 +234,8 @@ class MainActivity : AppCompatActivity(), ToolbarHolder {
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
-            return
-        }
-
-        if (backPressedTime + BACK_PRESS_INTERVAL > System.currentTimeMillis()) {
-            finish()
         } else {
-            Toast.makeText(
-                this, getString(R.string.tap_again_to_exit), Toast.LENGTH_SHORT
-            ).show()
+            finish()
         }
-
-        backPressedTime = System.currentTimeMillis()
     }
 }

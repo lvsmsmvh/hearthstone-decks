@@ -36,18 +36,4 @@
             </menu>
         </item>
     </group>
-    <group
-        android:id="@+id/group3"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/subtitle2"
-            android:title="@string/other">
-            <menu>
-                <item
-                    android:id="@+id/drawer_menu_item_exit"
-                    android:icon="@drawable/ic_logout"
-                    android:title="@string/exit" />
-            </menu>
-        </item>
-    </group>
 </menu>
