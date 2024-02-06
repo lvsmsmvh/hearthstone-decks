@@ -68,6 +68,10 @@
     <string name="select_all">Zaznacz wszystko</string>
     <string name="filter">Filtruj</string>
 
+    <string name="expansion">Ekspansja</string>
+    <string name="year">Rok</string>
+    <string name="flavor">Cytat</string>
+    <string name="artist">Artysta</string>
     <string name="tap_again_to_exit">Dotknij ponownie, aby wyjść</string>
     <string name="enter_deck_name_here">Wprowadź nazwę talii (niekoniecznie)</string>
     <string name="choose_heroes">Wybierz bohaterów:</string>

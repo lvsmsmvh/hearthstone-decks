@@ -68,6 +68,10 @@
     <string name="select_all">모두 선택</string>
     <string name="filter">필터</string>
 
+    <string name="expansion">확장</string>
+    <string name="year">년도</string>
+    <string name="flavor">견적</string>
+    <string name="artist">아티스트</string>
     <string name="tap_again_to_exit">종료하려면 다시 탭하세요</string>
     <string name="enter_deck_name_here">데크 이름 입력(반드시 필요하지 않음)</string>
     <string name="choose_heroes">영웅 선택:</string>

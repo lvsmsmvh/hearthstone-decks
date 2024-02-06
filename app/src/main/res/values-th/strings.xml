@@ -124,6 +124,10 @@
 
     <string name="filter">กรอง</string>
 
+    <string name="expansion">การขยาย</string>
+    <string name="year">ปี</string>
+    <string name="flavor">คำพูด</string>
+    <string name="artist">ศิลปิน</string>
     <string name="tap_again_to_exit">แตะอีกครั้งเพื่อออก</string>
 
     <string name="enter_deck_name_here">ใส่ชื่อสำรับ (ไม่จำเป็น)</string>

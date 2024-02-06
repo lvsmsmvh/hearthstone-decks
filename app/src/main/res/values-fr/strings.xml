@@ -124,6 +124,10 @@
 
     <string name="filter">Filtre</string>
 
+    <string name="expansion">Expansion</string>
+    <string name="year">Année</string>
+    <string name="flavor">Une citation</string>
+    <string name="artist">Artiste</string>
     <string name="tap_again_to_exit">Appuyez à nouveau pour quitter</string>
 
     <string name="enter_deck_name_here">Entrez le nom du deck (pas nécessairement)</string>

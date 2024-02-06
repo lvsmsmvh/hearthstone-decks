@@ -125,6 +125,10 @@
 
     <string name="filter">フィルター</string>
 
+    <string name="expansion">拡大</string>
+    <string name="year">年</string>
+    <string name="flavor">見積もり</string>
+    <string name="artist">アーティスト</string>
     <string name="tap_again_to_exit">もう一度タップして終了します</string>
 
     <string name="enter_deck_name_here">デッキ名を入力してください（必須ではありません）</string>

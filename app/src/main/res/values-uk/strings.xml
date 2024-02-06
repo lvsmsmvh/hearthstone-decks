@@ -67,9 +67,15 @@
     <string name="select_all">Вибрати все</string>
     <string name="filter">Фільтр</string>
 
+    <string name="expansion">Розширення</string>
+    <string name="year">рік</string>
+    <string name="flavor">Цитата</string>
+    <string name="artist">Художник</string>
     <string name="tap_again_to_exit">Торкніться знову, щоб вийти</string>
     <string name="enter_deck_name_here">Введіть назву колоди (необов’язково)</string>
     <string name="choose_heroes">Виберіть героїв:</string>
     <string name="search">Пошук</string>
     <string name="change_filters">Редагувати</string>
+    <string name="com.google.firebase.crashlytics.mapping_file_id">Expansión</string>
+    <string name="com.google.firebase.crashlytics.mapping_file_id">Expansión</string>
 </resources>

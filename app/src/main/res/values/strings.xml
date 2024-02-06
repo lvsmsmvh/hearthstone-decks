@@ -74,10 +74,10 @@
     <string name="select_all">Select all</string>
     <string name="filter">Filter</string>
 
-    <string name="expansion" translatable="false">Expansion</string>
-    <string name="year"  translatable="false">Year</string>
-    <string name="flavor" translatable="false">Flavor</string>
-    <string name="artist" translatable="false">Artist</string>
+    <string name="expansion">Expansion</string>
+    <string name="year">Year</string>
+    <string name="flavor">A quote</string>
+    <string name="artist">Artist</string>
 
     <string name="tap_again_to_exit">Tap again to exit</string>
     <string name="enter_deck_name_here">Enter deck name (not necessarily)</string>

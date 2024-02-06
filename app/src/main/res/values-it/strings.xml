@@ -126,6 +126,10 @@
     <string name="filter">Filtro</string>
 
 
+    <string name="expansion">Espansione</string>
+    <string name="year">Anno</string>
+    <string name="flavor">Una citazione</string>
+    <string name="artist">Artista</string>
     <string name="tap_again_to_exit">Tocca di nuovo per uscire</string>
 
     <string name="enter_deck_name_here">Inserisci il nome del mazzo (non necessariamente)</string>

@@ -124,7 +124,11 @@
 
     <string name="filter">过滤</string>
 
-    <string name="tap_again_to_exit">再次点击退出</string>
+    <string name="expansion">扩张</string>
+  <string name="year">年</string>
+  <string name="flavor">报价</string>
+  <string name="artist">艺术家</string>
+  <string name="tap_again_to_exit">再次点击退出</string>
 
     <string name="enter_deck_name_here">输入牌组名称（不一定）</string>
 

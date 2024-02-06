@@ -124,6 +124,10 @@
 
     <string name="filter">Saring</string>
 
+    <string name="expansion">Ekspansi</string>
+    <string name="year">Tahun</string>
+    <string name="flavor">Kutipan</string>
+    <string name="artist">Artis</string>
     <string name="tap_again_to_exit">Ketuk lagi untuk keluar</string>
 
     <string name="enter_deck_name_here">Masukkan nama dek (tidak harus)</string>

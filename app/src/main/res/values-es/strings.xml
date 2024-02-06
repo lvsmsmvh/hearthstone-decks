@@ -124,6 +124,10 @@
 
     <string name="filter">Filtrar</string>
 
+    <string name="expansion">Expansión</string>
+    <string name="year">Año</string>
+    <string name="flavor">Una cita</string>
+    <string name="artist">Artista</string>
     <string name="tap_again_to_exit">Toque de nuevo para salir</string>
 
     <string name="enter_deck_name_here">Introduce el nombre del mazo (no necesariamente)</string>
