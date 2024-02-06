@@ -8,12 +8,12 @@ plugins {
 }
 android {
     namespace 'com.cyberquick.hearthstonedecks'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.cyberquick.hearthstonedecks"
         minSdkVersion 26
-        targetSdk 33
+        targetSdk 34
         versionCode 14
         versionName "1.14"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
