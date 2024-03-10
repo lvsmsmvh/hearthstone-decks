@@ -22,7 +22,9 @@ class RoomDBApi @Inject constructor(
     }
 
     fun remove(deckPreview: DeckPreview) {
-        deckDao.delete(deckDao.getDeckEntity(deckPreview.id))
+        deckDao.getDeckEntity(deckPreview.id)?.let {
+            deckDao.delete(it)
+        }
     }
 
     fun isSaved(deckPreview: DeckPreview): Boolean {

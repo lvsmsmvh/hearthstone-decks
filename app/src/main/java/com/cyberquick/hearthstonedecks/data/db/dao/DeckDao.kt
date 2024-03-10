@@ -18,5 +18,5 @@ interface DeckDao {
     fun insert(deckEntities: DeckEntity): Long
 
     @Delete
-    fun delete(deckEntity: DeckEntity?)
+    fun delete(deckEntity: DeckEntity)
 }
